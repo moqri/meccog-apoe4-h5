@@ -71,9 +71,9 @@
           "strength": "3 moderate"
         },
         {
-          "description": "Cathepsin B activity is about 50 percent HIGHER in APOE4 than APOE3 astrocytes. Higher protease activity is not by itself evidence of impaired lysosomal function, so this panel does not directly support the impaired half of the hypothesis.",
+          "description": "CONTRADICTING on lysosomal function: cathepsin B activity is about 50 percent HIGHER in APOE4 than APOE3 astrocytes, the opposite direction to the impaired-lysosome half of the hypothesis. Other papers report lower cathepsin B activity with APOE4 (e.g. P5.F2, Neuro-2a cells), so the direction differs between systems.",
           "quote": "ApoE4 astrocytes displayed an approximately 50% increase in cathepsin B activity compared with ApoE3 astrocytes (Figure 3H)",
-          "summary": "(APOE3 -> APOE4) -> (more lysosomal cathepsin B activity; not an impairment)",
+          "summary": "CONTRADICTS: (APOE3 -> APOE4) -> (more lysosomal cathepsin B activity, not less)",
           "relevance": 0.7,
           "system": "Isogenic hiPSC-derived astrocytes (GLAST-sorted): APOE4/4 line from an AD patient vs its CRISPR-corrected APOE3/3 isogenic line. Fluorometric cathepsin B activity assay.",
           "location": "Fig 3H",
