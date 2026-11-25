@@ -660,7 +660,7 @@
           "effect_size_prov": "estimated_from_figure",
           "p_value": "N/A",
           "p_value_prov": "not_found_in_source",
-          "sample_size": "2-4",
+          "sample_size": "3-4",
           "sample_size_prov": "visual_only",
           "directness": 3,
           "strength": "4 weak"
