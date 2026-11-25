@@ -40,7 +40,21 @@ The starting reference, Lee et al. 2023 (PMID 37777962, doi 10.1016/j.celrep.202
 
 ## 5. What a human checked
 
-At the time of writing, nothing in the spreadsheet has been read against the papers by a person. The person supplied one PDF and will review before submission; this README will be updated with the proportion actually checked. Treat the current file as agent output with automated checks only.
+No row has yet been read against the papers by a person. The person supplied seven PDFs and will review before submission; this section will be updated with the number of rows a person actually checked. Until then, treat the file as agent output with the automated checks and the AI verification pass described below.
+
+**AI verification pass (not a human check).** After extraction, the same model made a separate second pass over all 67 rows, in a priority order set by the challenge's misconduct rules: first every row with a value recorded as absent and every contradicting or no-effect finding (19 rows), then every P value read from significance marks, every directness class 1 or 2 call and every effect size estimated by eye (42 rows), then the remaining rows' locations (6 rows). For each row it reopened the cited panel (figure image, PDF page or supplement), re-read the legend's significance key and the statistical test, and checked that the recorded comparison is the one the finding describes. For this pass the publisher supplements of three Cell Press papers were downloaded and the Supplementary Data of Cuní-López et al. 2026 was read. Twelve rows changed:
+
+- Values filled from supplements that had not been read before: P1.F11 (Lee 2023, Fig S6I), P3.F3 (TCW 2022, Fig S6F), P12.F2 (Lin 2018, Fig S3D), P6.F3 (Hellén 2025, Supplementary Fig 3C, effect size and n).
+- A P value that belonged to a different comparison: P1.F8, P1.F9 and P1.F10 had recorded the asterisk for APOE4 versus APOE3, but the findings are about the rescue by cyclodextrin or simvastatin, which the paper's Dunnett's test does not compare. Those P values are now N/A, with the reason in the row.
+- A finding weakened on reading the source data: P7.F3 (autophagosome-assembly enrichment on APOE4 lipid droplets) rests on three proteins and does not survive the paper's own multiple-testing correction (log q = 0); P = 0.0079 recorded from Supplementary Data 13 and strength lowered to 5.
+- Directness corrected: P12.F2 (lysosome-dependent amyloid-beta degradation is a direct functional readout) from class 3 to 1; P13.F1 (lysosome area in HEK293 cells) from class 1 to 3.
+- Wording tightened so the sentence matches the panel: P2.F8, P10.F4 (filipin measures total cholesterol, not lysosomal), P11.F2 (the ~6x fold change applies to the most unsaturated class only).
+
+Rows that still need a person:
+- P3.F4 (TCW 2022, Fig 2C): the lysosome gene-set statistics are in the paper's Table S2, which could not be located on the publisher's server.
+- P8.F2 (Guo 2024): the time-course comparison is in Fig S5G, which is not in the author manuscript and was not obtained.
+- P3.F3 (TCW 2022, Fig S6F): the supplementary figure image carries no legend; the asterisk key used is the one in the paper's main-figure legends.
+- Every effect size marked with `~` (estimated by eye) deserves a glance for order of magnitude.
 
 The automated checks that did run, on every row:
 
