@@ -515,15 +515,15 @@
       "source_type": "PubMed published",
       "findings": [
         {
-          "description": "Lysosomes are alkalinized in APOE4-expressing neuronal cells: ratiometric dextran pH 5.86 versus 4.30 for APOE3.",
+          "description": "Lysosomes are alkalinized in APOE4-expressing neuronal cells: ratiometric dextran pH 5.86 versus 4.30 for APOE3. Note: the published legend key is garbled (\"*p < .05, ****p < .01, *p < .0001\"); read as a typo for the standard key (* < 0.05, ** < 0.01, *** < 0.001, **** < 0.0001).",
           "quote": "We found that HsAPOE4-expressing cells exhibit dramatic lysosomal alkalinization (pH = 5.86) compared to HsAPOE3 (pH = 4.30) cells (Figure 1C-E), reminiscent of previous results in APOE4-expressing astrocyte lysosomes (pH = 5.20, compared to pH = 4.08 in APOE3 astrocytes) [26]",
           "summary": "(APOE3 -> APOE4) -> (higher lysosomal pH -> impaired lysosomal function)",
           "relevance": 0.75,
           "system": "Neuro-2a mouse neuroblastoma cells stably expressing human APOE3 or APOE4 (not human cells); isogenic apart from the APOE transgene. OregonGreen-dextran ratiometric lysosomal pH.",
           "location": "Fig 1C-E",
-          "effect_size": "N/A",
-          "effect_size_prov": "not_found_in_source",
-          "p_value": "<0.05",
+          "effect_size": "qualitative",
+          "effect_size_prov": "printed_in_text",
+          "p_value": "<0.01",
           "p_value_prov": "visual_only",
           "sample_size": "3",
           "sample_size_prov": "printed_in_text",
@@ -531,7 +531,7 @@
           "strength": "2 strong"
         },
         {
-          "description": "Lysosomal proteolysis is reduced in APOE4 cells: Magic Red cathepsin B cleavage is lower, in line with the higher lysosomal pH.",
+          "description": "Lysosomal proteolysis is reduced in APOE4 cells: Magic Red cathepsin B cleavage is lower, in line with the higher lysosomal pH. Note: the published legend key is garbled (\"*p < .05, ****p < .01, *p < .0001\"); read as a typo for the standard key (* < 0.05, ** < 0.01, *** < 0.001, **** < 0.0001).",
           "quote": "We found that the HsAPOE4-expressing cells exhibited significantly decreased MR-CTSB proteolysis compared to HsAPOE3-expressing cells, in line with their decreased lysosomal acidity (Figure 1F,G)",
           "summary": "(APOE3 -> APOE4) -> (less cathepsin B proteolysis)",
           "relevance": 0.75,
@@ -547,7 +547,7 @@
           "strength": "2 strong"
         },
         {
-          "description": "LysoTracker signal is reduced in APOE4 cells while LAMP1 lysosomal density is not, so the loss of acidic signal reflects alkalinization rather than fewer lysosomes.",
+          "description": "LysoTracker signal is reduced in APOE4 cells while LAMP1 lysosomal density is not, so the loss of acidic signal reflects alkalinization rather than fewer lysosomes. Note: the published legend key is garbled (\"*p < .05, ****p < .01, *p < .0001\"); read as a typo for the standard key (* < 0.05, ** < 0.01, *** < 0.001, **** < 0.0001).",
           "quote": "We found that the LysoTracker intensity was significantly reduced in HsAPOE4-expressing cells (Figure 1A,B), suggesting either endolysosomal alkalinization or a reduction in endolysosomal density",
           "summary": "(APOE3 -> APOE4) -> (less LysoTracker signal, lysosomes less acidic)",
           "relevance": 0.65,
@@ -555,7 +555,7 @@
           "location": "Fig 1A-B",
           "effect_size": "~57%",
           "effect_size_prov": "estimated_from_figure",
-          "p_value": "<0.05",
+          "p_value": "<0.0001",
           "p_value_prov": "visual_only",
           "sample_size": "3",
           "sample_size_prov": "printed_in_text",
@@ -579,7 +579,7 @@
           "strength": "4 weak"
         },
         {
-          "description": "Causal test of the driver: knocking down TMED5 re-acidifies lysosomes in APOE4 cells without changing lysosomal density.",
+          "description": "Causal test of the driver: knocking down TMED5 re-acidifies lysosomes in APOE4 cells without changing lysosomal density. Note: the published legend key is garbled (\"*p < .05, ****p < .01, *p < .0001\"); read as a typo for the standard key (* < 0.05, ** < 0.01, *** < 0.001, **** < 0.0001).",
           "quote": "We confirmed by lysosomal Oregon-green pH measurements that knockdown of TMED5 significantly enhanced lysosomal acidification in HsAPOE4 Neuro-2a cells, while not impacting the lysosomal density (Figure 5C-E)",
           "summary": "(APOE4 + TMED5 knockdown) -> (lysosomal pH restored)",
           "relevance": 0.55,
@@ -587,7 +587,7 @@
           "location": "Fig 5C-E",
           "effect_size": "N/A",
           "effect_size_prov": "not_found_in_source",
-          "p_value": "<0.05",
+          "p_value": "<0.0001",
           "p_value_prov": "visual_only",
           "sample_size": "3",
           "sample_size_prov": "printed_in_text",
@@ -595,7 +595,7 @@
           "strength": "3 moderate"
         },
         {
-          "description": "Replication in human cells: APOE4 iPSC-derived neurons carry less lysosomal LGALS3BP and more lysosomal TMED5 than isogenic APOE3 neurons.",
+          "description": "Replication in human cells: APOE4 iPSC-derived neurons carry less lysosomal LGALS3BP and more lysosomal TMED5 than isogenic APOE3 neurons. Note: the published legend key is garbled (\"*p < .05, ****p < .01, *p < .0001\"); read as a typo for the standard key (* < 0.05, ** < 0.01, *** < 0.001, **** < 0.0001).",
           "quote": "we found that APOE4 iPSC-derived neurons harbored less lysosomal LGALS3BP and more lysosomal TMED5 compared to their APOE3 counterparts (Figure 6B,C)",
           "summary": "(APOE3 -> APOE4) -> (altered lysosomal protein composition in human neurons)",
           "relevance": 0.7,
@@ -603,7 +603,7 @@
           "location": "Fig 6B-C",
           "effect_size": "N/A",
           "effect_size_prov": "not_found_in_source",
-          "p_value": "<0.05",
+          "p_value": "<0.0001",
           "p_value_prov": "visual_only",
           "sample_size": "3",
           "sample_size_prov": "printed_in_text",
