@@ -644,7 +644,7 @@
           "effect_size_prov": "estimated_from_figure",
           "p_value": "<0.001",
           "p_value_prov": "visual_only",
-          "sample_size": "4",
+          "sample_size": "3",
           "sample_size_prov": "visual_only",
           "directness": 1,
           "strength": "2 strong"
@@ -692,8 +692,8 @@
           "effect_size_prov": "not_found_in_source",
           "p_value": "N/A",
           "p_value_prov": "not_found_in_source",
-          "sample_size": "2",
-          "sample_size_prov": "printed_in_text",
+          "sample_size": "2-6",
+          "sample_size_prov": "visual_only",
           "directness": 3,
           "strength": "4 weak"
         }
