@@ -148,12 +148,15 @@ d['design']=[['mbcd','chol','removes'],['statin','chol','lowers synthesis'],['lo
 
 
 json.dump(d,open(os.path.join(HERE,'kg_data.json'),'w'),ensure_ascii=False,indent=0)
-t=open(os.path.join(HERE,'kg_template.html')).read()
-s=json.dumps(d,ensure_ascii=False).replace('</','<\\/')
-t=t.replace('__DATA__',s).replace('__SHA__',SHA[:7]).replace('__TIME__',datetime.datetime.fromtimestamp(os.path.getmtime(XLSX),datetime.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')).replace('__NF__',str(len(d['findings'])))
-t=t.replace('<meta name="claude:viewport-fit-sides" content="cover">','')
-page='<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n'+t.replace('<style>','<style>\nimg{max-width:100%}[hidden]{display:none!important}\n',1)
-page=page.replace('\n<div class="band">','\n</head>\n<body>\n<div class="band">',1)+'\n</body>\n</html>\n'
-open(os.path.join(HERE,'..','index.html'),'w').write(page)
-open(os.path.join(HERE,'..','..','index.html'),'w').write(page)  # repo root, for the short Pages URL
+def render(tpl,outs):
+    t=open(os.path.join(HERE,tpl)).read()
+    s=json.dumps(d,ensure_ascii=False).replace('</','<\\/')
+    t=t.replace('__DATA__',s).replace('__SHA__',SHA[:7]).replace('__TIME__',datetime.datetime.fromtimestamp(os.path.getmtime(XLSX),datetime.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')).replace('__NF__',str(len(d['findings'])))
+    t=t.replace('<meta name="claude:viewport-fit-sides" content="cover">','')
+    page='<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n'+t.replace('<style>','<style>\nimg{max-width:100%}[hidden]{display:none!important}\n',1)
+    page=page.replace('\n<div class="band">','\n</head>\n<body>\n<div class="band">',1)+'\n</body>\n</html>\n'
+    for o in outs:
+        o=os.path.join(HERE,'..','..',o); os.makedirs(os.path.dirname(o),exist_ok=True); open(o,'w').write(page)
+render('kg_template.html',['docs/index.html','index.html'])  # repo root, for the short Pages URL
+if os.path.exists(os.path.join(HERE,'kg_template_v2.html')): render('kg_template_v2.html',['v2/index.html'])  # preview
 print('built',len(d['findings']),'findings')

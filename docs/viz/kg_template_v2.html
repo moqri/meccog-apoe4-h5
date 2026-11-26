@@ -1,0 +1,252 @@
+<title>APOE4 H5 Mechanism Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE work: evidence map for the MecCog H5 team
+   IDEA a MecCog mechanism schema: SSP rectangles joined by mechanism-module ovals, each opening into a branch tree like MecCog's home-page figures
+   PICTURE the SSP/MM chain across the top; a clicked step expands in place into its narrow branches, each with a support bar
+   COLOUR white ground, ink #121212, support = MecCog green, not-support = MecCog red, MecCog evidence green/orange/red/black
+   TYPE Source Serif 4 600 display + Inter
+   LAYOUT chain runs top to bottom at every width; the open step holds its branches and findings */
+:root{color-scheme:light dark;--bg:light-dark(#fff,#10191e);--ink:light-dark(#121212,#eef2f4);--mute:light-dark(#5b6670,#9aa8b2);--rule:light-dark(#d9e0e4,#2b3a42);--panel:light-dark(#f6f8f9,#152027);--g:light-dark(#2f9e44,#51cf66);--sup:var(--g);--con:var(--r);--o:light-dark(#e67700,#ffa94d);--r:light-dark(#e03131,#ff6b6b);--blk:light-dark(#121212,#eef2f4);--k:light-dark(#868e96,#909aa3);--chipT:light-dark(#fff,#0c1317)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif;margin:0;overflow-x:clip}
+.band{padding-block:clamp(20px,3vw,40px);padding-left:max(4vw,16px,env(safe-area-inset-left,0px));padding-right:max(4vw,16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1440px;margin:0 auto}
+.tab{width:42px;height:7px;background:var(--ink);margin-bottom:14px}
+h1{font:600 clamp(28px,3.4vw,42px)/1.08 "Source Serif 4",Georgia,serif;letter-spacing:-.02em;margin:0 0 10px;max-width:40ch}
+h2{font:600 20px/1.2 "Source Serif 4",Georgia,serif;margin:0 0 8px}
+.top{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:end}
+.lede{color:var(--mute);margin:0;max-width:74ch}
+a{color:inherit;text-decoration:underline}
+.tally{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
+.tally div{padding:10px 10px 4px 0;border-right:1px solid var(--rule)}.tally div:last-child{border:0}
+.tally strong{display:block;font:600 30px/1 "Source Serif 4",serif}
+.tally span{font-size:13px;color:var(--mute)}
+.tools{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin-top:22px;font-size:13px;color:var(--mute)}
+.tg{font:500 13px Inter,sans-serif;border:1px solid var(--rule);background:var(--bg);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer;min-height:32px}
+.tg:hover{border-color:var(--ink)}.tg[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.bar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:10px 0;border-block:1px solid var(--rule);margin-top:10px}
+.grp{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.grp>span,.grp>label{font-size:13px;color:var(--mute);margin-right:4px}
+select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--bg);color:var(--ink);border-radius:6px;padding:5px 8px;min-height:34px}
+.legend{display:inline-flex;flex-wrap:wrap;gap:4px 14px;align-items:center}
+.legend i{display:inline-block;width:22px;height:9px;vertical-align:middle;margin-right:5px;border-radius:2px}
+/* chain */
+.stages{display:flex;margin-top:18px;font-size:12px;font-weight:600;color:var(--mute);gap:0}
+.stages span{border-top:2px solid var(--rule);padding-top:4px;margin-right:8px}
+.chain{display:flex;align-items:stretch;margin-top:18px;padding:4px 2px 10px}
+.step{flex:1 1 0;min-width:0;overflow-wrap:break-word;border:3px solid var(--c,var(--k));border-radius:3px;background:var(--bg);display:flex;flex-direction:column}
+.hd{all:unset;box-sizing:border-box;flex:1 0 auto;display:flex;flex-direction:column;gap:3px;width:100%;padding:10px 12px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.step>.hd{align-items:center;justify-content:center;text-align:center}
+.step>.hd .ct{margin-top:0;padding-top:2px}
+.hd:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+.step.open{flex:5 1 0}
+.step.open .hd{flex:0 0 auto;background:color-mix(in srgb,var(--c) 9%,var(--bg))}
+.chain.has-open{align-items:flex-start}
+.chain.has-open .mm{align-self:flex-start;margin-top:64px}
+.chain.has-open .step:not(.open) .src{display:none}
+.chain.has-open .step:not(.open){flex:0 0 132px}.chain.has-open .step:not(.open) .t{font-size:13px}
+.chain.has-open .mm:not(.open){flex-basis:88px}.chain.has-open .mm.big:not(.open){flex-basis:124px}
+.in{padding:8px 12px 12px;text-align:left;font-size:13px}
+.in .nt{font-size:12.5px;color:var(--mute);margin:4px 0 10px;line-height:1.45}
+.in .nt:last-child{margin-bottom:0}
+.mm.open{flex-basis:260px}.mm.big.open{flex-basis:560px}
+.mm.open .ov{flex:1 1 auto;border-radius:18px}
+.mm.open .ov.unk .nt{color:inherit}
+.step.given{border-style:dashed}
+.step.narrow{flex:.6 1 0}
+.step:hover{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 25%,transparent)}
+.step .n{font-size:12px;font-weight:600;color:var(--mute)}
+.gr{font-weight:600;color:var(--c)}
+.step .t{font-weight:600;font-size:14px;line-height:1.25}
+.step .stg{font:700 11px/1.2 Inter,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--mute)}
+.step .wh{font-size:13px;line-height:1.3}
+.src{font-size:11.5px;font-style:italic;color:var(--mute)}
+.step .ct{font-size:12.5px;color:var(--mute);margin-top:auto;padding-top:4px}
+.step .ct b{color:var(--con);font-weight:500}
+.step .op{font-size:12px;color:var(--ink);font-weight:500}
+.mm{flex:0 0 88px;align-self:center;display:flex;align-items:center;margin:0 -2px}
+.mm::before,.mm::after{content:"";height:2px;background:var(--lc,var(--mute));flex:1 0 8px}
+.mm::after{flex-basis:10px;clip-path:polygon(0 -3px,100% 1px,0 5px);height:8px;background:var(--lc,var(--mute))}
+.ov{flex:0 1 auto;border:2px solid var(--c);border-radius:999px;font:500 11px/1.25 Inter,sans-serif;color:var(--ink);background:var(--bg)}
+.ov>.hd{display:block;text-align:center;padding:5px 6px}
+.ov.unk{background:var(--blk);color:var(--bg);border-color:var(--blk)}
+.mm.big{flex-basis:168px}
+.mm.big .ov{border-width:3px;font-size:12px;border-radius:28px;width:100%}
+.mm.big .ov>.hd{padding:10px 12px}
+.mm.big .ov b{display:block;font-size:13px}
+.mm.big.open .ov>.hd{background:color-mix(in srgb,var(--c) 9%,var(--bg));border-radius:26px 26px 0 0}
+/* branches and findings inside an open step */
+.tree{border:1px solid var(--rule);border-radius:10px;padding:14px 16px 10px;background:var(--bg)}
+.tree h3{margin:0;font:600 16px/1.3 "Source Serif 4",serif;display:flex;justify-content:space-between;gap:10px}
+.tree h3 button{font:500 12px Inter;border:0;background:none;color:var(--mute);cursor:pointer;padding:0}
+.tree .src{margin:2px 0 8px;display:block}
+.br{position:relative;padding-left:22px;margin-left:8px;border-left:2px solid var(--c)}
+.br:last-child{border-left-color:transparent}
+.br::before{content:"";position:absolute;left:-2px;top:0;width:18px;height:22px;border-left:2px solid var(--c);border-bottom:2px solid var(--c);border-bottom-left-radius:10px}
+.row{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;border-radius:6px;padding:8px 8px 10px;cursor:pointer}
+.row:hover,.row.on{background:var(--panel)}
+.row .t{font-weight:600;font-size:14px;display:block}
+.row .m{font-size:12.5px;color:var(--mute);display:block}
+.fl{margin:0 0 4px;border-top:1px solid var(--rule);padding-top:4px}
+.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin:4px 0 10px}
+.subs:last-child{margin-bottom:0}
+.sub.nx{position:relative}.sub.nx::after{content:"→";position:absolute;right:-5px;top:50%;transform:translate(50%,-50%);font:600 13px/1 Inter,sans-serif;color:var(--ink);background:var(--bg);border-radius:50%;z-index:1}
+.cl{font-size:12.5px;font-weight:600;margin-top:4px}.sc{display:flex;flex-wrap:wrap;gap:4px 10px;justify-content:center;font-size:12px;color:var(--mute)}
+.gt{font:600 11px/1.2 Inter,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);margin:10px 0 4px;text-align:left}
+.fb{font-size:12.5px;line-height:1.45;color:var(--mute);border:1px dashed var(--rule);border-radius:6px;padding:7px 9px;margin:0 0 10px;text-align:left}
+.step.side{margin-top:22px;border-style:dashed}
+.pv{display:inline-block;font:600 12px/1 Inter,sans-serif;border:1px solid var(--rule);border-radius:999px;padding:5px 10px;margin-bottom:12px;color:var(--mute)}
+.mm.big .ov .cl{display:block;font-weight:500;color:var(--mute)}
+.chain .mm.big{width:min(100%,640px)}.chain .mm.big.open{width:100%}
+.sub{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:3px;border:2px solid var(--bc);border-radius:3px;padding:9px 8px;cursor:pointer;background:var(--bg)}
+.sub:hover{box-shadow:0 0 0 3px color-mix(in srgb,var(--bc) 25%,transparent)}
+.sub.on{background:color-mix(in srgb,var(--bc) 12%,var(--bg));border-width:3px;padding:8px 7px}
+.sub:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sub{justify-content:flex-start}
+.sub .t{font-weight:600;font-size:13px;line-height:1.25;flex:1 0 auto;display:flex;align-items:center}
+.sub .seg{margin:4px 0 1px}
+.sub .m{font-size:12px;color:var(--mute)}
+.fl h4{margin:6px 0 2px;font:600 15px/1.3 "Source Serif 4",serif}
+
+.seg{display:flex;height:9px;border-radius:2px;overflow:hidden;margin:5px 0 3px;background:var(--rule)}
+.empty{border:1px dashed var(--rule);border-radius:10px;padding:18px;color:var(--mute);font-size:14px}
+.fl details{border-top:1px solid var(--rule);padding:8px 0}
+.fl summary{cursor:pointer;font-size:13.5px;list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:start}
+.fl summary::-webkit-details-marker{display:none}
+.fl .bd{font-size:13px;padding:6px 0 2px}
+.fl blockquote{margin:6px 0;padding:4px 0 4px 10px;border-left:3px solid var(--rule);font-family:"Source Serif 4",serif;font-size:14px}
+.fl dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:2px 10px;margin:6px 0}
+.fl dt{color:var(--mute)}.fl dd{margin:0;overflow-wrap:anywhere}
+.pill{display:inline-block;font:600 11.5px/1 Inter;color:var(--chipT);padding:4px 6px;border-radius:4px;white-space:nowrap}
+footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-top:28px;padding-top:12px}
+@media(max-width:860px){.top{grid-template-columns:minmax(0,1fr)}}
+@media all{.chain{flex-direction:column;overflow:visible;max-width:820px;margin-inline:auto}.mm,.mm.big{flex:none;flex-direction:column;align-self:center;margin:-2px 0;width:auto}.mm::before,.mm::after{width:2px;height:10px;flex:none}.mm::after{width:8px;height:8px;clip-path:polygon(0 0,100% 0,50% 100%)}.step{min-width:0}.chain.has-open{align-items:stretch}.chain.has-open .mm{margin:-2px 0;align-self:center}.chain.has-open .step:not(.open),.chain.has-open .mm:not(.open),.chain.has-open .mm.big:not(.open){flex:none}.mm.open,.mm.big.open{width:100%}.step,.step.open,.step.narrow,.mm.open,.mm.big.open{flex:none}}
+</style>
+
+<div class="band"><div class="wrap">
+  <div class="top">
+    <div>
+      <div class="tab"></div>
+      <div class="pv">Preview of a restructured version · <a href="../">current version</a></div>
+      <h1 id="hl">H5. In human brain cells, APOE4 disrupts lipid metabolism, which impairs the lysosome.</h1>
+      <p class="lede" id="sum" style="color:var(--ink);font-weight:500;margin-bottom:8px"></p>
+      <p class="lede">The graph follows H5 from lipid to lysosome and stops where H5 stops. Boxes are steps and the large oval is the causal link between them. Small boxes joined by arrows are a sequence; the others are parallel, and one or more may hold. Click a small box to read its findings, or a step for its notes.</p>
+    </div>
+  </div>
+
+  <div class="tools">
+    <span class="legend"><span>Counts by cell type sit under each step</span><span><i style="background:var(--sup)"></i>supports H5</span><span><i style="background:var(--con)"></i>does not</span><span>Border: <b style="color:var(--g)">well</b>, <b style="color:var(--o)">partly</b>, <b style="color:var(--r)">weakly</b> supported, <b>black</b> = nobody has explained this step; dashed = established in earlier work, or a route outside H5</span></span>
+  </div>
+  <div class="bar" id="bar" role="group" aria-label="Filters">
+    <div class="grp" id="fV"><span>Verdict</span></div>
+    <div class="grp" id="fK"><span>Directness</span></div>
+    <div class="grp" id="fC"><span>Cells</span></div>
+    <div class="grp"><label for="fP">Paper</label><select id="fP"><option value="">All 13 papers</option></select></div>
+    <button class="tg" id="rst">Reset</button>
+  </div>
+
+  <div class="chain" id="chain"></div>
+
+  <footer>Preview. Built from h5_submission.xlsx at method commit __SHA__ (sheet saved __TIME__), __NF__ findings from 13 papers; every finding sits in exactly one small box. Claim a counts steps 1 and 2, claim b counts step 3, and claim c counts only the findings that change a lipid and then measure the lysosome (directness class 2). The one such finding with no lipid change, TMED5 knockdown, is on the side route. Ratings follow a rule, not expert judgement: green when at least 75% of the findings support H5 and one of them is class 1 or 2, orange from 50%, red below; “indirect evidence only” means mostly supportive with no class 1 or 2 finding; “one finding only” marks a single finding. * Cell lines include mouse and non-brain lines, which fall outside H5’s scope of human brain cells. H5 does not go beyond lysosome function, so plaque and Alzheimer’s risk are left out here; the <a href="../">current version</a> shows them.</footer>
+</div></div>
+
+<script>
+{
+const D=__DATA__;
+const MECH='https://meccog-meccog-challenge.static.hf.space/mechanism.html',HYP='https://meccog-meccog-challenge.static.hf.space/hypotheses.html',HOME='https://meccog-meccog-challenge.static.hf.space/';
+const BR={
+ L4:{t:'Less lipid export',c:['efflux']},
+ L1:{t:'Cell cholesterol changed (mostly higher)',c:['chol']},
+ L3:{t:'More lipid droplets and triacylglycerol',c:['ld','tag']},
+ L2:{t:'Cholesterol in late endosomes/lysosomes',c:['lyschol']},
+ L5:{t:'Peroxidisable lipid cargo (PUFA cholesteryl ester)',c:[]},
+ M1:{t:'Remove the lipid: the lysosome recovers',c:[]},
+ M2:{t:'Add the lipid: the lysosome fails',c:[]},
+ M3:{t:'Block lysosomal lipid export: APOE4 copes worse',c:[]},
+ M4:{t:'Removing TMED5 restores lysosomal acidity',c:[]},
+ Y2:{t:'Less acidic',c:['ph']},
+ Y1:{t:'Less degradation',c:['degr','cath']},
+ Y7:{t:'Undegraded contents (lipofuscin, tau)',c:[]},
+ Y5:{t:'Leaky membrane',c:['lmp']},
+ Y3:{t:'Enlarged lysosomes',c:['size']},
+ Y4:{t:'Fewer lysosomal proteins and genes',c:['lamp','lgenes']},
+ Y6:{t:'Changed protein make-up',c:['lprot']},
+ A1:{t:'Slower autophagy',c:['auto']},
+ A2m:{t:'Stalled mitophagy',c:[]},
+ A2l:{t:'Stalled lipophagy',c:[]},
+ N1:{t:'Neurite damage under lipid load',c:[]}};
+// chain items: steps (SSP) and mechanism modules (MM) in MecCog order
+const CH=[
+ {id:'s1',k:'ssp',ssp:'SSP1–2',stage:'DNA → protein',stg:'DNA → Protein',refs:[['Weisgraber 1981','10.1016/s0021-9258(19)52510-8','found the cysteine-to-arginine change at position 112 that defines apoE4']],kind:'SNV → missense variant',what:'rs429358-C → apoE C112R',gc:'--g',narrow:1,t:'APOE4: rs429358-C gives apoE C112R',src:'MecCog',u:MECH,given:'well supported',note:'Two MecCog steps in one box. SSP1 (DNA): “Single base change: rs429358-C, in the APOE gene”. Protein synthesis, then SSP2 (protein): “apoE C112R missense variant”. Both copied from MecCog’s mechanism example, with MecCog’s rating. No H5 finding tests them; the challenge rules count comparing APOE4 with APOE3 as a perturbation of SSP2, so every H5 finding starts here.'},
+ {id:'m2',k:'mm',t:'Mechanism unknown',src:'MecCog',u:MECH,unk:1,note:'How apoE4 changes lipid handling is not shown by any finding here, so the oval is black, MecCog’s mark for “nobody has explained this step”.'},
+ {id:'s3',k:'ssp',stg:'Step 1 · Cell',kind:'Cell lipid state',what:'less export, then more free cholesterol, then more storage in droplets',claim:'Claim a: APOE4 changes lipid handling',groups:[{ord:1,ar:['L4','L1'],br:['L4','L1','L3']}],note:'The first half of H5 (“APOE4 disruption of lipid metabolism”). The three boxes are drawn as a sequence because less export would raise cell cholesterol and the excess is stored in droplets; the papers measure each separately and none tests the order. Findings compare APOE4 with APOE3 and measure a lipid.'},
+ {id:'m6',k:'mm',t:'Lipid reaches the lysosome',src:'our addition'},
+ {id:'sL',k:'ssp',stg:'Step 2 · Late endosome / lysosome',kind:'Lipid load inside the lysosome',what:'the point where the lipid change meets the lysosome',claim:'Claim a, continued: the lipid builds up inside the lysosome',fb:'Feedback (TCW 2022): the paper argues that cholesterol trapped here drives the cell-level changes of step 1, such as more cholesterol synthesis. That runs lysosome to lipid, the reverse of H5. No findings are counted on this arrow.',groups:[{br:['L2','L5']}],note:'Not named in H5, but both routes to the lysosome defect pass through it: cholesterol held in late endosomes and lysosomes, and peroxidisable lipid cargo delivered by ApoE particles (Guo 2024).'},
+ {id:'mm',k:'mm',big:1,t:'Claim c: the lipid causes the lysosome defect',claim:'The “results in” of H5',groups:[{br:['M1','M2','M3']}],src:'H5 statement',u:HYP,note:'The causal claim inside H5. Only experiments that change a lipid and then measure the lysosome test it (directness class 2). Removing the lipid tests whether it is needed; adding it tests whether it is enough.'},
+ {id:'s4',k:'ssp',stg:'Step 3 · Late endosome / lysosome',kind:'Impaired lysosome function',what:'where H5 ends',claim:'Claim b: APOE4 impairs lysosome function',groups:[{t:'Function, the subject of H5',short:'function',ord:1,ar:['Y2','Y1'],br:['Y2','Y1','Y7','Y5']},{t:'Indirect signs of lysosome function',short:'indirect signs',br:['Y3','Y4','Y6','A1','A2m','A2l','N1']}],src:'H5 statement',u:HYP,note:'The second half of H5. Function is what H5 names: acidity, degradation, what is left undegraded, and membrane integrity; the arrows mark the order in which one would cause the next. The indirect signs (size, protein levels, autophagy and what follows from it) are consistent with impaired function but do not measure it.'},
+ {id:'sx',k:'ssp',side:1,stg:'Side route',kind:'apoE4 reaches the lysosome without lipid',what:'a competing explanation for the same defect',claim:'Not part of H5',groups:[{br:['M4']}],note:'Results that tie apoE4 to the lysosome defect without a measured lipid change. Krogsaeter 2025: the protein TMED5 builds up in APOE4 lysosomes and removing it restores acidity; that paper has no APOE4-versus-APOE3 lipid measurement. Fote 2022 and Guo 2024 also show apoE4 protein itself collecting in lysosomes. If this route explains the defect, claim c is not needed.'}];
+CH.forEach(s=>{if(s.groups)s.br=s.groups.flatMap(g=>g.br)});
+const CI=Object.fromEntries(CH.map(s=>[s.id,s]));
+const brOf=Object.fromEntries(CH.flatMap(s=>(s.br||[]).map(b=>[b,s.id])));
+const CELLS={astro:'Astrocytes',microglia:'Microglia',neurons:'Neurons',mixed:'Neuron-glia cultures',lines:'Cell lines'};
+const P=Object.fromEntries(D.papers.map(p=>[p.id,p]));
+const F=D.findings;
+// hand placements where the first readout tag would put a finding in the wrong branch
+const OV={'P6.F6':'Y4','P6.F5':'Y4','P2.F9':'Y1','P10.F1':'M3','P10.F4':'M3','P5.F5':'M4','P8.F3':'Y7','P8.F5':'Y7','P10.F2':'N1','P1.F12':'A2m','P7.F2':'A2l','P7.F3':'A2l','P8.F6':'L5'};
+F.forEach(f=>{if(OV[f.id]){f.br=OV[f.id];return}if(f.cls===2){f.br=f.edges.some(e=>e.e==='rescue')?'M1':'M2';return}const c=f.edges[0].t;f.br=Object.keys(BR).find(k=>BR[k].c.includes(c))});
+const bad=F.filter(f=>!f.br);if(bad.length)console.warn('unplaced',bad.map(f=>f.id));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=id=>document.getElementById(id);
+const st={v:'all',k:new Set(),c:new Set(),p:'',open:null,sel:null};
+const pass=f=>(st.v==='all'||(st.v==='con')===f.con)&&(!st.k.size||st.k.has(String(f.cls)))&&(!st.c.size||st.c.has(f.cell))&&(!st.p||f.p===st.p);
+const grade=fs=>{if(!fs.length)return['--k','no findings'];if(fs.length===1)return fs[0].con?['--r','one finding only']:['--o','one finding only'];const s=fs.filter(f=>!f.con).length/fs.length,d=fs.some(f=>!f.con&&f.cls<=2);return s>=.75&&d?['--g','well supported']:s>=.75?['--o','indirect evidence only']:s>=.5?['--o','partly supported']:['--r','weakly supported']};
+const inBr=(fs,b)=>fs.filter(f=>f.br===b);
+const inStep=(fs,s)=>fs.filter(f=>(CI[s].br||[]).includes(f.br));
+{const t=(fs)=>`${fs.filter(f=>!f.con).length} of ${fs.length}`,g=(s,i)=>F.filter(f=>CI[s].groups[i].br.includes(f.br));
+ $('sum').innerHTML=`H5 makes three claims, and each has its own evidence:<br>a. APOE4 changes lipid handling: ${t([...inStep(F,'s3'),...inStep(F,'sL')])} findings support.<br>b. APOE4 impairs lysosome function: ${t(g('s4',0))} findings on function support, and ${t(g('s4',1))} on indirect signs.<br>c. The lipid causes the defect: ${t(inStep(F,'mm'))} direct tests support.`;}
+const tog=(host,items,key,multi)=>$(host).insertAdjacentHTML('beforeend',items.map(([v,l])=>`<button class="tg" data-g="${key}" data-v="${v}" aria-pressed="${!multi&&v==='all'}">${esc(l)}</button>`).join(''));
+tog('fV',[['all','All'],['sup','Supports'],['con','Does not']],'v',false);
+tog('fK',[1,2,3,4].map(k=>[k,'Class '+k]),'k',true);
+tog('fC',Object.entries(CELLS),'c',true);
+$('fP').insertAdjacentHTML('beforeend',D.papers.map(p=>`<option value="${p.id}">${p.id} ${esc(p.short)}</option>`).join(''));
+const cnt=fs=>{const n=fs.filter(f=>f.con).length;return`${fs.length} finding${fs.length===1?'':'s'}${n?` · <b>${n} do not support</b>`:''}`};
+const body=s=>`<span class="stg">${esc(s.stg)}</span><span class="t">${esc(s.kind)}</span><span class="wh">${esc(s.what)}</span>`;
+const tally=fs=>`${fs.filter(f=>!f.con).length} of ${fs.length} support`;
+const claimLine=(s,fs)=>{if(!s.claim)return'';const gs=s.groups.map(g=>{const gf=fs.filter(f=>g.br.includes(f.br));return(g.short?g.short+': ':'')+tally(gf)}).join(' · ');const sf=inStep(fs,s.id);
+ const sc=Object.entries(CELLS).map(([k,l])=>{const cf=sf.filter(f=>f.cell===k);return cf.length?`<span>${l}${k==='lines'?'*':''} ${cf.filter(f=>!f.con).length}/${cf.length}</span>`:''}).join('');
+ return`<span class="cl">${esc(s.claim)} · ${gs}</span><span class="sc">${sc}</span>`};
+const srcTag=s=>s.src==='our addition'?'our addition':'from '+s.src;
+const render=()=>{
+ const fs=F.filter(pass);
+ const ch=$('chain');ch.className='chain'+(st.open?' has-open':'');
+ ch.innerHTML=CH.map(s=>{const o=st.open===s.id,ins=o||s.br?inner(s,fs,o):'';
+  if(s.k==='mm'){if(s.big){const sf=inStep(fs,s.id),[c,lab]=grade(sf);return`<div class="mm big${o?' open':''}" style="--lc:var(${c})"><div class="ov" style="--c:var(${c})"><button class="hd" data-s="mm" aria-expanded="${o}"><b>${esc(s.t)}</b>${claimLine(s,fs)}</button>${ins}</div></div>`}
+   const lc=s.unk?'--blk':s.rate||'--mute';return`<div class="mm${o?' open':''}" style="--lc:var(${lc})"><div class="ov${s.unk?' unk':''}" style="--c:var(${s.unk?'--blk':s.rate||'--rule'})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${esc(s.t)}</button>${ins}</div></div>`}
+  if(s.given)return`<div class="step given${s.narrow?' narrow':''}${o?' open':''}" style="--c:var(${s.gc||'--g'})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${body(s)}<span class="ct">${s.gc==='--o'?'partly established':'established'} (${s.refs.map(r=>r[0]).join('; ')})</span></button>${ins}</div>`;
+  const sf=inStep(fs,s.id),[c,lab]=grade(sf);
+  return`<div class="step${o?' open':''}${s.side?' side':''}" style="--c:var(${s.side?'--k':c})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${body(s)}${claimLine(s,fs)}</button>${ins}</div>`}).join('');
+};
+const maxN=Math.max(...Object.keys(BR).map(b=>F.filter(f=>f.br===b).length));
+const rank=bf=>{if(!bf.length)return -1;const l=grade(bf)[1],sp=bf.filter(f=>!f.con).length;return({'well supported':3,'indirect evidence only':2,'partly supported':1,'one finding only':.5}[l]||0)*1e4+sp/bf.length*100+bf.length/100};
+const sub=(b,fs,ar)=>{const bf=inBr(fs,b),n=bf.length,sp=bf.filter(f=>!f.con).length,[bc,bl]=grade(bf),on=st.sel===b;
+ return`<button class="sub${on?' on':''}${ar?' nx':''}" data-b="${b}" aria-expanded="${on}" style="--bc:var(${bc})"><span class="t">${esc(BR[b].t)}</span>${n?`<span class="seg" style="width:${Math.round(Math.max(.25,n/maxN)*100)}%"><i style="flex:${sp};background:var(--sup)"></i><i style="flex:${n-sp};background:var(--con)"></i></span><span class="m">${sp} of ${n} support</span><span class="m" style="color:var(${bc});font-weight:600">${bl}</span>`:'<span class="m">no findings under these filters</span>'}</button>`};
+const inner=(s,fs,o)=>{const note=s.note||(s.src==='MecCog'?'Activity copied from MecCog’s mechanism example.':'Our label for the activity between these steps; no findings are placed on it.');
+ const sel=(s.br||[]).find(x=>x===st.sel),bf=sel?inBr(fs,sel):[];
+ return`<div class="in">${o?`<p class="nt">${esc(note)}${s.u?` <a href="${s.u}">Source</a>.`:''}</p>`:''}${o&&s.refs?`<p class="nt">Established by: ${s.refs.map(r=>`<a href="https://doi.org/${r[1]}">${r[0]}</a>, which ${esc(r[2])}`).join('; ')}. Rating from Moult and Darden 2023, Figure 1.</p>`:''}${s.fb?`<p class="fb">↺ ${esc(s.fb)}</p>`:''}${(s.groups||[]).map(g=>`${g.t?`<p class="gt">${esc(g.t)}</p>`:''}<div class="subs">${(g.ord?g.br:[...g.br].sort((x,y)=>rank(inBr(fs,y))-rank(inBr(fs,x)))).map(b=>sub(b,fs,g.ar&&g.ar.includes(b))).join('')}</div>`).join('')}${sel?`<div class="fl"><h4>${esc(BR[sel].t)}</h4>${bf.map(f=>fItem(f,bf.length===1)).join('')}</div>`:''}</div>`};
+const row=(l,v,p)=>v==null||v===''?'':`<dt>${l}</dt><dd>${esc(v)}${p?` <span style="color:var(--mute)">(${esc(String(p).replace(/_/g,' '))})</span>`:''}</dd>`;
+const fItem=(f,open)=>{const p=P[f.p];return`<details${open?' open':''}><summary><span class="pill" style="background:var(${f.con?'--con':'--sup'})">${f.id}</span><span>${esc(f.sum.replace(/^CONTRADICTS[^:]*:\s*/,''))} <span style="color:var(--mute)">· class ${f.cls}</span></span></summary><div class="bd"><p style="margin:2px 0">${esc(f.desc)}</p><blockquote>“${esc(f.quote)}”</blockquote><dl>${row('Verdict',f.con?'Does not support H5':'Supports H5')}${row('Paper',p.short+', '+p.journal)}${row('System',f.sys)}${row('Data',f.loc)}${row('Effect',f.es,f.esp)}${row('P',f.pv,f.pvp)}${row('n',f.n,f.np)}${row('Directness','class '+f.cls+', strength '+f.str)}</dl><a href="https://doi.org/${esc(p.doi)}">doi ${esc(p.doi)}</a></div></details>`};
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-g],[data-s],[data-b]');if(!t)return;
+ if(t.dataset.g){const g=t.dataset.g,v=t.dataset.v;if(g==='v'){st.v=v;document.querySelectorAll('[data-g=v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v))}else{const s=st[g];s.has(v)?s.delete(v):s.add(v);t.setAttribute('aria-pressed',s.has(v))}render();return}
+ if(t.dataset.s){const id=t.dataset.s;st.open=st.open===id?null:id;render();return}
+ if(t.dataset.b){st.sel=st.sel===t.dataset.b?null:t.dataset.b;render()}
+});
+$('fP').onchange=e=>{st.p=e.target.value;render()};
+$('rst').onclick=()=>{st.v='all';st.k.clear();st.c.clear();st.p='';$('fP').value='';document.querySelectorAll('[data-g]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g==='v'&&b.dataset.v==='all'));render()};
+render();
+}
+</script>
