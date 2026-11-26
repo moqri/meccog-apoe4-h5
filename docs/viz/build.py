@@ -158,5 +158,5 @@ def render(tpl,outs):
     for o in outs:
         o=os.path.join(HERE,'..','..',o); os.makedirs(os.path.dirname(o),exist_ok=True); open(o,'w').write(page)
 render('kg_template.html',['docs/index.html','index.html'])  # repo root, for the short Pages URL
-if os.path.exists(os.path.join(HERE,'kg_template_v2.html')): render('kg_template_v2.html',['v2/index.html'])  # preview
+if os.path.exists(os.path.join(HERE,'kg_template_v2.html')): render('kg_template_v2.html',['v2/index.html','docs/v2/index.html'])  # preview
 print('built',len(d['findings']),'findings')
