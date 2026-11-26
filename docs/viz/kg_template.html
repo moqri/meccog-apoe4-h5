@@ -35,14 +35,12 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .key svg{vertical-align:middle;margin-right:5px}
 .main{margin-top:16px}.below{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;margin-top:22px;align-items:start}
 .gw{overflow-x:auto;border:1px solid var(--rule);border-radius:12px;background:var(--bg)}
-.fig{position:relative;min-width:1080px;height:760px}
+.fig{position:relative;min-width:720px;height:520px}
 .mode{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:20px;font-size:13px;color:var(--mute)}
 .mode a{color:var(--sup)}
-.simple .full{display:none}
-.simple .fig{min-width:0;height:clamp(460px,62vw,560px)}
-.simple .below{grid-template-columns:minmax(0,1fr)}
-.simple .det{max-width:820px}
-body:not(.simple) #modeNote{display:none}
+.keyline{display:inline-flex;align-items:center;gap:6px}
+.rank summary{cursor:pointer}
+.fig{transition:none}
 .fig>svg{position:absolute;inset:0;width:100%;height:100%}
 svg text{paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round}
 .hit{cursor:pointer}
@@ -78,26 +76,24 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
     <div>
       <div class="tab"></div>
       <h1 id="hl">APOE4 and the H5 mechanism</h1>
-      <p class="lede">Each line links APOE4 to something the H5 findings measured. Thicker lines have more findings. Blue findings support H5, red ones do not. Click a line or a dot to read the findings.</p>
+      <p class="lede">APOE4 is linked to the four H5 steps that the findings test, drawn as steps (SSPs) in <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog's format</a>. Click a step to open it into the things measured. Click a line or a dot to read its findings.</p>
     </div>
     <div class="tally" id="tally"></div>
   </div>
 
-  <div class="mode"><button class="tg" id="mode" aria-pressed="false">Show full graph</button><span id="modeNote">Showing the six most-studied links. The full graph has all 79 findings, the H5 steps in <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog's format</a>, lipid treatments and filters.</span></div>
-  <div class="bar full" role="group" aria-label="Filters">
+  <div class="mode">
+    <button class="tg" id="openAll">Open all steps</button>
+    <button class="tg" id="closeAll">Close all</button>
+    <button class="tg" id="ivT" aria-pressed="false">Show lipid treatments</button>
+    <button class="tg" id="fT" aria-pressed="false">Filters</button>
+    <span class="keyline"><svg width="34" height="12"><rect x="0" y="1" width="34" height="5" fill="var(--sup)"/><rect x="0" y="7" width="34" height="3" fill="var(--con)"/></svg>thicker = more findings; blue supports H5, red does not; dashed = indirect evidence only</span>
+  </div>
+  <div class="bar" id="bar" hidden role="group" aria-label="Filters">
     <div class="grp" id="fV"><span>Verdict</span></div>
     <div class="grp" id="fK"><span>Directness</span></div>
     <div class="grp" id="fC"><span>Cells</span></div>
     <div class="grp"><label for="fP">Paper</label><select id="fP"><option value="">All 13 papers</option></select></div>
     <button class="tg" id="rst">Reset</button>
-  </div>
-  <div class="key full">
-    <span><svg width="44" height="14"><rect x="0" y="1" width="44" height="5" fill="var(--sup)"/><rect x="0" y="7" width="44" height="3" fill="var(--con)"/></svg>Link: blue width = supporting findings, red width = contradicting</span>
-    <span><svg width="44" height="10"><line x1="0" y1="5" x2="44" y2="5" stroke="var(--mute)" stroke-width="3"/></svg>solid: has a class 1 or 2 finding</span>
-    <span><svg width="44" height="10"><line x1="0" y1="5" x2="44" y2="5" stroke="var(--mute)" stroke-width="3" stroke-dasharray="6 4"/></svg>dashed: class 3 or 4 only</span>
-    <span><svg width="44" height="10"><line x1="0" y1="5" x2="44" y2="5" stroke="var(--iv)" stroke-width="1.5" stroke-dasharray="1 4" stroke-linecap="round"/></svg>what an intervention does by design</span>
-    <span>↑ more ↓ less ∅ no change ⟲ rescues ≈ mixed</span>
-    <span>Step colour, as in MecCog: <b style="color:var(--g)">well</b>, <b style="color:var(--o)">partly</b>, <b style="color:var(--r)">weakly</b> supported, <b>black</b> no findings</span>
   </div>
 
   <div class="main">
@@ -105,9 +101,10 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
   </div>
   <div class="below">
   <aside class="det" id="det" aria-live="polite"></aside>
-  <section class="rank full" style="margin-top:0">
-    <h2>Links ranked by evidence</h2>
-    <div class="scroll"><table class="stack"><thead><tr><th>Link</th><th>Effect</th><th>For / against</th><th style="min-width:160px">Balance</th><th>Best class</th><th>Papers</th></tr></thead><tbody id="tb"></tbody></table></div>
+  <section class="rank" style="margin-top:0">
+    <details><summary><h2 style="display:inline">All links ranked by evidence</h2></summary>
+    <div class="scroll"><table class="stack"><thead><tr><th>Link</th><th>Effect</th><th>Support / not</th><th style="min-width:160px">Balance</th><th>Best class</th><th>Papers</th></tr></thead><tbody id="tb"></tbody></table></div>
+    </details>
   </section>
   </div>
   <footer>Built from h5_submission.xlsx at method commit __SHA__ (sheet saved __TIME__), __NF__ findings from 13 papers. MecCog has not published a schema for H5; the six steps here are a draft written for this view in MecCog's form (after the <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">mechanism example</a> and the <a href="https://meccog-meccog-challenge.static.hf.space/hypotheses.html">H5 statement</a>). Concepts and link directions were read from each finding's summary for this view; verdict, directness class and strength are as submitted. Step colours use a rule, not expert judgement: green when at least 75% of a step's findings support it and one is class 1 or 2, orange from 50%, red below.</footer>
@@ -139,7 +136,7 @@ const P=Object.fromEntries(D.papers.map(p=>[p.id,p]));
 const F=D.findings;
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const $=id=>document.getElementById(id);
-const st={v:'all',k:new Set(),c:new Set(),p:'',sel:null,simple:true};document.body.classList.add('simple');
+const st={v:'all',k:new Set(),c:new Set(),p:'',sel:null};
 const pass=f=>(st.v==='all'||(st.v==='con')===f.con)&&(!st.k.size||st.k.has(String(f.cls)))&&(!st.c.size||st.c.has(f.cell))&&(!st.p||f.p===st.p);
 const links=fs=>{const m={};fs.forEach(f=>f.edges.forEach(e=>{const k=e.s+'>'+e.t;(m[k]??={k,s:e.s,t:e.t,f:[],eff:{}}).f.push(f);m[k].eff[e.e]=(m[k].eff[e.e]||0)+1}));
  return Object.values(m).map(l=>{l.sup=l.f.filter(f=>!f.con).length;l.con=l.f.length-l.sup;l.best=Math.min(...l.f.map(f=>f.cls));const ef=Object.entries(l.eff).sort((a,b)=>b[1]-a[1]);l.g=ef.length>1&&ef[0][1]===ef[1][1]?'≈':GLY[ef[0][0]];l.papers=[...new Set(l.f.map(f=>f.p))];return l})};
@@ -155,90 +152,84 @@ tog('fK',[1,2,3,4].map(k=>[k,'Class '+k]),'k',true);
 tog('fC',Object.entries(CELLS),'c',true);
 $('fP').insertAdjacentHTML('beforeend',D.papers.map(p=>`<option value="${p.id}">${p.id} ${esc(p.short)}</option>`).join(''));
 const sv=$('sv'),fig=$('fig');let POS={},cur=[];
-const nodeCount=(id,L)=>L.filter(l=>l.s===id||l.t===id).reduce((a,l)=>a+l.f.length,0);
-const SIMPLE=[['chol','up','More cellular cholesterol','s3'],['lyschol','up','More cholesterol inside lysosomes','s3'],['ld','up','More lipid droplets','s3'],['degr','down','Less lysosomal degradation','s5'],['size','up','Larger lysosomes','s5'],['auto','down','Slower autophagy','s5']];
-const drawSimple=()=>{
- const W=fig.clientWidth,H=fig.clientHeight,fs=F.filter(pass),L=links(fs).filter(l=>l.s==='APOE4'&&SIMPLE.some(s=>s[0]===l.t));cur=L;
- const narrow=W<640,x0=narrow?44:Math.max(90,W*.13),x1=narrow?W*.36:W*.5,top=54,gap=28,rowH=(H-top-20-gap)/6;
- POS={APOE4:{x:x0,y:H/2}};SIMPLE.forEach((s,i)=>POS[s[0]]={x:x1,y:top+rowH*(i+.5)+(i>2?gap:0)});
- let h=`<text x="${x1}" y="${top-14}" font-size="13" font-weight="600" fill="var(--s3)">Lipids</text><text x="${x1}" y="${top+rowH*3+gap-14}" font-size="13" font-weight="600" fill="var(--s5)">Lysosome</text>`;
- const U=narrow?3.4:5;
- L.forEach(l=>{const p=POS[l.s],q=POS[l.t],ws=l.sup*U,wc=l.con*U,tot=ws+wc,dx=(q.x-p.x)*.55,path=o=>`M${p.x} ${p.y+o}C${p.x+dx} ${p.y+o},${q.x-dx} ${q.y+o},${q.x-12} ${q.y+o}`;
-  h+=`<g class="hit ln" data-l="${l.k}">`;if(ws)h+=`<path d="${path(-tot/2+ws/2)}" fill="none" stroke="var(--sup)" stroke-opacity=".8" stroke-width="${ws}"/>`;if(wc)h+=`<path d="${path(tot/2-wc/2)}" fill="none" stroke="var(--con)" stroke-opacity=".85" stroke-width="${wc}"/>`;
-  h+=`<path d="${path(0)}" fill="none" stroke="transparent" stroke-width="${Math.max(14,tot+8)}"><title>${esc(NI[l.t].l+': '+l.sup+' support H5, '+l.con+' do not')}</title></path></g>`});
- h+=`<g class="hit nd" data-n="APOE4"><circle cx="${x0}" cy="${H/2}" r="${narrow?24:30}" fill="var(--s2)"/><text x="${x0}" y="${H/2+5}" text-anchor="middle" font-size="15" font-weight="600" fill="var(--chipT)" style="stroke:none">E4</text><text x="${x0}" y="${H/2+(narrow?44:52)}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">APOE4</text><text x="${x0}" y="${H/2+(narrow?60:68)}" text-anchor="middle" font-size="12" fill="var(--mute)">vs APOE3</text></g>`;
- SIMPLE.forEach(([id,eff,phrase,stp])=>{const p=POS[id],l=L.find(x=>x.t===id);if(!l)return;const n=l.eff[eff]||0;
-  const words=phrase.split(' '),lines=[];let ln='';const maxc=Math.max(12,Math.floor((W-p.x-30)/8.2));words.forEach(w=>{if((ln+' '+w).trim().length>maxc&&ln){lines.push(ln);ln=w}else ln=(ln+' '+w).trim()});lines.push(ln);
-  h+=`<g class="hit nd" data-n="${id}"><circle cx="${p.x}" cy="${p.y}" r="10" fill="var(${SI[stp].col})"/>`;
-  lines.forEach((s,k)=>h+=`<text x="${p.x+18}" y="${p.y-4+k*18-(lines.length-1)*9}" font-size="${narrow?14:16}" font-weight="600" fill="var(--ink)">${esc(s)}</text>`);
-  h+=`<text x="${p.x+18}" y="${p.y+14+(lines.length-1)*9}" font-size="13" fill="var(--mute)">${n} of ${l.f.length} findings${l.con?` · <tspan fill="var(--con)">${l.con} do not support H5</tspan>`:''}</text></g>`});
- sv.innerHTML=h;highlight();
-};
-const draw=()=>{if(st.simple)return drawSimple();
- const W=fig.clientWidth,H=fig.clientHeight,fs=F.filter(pass),L=links(fs);cur=L;
- const top=160,bot=H-110,colW=(W-150)/6,cx=i=>colW*(i+.5);
- POS={};
- STEPS.forEach((s,i)=>{const ns=N.filter(n=>n.st===s.id);ns.forEach((n,j)=>POS[n.id]={x:cx(i),y:ns.length===1?(top+bot)/2:top+18+(bot-top-36)*j/(ns.length-1)})});
- const iv=N.filter(n=>n.st==='iv');iv.forEach((n,j)=>POS[n.id]={x:cx(1)+(cx(5)-cx(1))*j/(iv.length-1),y:H-40});
- let h='<defs><marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--mute)"/></marker></defs>';
- // MecCog chain
- STEPS.forEach((s,i)=>{const sf=s.id==='s1'?null:s.id==='s2'?fs:stepF(fs,s.id);const [c,lab]=s.id==='s1'?['--g','not tested here']:s.id==='s2'?['--g','every finding']:grade(sf);const x=cx(i)-colW/2+8,w=colW-16;
-  h+=`<g class="hit" data-step="${s.id}"><rect x="${x}" y="8" width="${w}" height="104" rx="3" fill="var(--bg)" stroke="var(${c})" stroke-width="3"/><text x="${x+10}" y="27" font-size="12" font-weight="600" fill="var(--mute)">${s.ssp}${sf?` · ${sf.length} findings`:''}</text><text x="${x+10}" y="43" font-size="12" font-weight="600" fill="var(${c})">${lab}</text>`;
-  const words=s.t.split(' ');let line='',ls=[];words.forEach(wd=>{if((line+' '+wd).trim().length*7.4>w-18){ls.push(line);line=wd}else line=(line+' '+wd).trim()});ls.push(line);
-  ls.slice(0,3).forEach((t,k)=>h+=`<text x="${x+10}" y="${63+k*16}" font-size="13.5" font-weight="600" fill="var(--ink)">${esc(t)}</text>`);h+='</g>';
-  if(s.mm&&i<5){h+=`<ellipse cx="${(cx(i)+cx(i+1))/2}" cy="130" rx="${Math.min(70,colW*.42)}" ry="11" fill="var(--panel)" stroke="var(--rule)"/><text x="${(cx(i)+cx(i+1))/2}" y="134" font-size="10.5" text-anchor="middle" fill="var(--mute)">${esc(s.mm.length>26?s.mm.slice(0,25)+'…':s.mm)}</text>`}});
- h+=`<text x="10" y="${H-46}" font-size="12" font-weight="600" fill="var(--mute)">Interventions</text><text x="10" y="${H-30}" font-size="11.5" fill="var(--mute)">change a lipid,</text><text x="10" y="${H-16}" font-size="11.5" fill="var(--mute)">read the lysosome</text>`;
- // design edges
- D.design.forEach(([a,b,v])=>{const p=POS[a],q=POS[b];h+=`<path d="M${p.x} ${p.y}C${p.x} ${p.y-80},${q.x} ${q.y+80},${q.x} ${q.y}" fill="none" stroke="var(--iv)" stroke-width="1.5" stroke-dasharray="1 4" stroke-linecap="round"><title>${esc(NI[a].l+' '+v+' '+NI[b].l)}</title></path>`});
- // evidence links
- const U=4.5;
- L.sort((a,b)=>b.f.length-a.f.length).forEach(l=>{const p=POS[l.s],q=POS[l.t],ws=l.sup*U,wc=l.con*U,tot=ws+wc,dash=l.best<=2?'':'stroke-dasharray="7 5"';
-  const dx=Math.max(40,(q.x-p.x)*.5);const path=o=>`M${p.x} ${p.y+o}C${p.x+dx} ${p.y+o},${q.x-dx} ${q.y+o},${q.x-14} ${q.y+o}`;
-  const vert=NI[l.s].st==='iv'||NI[l.s].st===NI[l.t].st;const vp=o=>`M${p.x+o} ${p.y}C${p.x+o} ${p.y-90},${q.x+o} ${q.y+90},${q.x+o} ${q.y+14}`;
-  const mk=vert?vp:path;
+st.open=new Set();st.iv=false;
+const COLS=['s3','s4','s5','s6'];
+const vis=id=>{if(id==='APOE4')return id;const n=NI[id];if(n.st==='iv')return st.iv?id:null;return st.open.has(n.st)?id:'S:'+n.st};
+const lbl=v=>v.startsWith('S:')?SI[v.slice(2)].ssp+' '+SI[v.slice(2)].t:NI[v].l;
+const agg=L=>{const m={};L.forEach(l=>{const a=vis(l.s),b=vis(l.t);if(!a||!b||a===b)return;const k=a+'>'+b;const o=m[k]??={k,s:a,t:b,fm:new Map(),eff:{}};l.f.forEach(f=>o.fm.set(f.id,f));Object.entries(l.eff).forEach(([e,c])=>o.eff[e]=(o.eff[e]||0)+c)});
+ return Object.values(m).map(o=>{o.f=[...o.fm.values()];o.sup=o.f.filter(f=>!f.con).length;o.con=o.f.length-o.sup;o.best=Math.min(...o.f.map(f=>f.cls));const ef=Object.entries(o.eff).sort((a,b)=>b[1]-a[1]);o.g=ef.length>1&&ef[0][1]===ef[1][1]?'≈':GLY[ef[0][0]];o.papers=[...new Set(o.f.map(f=>f.p))];return o})};
+const wrap=(s,max)=>{const out=[];let ln='';s.split(' ').forEach(w=>{if((ln+' '+w).trim().length>max&&ln){out.push(ln);ln=w}else ln=(ln+' '+w).trim()});out.push(ln);return out};
+const draw=()=>{
+ const any=st.open.size>0;fig.style.minWidth=any?'1000px':'720px';
+ const Hw=(any?660:520)+(st.iv?90:0);if(Math.abs(fig.clientHeight-Hw)>1){fig.style.height=Hw+'px'}
+ const W=fig.clientWidth,H=Hw,fs=F.filter(pass),Lc=links(fs),L=agg(Lc);cur=L;
+ const x0=70,colW=(W-x0-60)/4,cx=i=>x0+60+colW*(i+.5)-colW*.15,top=24,ivH=st.iv?90:0,bot=H-ivH-20;
+ POS={APOE4:{x:x0,y:(top+bot)/2,in:x0,out:x0+28}};
+ const bw=Math.min(210,colW-24),bh=104;
+ COLS.forEach((sid,i)=>{const x=cx(i);if(st.open.has(sid)){const ns=N.filter(n=>n.st===sid);const y0=top+70,y1=bot-10;ns.forEach((n,j)=>POS[n.id]={x,y:ns.length===1?(y0+y1)/2:y0+(y1-y0)*j/(ns.length-1),in:x-9,out:x+9})}
+  else{const k=COLS.length,y=any?(top+bot)/2:top+bh/2+10+(bot-top-bh-30)*i/(k-1);POS['S:'+sid]={x,y,in:x-bw/2,out:x+bw/2}}});
+ const iv=N.filter(n=>n.st==='iv');iv.forEach((n,j)=>POS[n.id]={x:cx(0)+(cx(3)-cx(0))*j/(iv.length-1),y:H-46,in:0,out:0,iv:1});
+ const maxN=Math.max(1,...L.map(l=>l.f.length)),U=Math.min(4.5,54/maxN);
+ let h='';
+ // links
+ [...L].sort((a,b)=>b.f.length-a.f.length).forEach(l=>{const p=POS[l.s],q=POS[l.t];if(!p||!q)return;const ws=l.sup*U,wc=l.con*U,tot=ws+wc,dash=l.best<=2?'':'stroke-dasharray="7 5"';
+  let mk;if(p.iv){mk=o=>`M${p.x+o} ${p.y-8}C${p.x+o} ${p.y-110},${q.x+o} ${q.y+110},${q.x+o} ${q.y+(q.in===q.x-9?10:bh/2)}`}
+  else if(Math.abs(p.x-q.x)<2){mk=o=>`M${p.x+9} ${p.y+o}C${p.x+70} ${p.y+o},${q.x+70} ${q.y+o},${q.x+9} ${q.y+o}`}
+  else{const a=p.x<q.x?p.out:p.in,b=p.x<q.x?q.in:q.out,dx=(b-a)*.5;mk=o=>`M${a} ${p.y+o}C${a+dx} ${p.y+o},${b-dx} ${q.y+o},${b} ${q.y+o}`}
   h+=`<g class="hit ln" data-l="${l.k}">`;
-  if(ws)h+=`<path d="${mk(-tot/2+ws/2)}" fill="none" stroke="var(--sup)" stroke-opacity=".75" stroke-width="${ws}" ${dash}/>`;
-  if(wc)h+=`<path d="${mk(tot/2-wc/2)}" fill="none" stroke="var(--con)" stroke-opacity=".8" stroke-width="${wc}" ${dash}/>`;
-  h+=`<path d="${mk(0)}" fill="none" stroke="transparent" stroke-width="${Math.max(12,tot+6)}"><title>${esc(NI[l.s].l+' → '+NI[l.t].l+': '+l.sup+' for, '+l.con+' against')}</title></path></g>`});
- // nodes
- N.forEach(n=>{const p=POS[n.id],c=nodeCount(n.id,L),r=n.id==='APOE4'?26:n.st==='iv'?7:Math.max(7,Math.min(20,5+Math.sqrt(c)*4)),col=n.st==='iv'?'--iv':SI[n.st].col,emp=!c&&n.st!=='iv';
-  const right=n.st==='iv'?null:true;
-  h+=`<g class="hit nd" data-n="${n.id}"><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${emp?'var(--bg)':`var(${col})`}" stroke="var(${col})" stroke-width="2"/>`;
-  if(n.id==='APOE4')h+=`<text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-size="14" font-weight="600" fill="var(--chipT)" style="stroke:none">E4</text><text x="${p.x}" y="${p.y+48}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">APOE4 vs APOE3</text>`;
-  else if(n.st==='iv')h+=`<text x="${p.x}" y="${p.y+22}" text-anchor="middle" font-size="12" fill="var(--ink)">${esc(n.l)}</text>`;
-  else{const lw=colW-r-34,ws=n.l.split(' '),ls=[];let ln='';ws.forEach(w=>{if((ln+' '+w).trim().length*7.2>lw&&ln){ls.push(ln);ln=w}else ln=(ln+' '+w).trim()});ls.push(ln);if(c)ls[ls.length-1]+=` <tspan fill="var(--mute)">${c}</tspan>`;
-  ls.forEach((s,k)=>h+=`<text x="${p.x+r+5}" y="${p.y+4+(k-(ls.length-1)/2)*14}" font-size="12.5" font-weight="500" fill="var(--ink)">${s.startsWith(esc(s))?s:s}</text>`)}
-  h+='</g>'});
- sv.innerHTML=h;highlight();table(L);
+  if(ws)h+=`<path d="${mk(-tot/2+ws/2)}" fill="none" stroke="var(--sup)" stroke-opacity=".78" stroke-width="${ws}" ${dash}/>`;
+  if(wc)h+=`<path d="${mk(tot/2-wc/2)}" fill="none" stroke="var(--con)" stroke-opacity=".85" stroke-width="${wc}" ${dash}/>`;
+  h+=`<path d="${mk(0)}" fill="none" stroke="transparent" stroke-width="${Math.max(14,tot+8)}"><title>${esc(lbl(l.s)+' → '+lbl(l.t)+': '+l.sup+' support H5, '+l.con+' do not')}</title></path></g>`});
+ // APOE4
+ const A=POS.APOE4;h+=`<g class="hit nd" data-n="APOE4"><circle cx="${A.x}" cy="${A.y}" r="28" fill="var(--s2)"/><text x="${A.x}" y="${A.y+5}" text-anchor="middle" font-size="15" font-weight="600" fill="var(--chipT)" style="stroke:none">E4</text><text x="${A.x}" y="${A.y+48}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">APOE4</text><text x="${A.x}" y="${A.y+64}" text-anchor="middle" font-size="12" fill="var(--mute)">vs APOE3 (SSP2)</text></g>`;
+ // steps
+ COLS.forEach((sid,i)=>{const s=SI[sid],sf=stepF(fs,sid),[c,lab]=grade(sf),x=cx(i),con=sf.filter(f=>f.con).length;
+  if(st.open.has(sid)){h+=`<g class="hit" data-close="${sid}"><rect x="${x-bw/2}" y="${top}" width="${bw}" height="44" rx="4" fill="var(--bg)" stroke="var(${c})" stroke-width="2.5"/><text x="${x-bw/2+10}" y="${top+18}" font-size="12" font-weight="600" fill="var(--mute)">${s.ssp} · <tspan fill="var(${c})">${lab}</tspan></text><text x="${x-bw/2+10}" y="${top+35}" font-size="12" fill="var(--mute)">− click to close</text></g>`;
+   N.filter(n=>n.st===sid).forEach(n=>{const p=POS[n.id],ls=Lc.filter(l=>l.s===n.id||l.t===n.id),cnt=new Set(ls.flatMap(l=>l.f.map(f=>f.id))).size,cc=new Set(ls.flatMap(l=>l.f.filter(f=>f.con).map(f=>f.id))).size,lines=wrap(n.l,Math.floor((colW-40)/7.4));
+    h+=`<g class="hit nd" data-n="${n.id}"><circle cx="${p.x}" cy="${p.y}" r="9" fill="${cnt?`var(${s.col})`:'var(--bg)'}" stroke="var(${s.col})" stroke-width="2"/>`;
+    lines.forEach((t,k)=>h+=`<text x="${p.x+15}" y="${p.y-2+k*15-(lines.length-1)*7.5}" font-size="13" font-weight="600" fill="var(--ink)">${esc(t)}</text>`);
+    h+=`<text x="${p.x+15}" y="${p.y+13+(lines.length-1)*7.5}" font-size="11.5" fill="var(--mute)">${cnt} finding${cnt===1?'':'s'}${cc?` · <tspan fill="var(--con)">${cc} not</tspan>`:''}</text></g>`})}
+  else{const p=POS['S:'+sid],lines=wrap(s.t,Math.floor((bw-20)/7.6)).slice(0,3);
+   h+=`<g class="hit nd" data-open="${sid}" data-n="S:${sid}"><rect x="${p.in}" y="${p.y-bh/2}" width="${bw}" height="${bh+18}" rx="4" fill="var(--bg)" stroke="var(${c})" stroke-width="3"/><text x="${p.in+10}" y="${p.y-bh/2+19}" font-size="12" font-weight="600" fill="var(--mute)">${s.ssp} · <tspan fill="var(${c})">${lab}</tspan></text>`;
+   lines.forEach((t,k)=>h+=`<text x="${p.in+10}" y="${p.y-bh/2+40+k*17}" font-size="14" font-weight="600" fill="var(--ink)">${esc(t)}</text>`);
+   h+=`<text x="${p.in+10}" y="${p.y+bh/2+2}" font-size="12" fill="var(--mute)">${sf.length} findings${con?` · <tspan fill="var(--con)">${con} not</tspan>`:''}</text><text x="${p.in+10}" y="${p.y+bh/2+14}" font-size="11.5" fill="var(--sup)">+ click to open</text></g>`}});
+ if(st.iv){h+=`<text x="10" y="${H-74}" font-size="12" font-weight="600" fill="var(--mute)">Lipid treatments</text>`;iv.forEach(n=>{const p=POS[n.id];h+=`<g class="hit nd" data-n="${n.id}"><circle cx="${p.x}" cy="${p.y}" r="8" fill="var(--iv)"/><text x="${p.x}" y="${p.y+24}" text-anchor="middle" font-size="12" fill="var(--ink)">${esc(n.l)}</text></g>`})}
+ sv.innerHTML=h;highlight();table(Lc);
 };
-const ro=new ResizeObserver(draw);ro.observe(fig);
+const ro=new ResizeObserver(()=>draw());ro.observe(fig);
 const row=(l,v,p)=>v==null||v===''?'':`<dt>${l}</dt><dd>${esc(v)}${p?` <span style="color:var(--mute)">(${esc(String(p).replace(/_/g,' '))})</span>`:''}</dd>`;
-const fItem=(f,open)=>{const p=P[f.p];return`<details${open?' open':''}><summary><span class="pill" style="background:var(${f.con?'--con':'--sup'})">${f.id}</span><span>${esc(f.sum.replace(/^CONTRADICTS[^:]*:\s*/,''))} <span style="color:var(--mute)">· class ${f.cls}</span></span></summary><div class="bd"><p style="margin:2px 0">${esc(f.desc)}</p><blockquote>“${esc(f.quote)}”</blockquote><dl>${row('Verdict',f.con?'Contradicts':'Supports')}${row('Paper',p.short+', '+p.journal)}${row('System',f.sys)}${row('Data',f.loc)}${row('Effect',f.es,f.esp)}${row('P',f.pv,f.pvp)}${row('n',f.n,f.np)}${row('Directness','class '+f.cls+', strength '+f.str)}</dl><a href="https://doi.org/${esc(p.doi)}">doi ${esc(p.doi)}</a></div></details>`};
-const panel=(title,sub,fs)=>{const s=fs.filter(f=>!f.con).length;$('det').innerHTML=`<h2>${esc(title)}</h2><p class="sub">${esc(sub)} ${fs.length} findings: <b style="color:var(--sup)">${s} support H5</b>, <b style="color:var(--con)">${fs.length-s} do not</b>.</p>${fs.map((f,i)=>fItem(f,fs.length===1)).join('')||'<p>No findings under the current filters.</p>'}`};
+const fItem=(f,open)=>{const p=P[f.p];return`<details${open?' open':''}><summary><span class="pill" style="background:var(${f.con?'--con':'--sup'})">${f.id}</span><span>${esc(f.sum.replace(/^CONTRADICTS[^:]*:\s*/,''))} <span style="color:var(--mute)">· class ${f.cls}</span></span></summary><div class="bd"><p style="margin:2px 0">${esc(f.desc)}</p><blockquote>“${esc(f.quote)}”</blockquote><dl>${row('Verdict',f.con?'Does not support H5':'Supports H5')}${row('Paper',p.short+', '+p.journal)}${row('System',f.sys)}${row('Data',f.loc)}${row('Effect',f.es,f.esp)}${row('P',f.pv,f.pvp)}${row('n',f.n,f.np)}${row('Directness','class '+f.cls+', strength '+f.str)}</dl><a href="https://doi.org/${esc(p.doi)}">doi ${esc(p.doi)}</a></div></details>`};
+const panel=(title,sub,fs)=>{const s=fs.filter(f=>!f.con).length;$('det').innerHTML=`<h2>${esc(title)}</h2><p class="sub">${esc(sub)} ${fs.length} findings: <b style="color:var(--sup)">${s} support H5</b>, <b style="color:var(--con)">${fs.length-s} do not</b>.</p>${fs.map(f=>fItem(f,fs.length===1)).join('')||'<p>No findings under the current filters.</p>'}`};
+const nodeF=(v,fs)=>v.startsWith('S:')?stepF(fs,v.slice(2)):fs.filter(f=>f.edges.some(e=>e.s===v||e.t===v));
 const highlight=()=>{const s=st.sel;const on=new Set();
  if(s?.t==='l'){const l=cur.find(x=>x.k===s.k);if(l){on.add('n:'+l.s);on.add('n:'+l.t);on.add('l:'+l.k)}}
  if(s?.t==='n'){on.add('n:'+s.k);cur.forEach(l=>{if(l.s===s.k||l.t===s.k){on.add('l:'+l.k);on.add('n:'+l.s);on.add('n:'+l.t)}})}
- if(s?.t==='s'){N.filter(n=>n.st===s.k).forEach(n=>on.add('n:'+n.id));cur.forEach(l=>{if(NI[l.t].st===s.k||(s.k==='s4'&&NI[l.s].st==='iv')){on.add('l:'+l.k);on.add('n:'+l.s);on.add('n:'+l.t)}})}
- sv.querySelectorAll('.ln').forEach(g=>g.classList.toggle('dim',!!s&&!on.has('l:'+g.dataset.l)));
- sv.querySelectorAll('.nd').forEach(g=>g.classList.toggle('dim',!!s&&!on.has('n:'+g.dataset.n)));
+ const dimOK=s&&(s.t==='l'?cur.some(x=>x.k===s.k):POS[s.k]);
+ sv.querySelectorAll('.ln').forEach(g=>g.classList.toggle('dim',!!dimOK&&!on.has('l:'+g.dataset.l)));
+ sv.querySelectorAll('.nd').forEach(g=>g.classList.toggle('dim',!!dimOK&&!on.has('n:'+g.dataset.n)));
  document.querySelectorAll('tr.r').forEach(r=>r.classList.toggle('on',s?.t==='l'&&r.dataset.l===s.k));
  const fs=F.filter(pass);
- if(!s){if(st.simple){$('det').innerHTML='<h2>Click a line or a dot</h2><p class="sub">Its findings appear here, each with the quote, figure, P value and sample size.</p>';return}panel('Pick a step, concept or link','Showing every finding under the current filters.',fs);return}
- if(s.t==='l'){const l=cur.find(x=>x.k===s.k);if(!l){panel('Link hidden by filters','',[]);return}panel(`${NI[l.s].l} → ${NI[l.t].l}`,`Effect ${l.g} · ${l.papers.length} papers · best directness class ${l.best}.`,l.f)}
- if(s.t==='n'){const n=NI[s.k];panel(n.l,n.st==='iv'?'Intervention.':`Concept under ${SI[n.st].ssp}.`,fs.filter(f=>f.edges.some(e=>e.s===s.k||e.t===s.k)))}
- if(s.t==='s'){const sp=SI[s.k];const sf=sp.id==='s1'?[]:sp.id==='s2'?fs:stepF(fs,sp.id);panel(`${sp.ssp}: ${sp.t}`,sp.id==='s1'?'The variant itself; no finding in this sheet tests it.':sp.id==='s4'?'Includes the intervention findings, which test whether lipid drives the lysosomal steps.':sp.d+'.',sf)}
+ if(!s){$('det').innerHTML='<h2>Click a step, a dot or a line</h2><p class="sub">A step box opens into the things its findings measured. The findings behind whatever you click appear here, each with its quote, figure, P value and sample size.</p>';return}
+ if(s.t==='l'){const l=cur.find(x=>x.k===s.k)||links(fs).find(x=>x.k===s.k);if(!l){panel('Link hidden by filters','',[]);return}panel(`${lbl(l.s)} → ${lbl(l.t)}`,`Effect ${l.g} · ${l.papers.length} papers · best directness class ${l.best}.`,l.f);return}
+ if(s.t==='n'){const v=s.k;if(v.startsWith('S:')){const sp=SI[v.slice(2)];panel(`${sp.ssp}: ${sp.t}`,sp.id==='s4'?'Includes the lipid-treatment findings, which test whether lipid drives the lysosomal steps.':sp.d+'.',nodeF(v,fs))}else{const n=NI[v];panel(n.l,n.id==='APOE4'?'Every finding compares APOE4 with APOE3.':n.st==='iv'?'Lipid treatment.':`Measured under ${SI[n.st].ssp}.`,n.id==='APOE4'?fs:nodeF(v,fs))}}
 };
-const table=L=>{$('tb').innerHTML=[...L].sort((a,b)=>b.f.length-a.f.length||a.con-b.con).map(l=>`<tr class="r" data-l="${l.k}"><td data-l="Link">${esc(NI[l.s].l)} → ${esc(NI[l.t].l)}</td><td data-l="Effect" class="v">${l.g}</td><td data-l="For / against" class="v"><b style="color:var(--sup)">${l.sup}</b> / <b style="color:var(--con)">${l.con}</b></td><td data-l="Balance"><div class="seg" style="max-width:${Math.min(240,l.f.length*24)}px"><i style="flex:${l.sup};background:var(--sup)"></i><i style="flex:${l.con};background:var(--con)"></i></div></td><td data-l="Best class" class="v">${l.best}</td><td data-l="Papers">${l.papers.map(p=>esc(P[p].short)).join(', ')}</td></tr>`).join('')||'<tr><td colspan="6">No links under these filters.</td></tr>'};
+const table=L=>{$('tb').innerHTML=[...L].sort((a,b)=>b.f.length-a.f.length||a.con-b.con).map(l=>`<tr class="r" data-l="${l.k}"><td data-l="Link">${esc(NI[l.s].l)} → ${esc(NI[l.t].l)}</td><td data-l="Effect" class="v">${l.g}</td><td data-l="Support / not" class="v"><b style="color:var(--sup)">${l.sup}</b> / <b style="color:var(--con)">${l.con}</b></td><td data-l="Balance"><div class="seg" style="max-width:${Math.min(240,l.f.length*24)}px"><i style="flex:${l.sup};background:var(--sup)"></i><i style="flex:${l.con};background:var(--con)"></i></div></td><td data-l="Best class" class="v">${l.best}</td><td data-l="Papers">${l.papers.map(p=>esc(P[p].short)).join(', ')}</td></tr>`).join('')||'<tr><td colspan="6">No links under these filters.</td></tr>'};
 document.addEventListener('click',e=>{
- const t=e.target.closest('[data-g],[data-step],[data-n],.ln,tr.r');if(!t)return;
+ const t=e.target.closest('[data-g],[data-open],[data-close],[data-n],.ln,tr.r');if(!t)return;
  if(t.dataset.g){const g=t.dataset.g,v=t.dataset.v;if(g==='v'){st.v=v;document.querySelectorAll('[data-g=v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v))}else{const s=st[g];s.has(v)?s.delete(v):s.add(v);t.setAttribute('aria-pressed',s.has(v))}draw();return}
- const k=t.dataset.step?{t:'s',k:t.dataset.step}:t.dataset.n?{t:'n',k:t.dataset.n}:{t:'l',k:t.dataset.l};
+ if(t.dataset.close){st.open.delete(t.dataset.close);st.sel=null;draw();return}
+ if(t.dataset.open){st.open.add(t.dataset.open);st.sel={t:'n',k:'S:'+t.dataset.open};draw();st.sel=null;const sp=SI[t.dataset.open];panel(`${sp.ssp}: ${sp.t}`,sp.d+'.',stepF(F.filter(pass),sp.id));return}
+ if(t.tagName==='TR'){const l=links(F.filter(pass)).find(x=>x.k===t.dataset.l);[l.s,l.t].forEach(id=>{const n=NI[id];if(COLS.includes(n.st))st.open.add(n.st);if(n.st==='iv')st.iv=true});$('ivT').setAttribute('aria-pressed',st.iv);st.sel={t:'l',k:t.dataset.l};draw();$('fig').scrollIntoView({behavior:'smooth',block:'start'});return}
+ const k=t.dataset.n?{t:'n',k:t.dataset.n}:{t:'l',k:t.dataset.l};
  st.sel=st.sel&&st.sel.t===k.t&&st.sel.k===k.k?null:k;highlight();
  {const r=$('det').getBoundingClientRect();if(r.top>innerHeight-120||r.bottom<0)$('det').scrollIntoView({behavior:'smooth',block:'start'})}
 });
+$('openAll').onclick=()=>{COLS.forEach(c=>st.open.add(c));draw()};
+$('closeAll').onclick=()=>{st.open.clear();st.sel=null;draw()};
+$('ivT').onclick=e=>{st.iv=!st.iv;e.currentTarget.setAttribute('aria-pressed',st.iv);e.currentTarget.textContent=st.iv?'Hide lipid treatments':'Show lipid treatments';draw()};
+$('fT').onclick=e=>{const b=$('bar');b.hidden=!b.hidden;e.currentTarget.setAttribute('aria-pressed',!b.hidden)};
 $('fP').onchange=e=>{st.p=e.target.value;draw()};
 $('rst').onclick=()=>{st.v='all';st.k.clear();st.c.clear();st.p='';st.sel=null;$('fP').value='';document.querySelectorAll('[data-g]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g==='v'&&b.dataset.v==='all'));draw()};
-$('mode').onclick=()=>{st.simple=!st.simple;document.body.classList.toggle('simple',st.simple);$('mode').textContent=st.simple?'Show full graph':'Show simple view';$('mode').setAttribute('aria-pressed',!st.simple);if(st.simple){st.v='all';st.k.clear();st.c.clear();st.p=''}draw()};
 st.sel=null;draw();
 }
 </script>
