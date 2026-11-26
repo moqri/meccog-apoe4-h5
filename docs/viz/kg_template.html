@@ -1,0 +1,217 @@
+<title>APOE4 Knowledge Graph</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE work: evidence map for the MecCog H5 team
+   IDEA a MecCog mechanism schema (SSP boxes, MM ovals, evidence colours) with the findings drawn as a graph hanging under each step
+   PICTURE the SSP chain across the top; under each step its concept nodes; ribbons from APOE4 and interventions sized by findings, blue for, red against
+   COLOUR white ground, ink #121212, support #2e6f8e, contradict #e3120b, MecCog evidence green/orange/red/black
+   TYPE Source Serif 4 600 display + Inter
+   LAYOUT laptop: title + tallies, chain+graph full width with finding panel at right; phone: graph scrolls sideways, panel and ranked links stack below */
+:root{color-scheme:light dark;--bg:light-dark(#fff,#10191e);--ink:light-dark(#121212,#eef2f4);--mute:light-dark(#5b6670,#9aa8b2);--rule:light-dark(#d9e0e4,#2b3a42);--panel:light-dark(#f6f8f9,#152027);--sup:light-dark(#2e6f8e,#6fb3d4);--con:light-dark(#e3120b,#ff5a4f);--g:light-dark(#2f9e44,#51cf66);--o:light-dark(#f08c00,#ffa94d);--r:light-dark(#e03131,#ff6b6b);--k:light-dark(#212529,#ced4da);--s2:light-dark(#495057,#adb5bd);--s3:light-dark(#3b82c4,#74b3ea);--s4:light-dark(#7c5cc4,#a993e6);--s5:light-dark(#d6336c,#f06595);--s6:light-dark(#c2410c,#fb923c);--iv:light-dark(#868e96,#909aa3);--chipT:light-dark(#fff,#0c1317)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif;margin:0;overflow-x:clip}
+.band{padding-block:clamp(20px,3vw,40px);padding-left:max(4vw,16px,env(safe-area-inset-left,0px));padding-right:max(4vw,16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1400px;margin:0 auto}
+.tab{width:42px;height:7px;background:var(--con);margin-bottom:14px}
+h1{font:600 clamp(28px,3.6vw,44px)/1.07 "Source Serif 4",Georgia,serif;letter-spacing:-.02em;margin:0 0 10px;max-width:32ch}
+h2{font:600 21px/1.2 "Source Serif 4",Georgia,serif;margin:0 0 8px}
+.top{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:28px;align-items:end}
+.lede{color:var(--mute);margin:0;max-width:70ch}
+.lede a,.det a,footer a{color:var(--sup)}
+.tally{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
+.tally div{padding:10px 10px 4px 0;border-right:1px solid var(--rule)}.tally div:last-child{border:0}
+.tally strong{display:block;font:600 30px/1 "Source Serif 4",serif}
+.tally span{font-size:13px;color:var(--mute)}
+.bar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:12px 0;border-block:1px solid var(--rule);margin-top:20px}
+.grp{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.grp>span,.grp>label{font-size:13px;color:var(--mute);margin-right:4px}
+.tg{font:500 13px Inter,sans-serif;border:1px solid var(--rule);background:var(--bg);color:var(--ink);border-radius:999px;padding:5px 11px;cursor:pointer;min-height:32px}
+.tg:hover{border-color:var(--ink)}.tg[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--bg);color:var(--ink);border-radius:6px;padding:5px 8px;min-height:34px}
+.key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--mute);padding-top:10px;align-items:center}
+.key svg{vertical-align:middle;margin-right:5px}
+.main{margin-top:16px}.below{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;margin-top:22px;align-items:start}
+.gw{overflow-x:auto;border:1px solid var(--rule);border-radius:12px;background:var(--bg)}
+.fig{position:relative;min-width:1080px;height:760px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+svg text{paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round}
+.hit{cursor:pointer}
+.dim{opacity:.12}
+.det{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:16px;max-height:900px;overflow:auto}
+.det h2{font-size:19px}
+.det .sub{font-size:13px;color:var(--mute);margin:0 0 10px}
+.det details{border-top:1px solid var(--rule);padding:8px 0}
+.det summary{cursor:pointer;font-size:13.5px;list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:start}
+.det summary::-webkit-details-marker{display:none}
+.det summary b{font-weight:600;white-space:nowrap}
+.det .bd{font-size:13px;padding:6px 0 2px 0}
+.det blockquote{margin:6px 0;padding:4px 0 4px 10px;border-left:3px solid var(--rule);font-family:"Source Serif 4",serif;font-size:14px}
+.det dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:2px 10px;margin:6px 0}
+.det dt{color:var(--mute)}.det dd{margin:0;overflow-wrap:anywhere}
+.pill{display:inline-block;font:600 11.5px/1 Inter;color:var(--chipT);padding:4px 6px;border-radius:4px;white-space:nowrap}
+.seg{display:flex;height:12px;border-radius:2px;overflow:hidden;background:var(--rule);width:100%;max-width:240px}
+.rank{margin-top:28px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{text-align:left;font-weight:600;border-bottom:2px solid var(--ink);padding:6px 8px;white-space:nowrap}
+td{border-bottom:1px solid var(--rule);padding:7px 8px;vertical-align:middle}
+tr.r{cursor:pointer}tr.r:hover td,tr.r.on td{background:var(--panel)}
+td.v{white-space:nowrap;font-variant-numeric:tabular-nums}
+footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-top:28px;padding-top:12px}
+@media(max-width:1000px){.below{grid-template-columns:minmax(0,1fr)}.det{max-height:none}}
+@media(max-width:860px){.top{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){table{font-size:13px}th,td{padding:6px 4px}.stack thead{display:none}.stack tr{display:grid;padding-block:8px;border-bottom:1px solid var(--rule)}.stack td{display:flex;justify-content:space-between;gap:12px;border:0;padding:2px 0}.stack td::before{content:attr(data-l);color:var(--mute);flex:none}}
+</style>
+
+<div class="band"><div class="wrap">
+  <div class="top">
+    <div>
+      <div class="tab"></div>
+      <h1 id="hl">APOE4 and the H5 mechanism</h1>
+      <p class="lede">Every finding in the MecCog H5 submission, drawn as links from APOE4 (and from lipid interventions) to the concepts it measures, and laid under the steps of an H5 mechanism schema in <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog's notation</a>. Click a step, a concept or a link to see the findings behind it.</p>
+    </div>
+    <div class="tally" id="tally"></div>
+  </div>
+
+  <div class="bar" role="group" aria-label="Filters">
+    <div class="grp" id="fV"><span>Verdict</span></div>
+    <div class="grp" id="fK"><span>Directness</span></div>
+    <div class="grp" id="fC"><span>Cells</span></div>
+    <div class="grp"><label for="fP">Paper</label><select id="fP"><option value="">All 13 papers</option></select></div>
+    <button class="tg" id="rst">Reset</button>
+  </div>
+  <div class="key">
+    <span><svg width="44" height="14"><rect x="0" y="1" width="44" height="5" fill="var(--sup)"/><rect x="0" y="7" width="44" height="3" fill="var(--con)"/></svg>Link: blue width = supporting findings, red width = contradicting</span>
+    <span><svg width="44" height="10"><line x1="0" y1="5" x2="44" y2="5" stroke="var(--mute)" stroke-width="3"/></svg>solid: has a class 1 or 2 finding</span>
+    <span><svg width="44" height="10"><line x1="0" y1="5" x2="44" y2="5" stroke="var(--mute)" stroke-width="3" stroke-dasharray="6 4"/></svg>dashed: class 3 or 4 only</span>
+    <span><svg width="44" height="10"><line x1="0" y1="5" x2="44" y2="5" stroke="var(--iv)" stroke-width="1.5" stroke-dasharray="1 4" stroke-linecap="round"/></svg>what an intervention does by design</span>
+    <span>↑ more ↓ less ∅ no change ⟲ rescues ≈ mixed</span>
+    <span>Step colour, as in MecCog: <b style="color:var(--g)">well</b>, <b style="color:var(--o)">partly</b>, <b style="color:var(--r)">weakly</b> supported, <b>black</b> no findings</span>
+  </div>
+
+  <div class="main">
+    <div class="gw"><div class="fig" id="fig"><svg id="sv" role="img" aria-label="Knowledge graph of APOE4 findings"></svg></div></div>
+  </div>
+  <div class="below">
+  <aside class="det" id="det" aria-live="polite"></aside>
+  <section class="rank" style="margin-top:0">
+    <h2>Links ranked by evidence</h2>
+    <div class="scroll"><table class="stack"><thead><tr><th>Link</th><th>Effect</th><th>For / against</th><th style="min-width:160px">Balance</th><th>Best class</th><th>Papers</th></tr></thead><tbody id="tb"></tbody></table></div>
+  </section>
+  </div>
+  <footer>Built from h5_submission.xlsx at method commit __SHA__ (sheet saved __TIME__), __NF__ findings from 13 papers. MecCog has not published a schema for H5; the six steps here are a draft written for this view in MecCog's form (after the <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">mechanism example</a> and the <a href="https://meccog-meccog-challenge.static.hf.space/hypotheses.html">H5 statement</a>). Concepts and link directions were read from each finding's summary for this view; verdict, directness class and strength are as submitted. Step colours use a rule, not expert judgement: green when at least 75% of a step's findings support it and one is class 1 or 2, orange from 50%, red below.</footer>
+</div></div>
+
+<script>
+{
+const D=__DATA__;
+const STEPS=[
+ {id:'s1',ssp:'SSP1',t:'rs429358-C in APOE',d:'The variant',mm:'Protein synthesis',col:'--s2'},
+ {id:'s2',ssp:'SSP2',t:'apoE4 (C112R) vs apoE3',d:'Genotype compared in every finding',mm:'Mechanism unknown',col:'--s2'},
+ {id:'s3',ssp:'SSP3',t:'Lipid metabolism disrupted',d:'Cholesterol, droplets, TAG, efflux',mm:'Reduced lysosomal cholesterol export',col:'--s3'},
+ {id:'s4',ssp:'SSP4',t:'Cholesterol held in late endosomes/lysosomes',d:'LAMP1/2, NPC route',mm:'Lipid-dependent lysosome failure',col:'--s4'},
+ {id:'s5',ssp:'SSP5',t:'Late endosome/lysosome function impaired',d:'Degradation, pH, cathepsins, size',mm:'Less clearance',col:'--s5'},
+ {id:'s6',ssp:'SSP6',t:'Autophagy stalls, cargo accumulates',d:'Autophagy, Aβ, α-syn, tau, lipofuscin',mm:'',col:'--s6'}];
+const N=[
+ ['APOE4','APOE4','s2'],
+ ['chol','Cellular cholesterol','s3'],['efflux','Cholesterol efflux, ApoE lipidation','s3'],['ld','Lipid droplets','s3'],['tag','Triacylglycerol','s3'],['pufa','PUFA cholesteryl ester cargo','s3'],
+ ['lgenes','Lysosomal gene expression','s4'],['lamp','LAMP1/2','s4'],['lyschol','Lysosomal cholesterol','s4'],
+ ['degr','Lysosomal degradation','s5'],['cath','Cathepsins','s5'],['ph','Lysosomal acidity','s5'],['size','Lysosome size and number','s5'],['lmp','Lysosomal membrane integrity','s5'],['lprot','Lysosomal proteome','s5'],
+ ['auto','Autophagy flux','s6'],['lipophagy','Lipophagy','s6'],['mito','Mitophagy','s6'],['lipofuscin','Lipofuscin','s6'],['abeta','Amyloid-β','s6'],['asyn','α-synuclein','s6'],['tau','Tau','s6'],['neurite','Neurite damage','s6'],
+ ['mbcd','Cyclodextrin','iv'],['statin','Statin','iv'],['load','Cholesterol loading','iv'],['npc1','NPC1 inhibition','iv'],['choline','CDP-choline','iv'],['tmed5','TMED5 knockdown','iv']
+].map(([id,l,st])=>({id,l,st}));
+const NI=Object.fromEntries(N.map(n=>[n.id,n]));
+const SI=Object.fromEntries(STEPS.map(s=>[s.id,s]));
+const CELLS={astro:'Astrocytes',microglia:'Microglia',neurons:'Neurons',mixed:'Neuron-glia cultures',lines:'Cell lines'};
+const GLY={up:'↑',down:'↓',none:'∅',rescue:'⟲',change:'≈'};
+const P=Object.fromEntries(D.papers.map(p=>[p.id,p]));
+const F=D.findings;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=id=>document.getElementById(id);
+const st={v:'all',k:new Set(),c:new Set(),p:'',sel:null};
+const pass=f=>(st.v==='all'||(st.v==='con')===f.con)&&(!st.k.size||st.k.has(String(f.cls)))&&(!st.c.size||st.c.has(f.cell))&&(!st.p||f.p===st.p);
+const links=fs=>{const m={};fs.forEach(f=>f.edges.forEach(e=>{const k=e.s+'>'+e.t;(m[k]??={k,s:e.s,t:e.t,f:[],eff:{}}).f.push(f);m[k].eff[e.e]=(m[k].eff[e.e]||0)+1}));
+ return Object.values(m).map(l=>{l.sup=l.f.filter(f=>!f.con).length;l.con=l.f.length-l.sup;l.best=Math.min(...l.f.map(f=>f.cls));const ef=Object.entries(l.eff).sort((a,b)=>b[1]-a[1]);l.g=ef.length>1&&ef[0][1]===ef[1][1]?'≈':GLY[ef[0][0]];l.papers=[...new Set(l.f.map(f=>f.p))];return l})};
+const stepF=(fs,sid)=>fs.filter(f=>f.edges.some(e=>NI[e.t].st===sid||(sid==='s4'&&NI[e.s].st==='iv')));
+const grade=fs=>{if(!fs.length)return['--k','no findings'];const s=fs.filter(f=>!f.con).length/fs.length,d=fs.some(f=>!f.con&&f.cls<=2);return s>=.75&&d?['--g','well supported']:s>=.5?['--o','partly supported']:['--r','weakly supported']};
+// headline from the full set
+{const L=links(F),g=k=>L.find(l=>l.k===k);const c=g('APOE4>chol'),d=g('APOE4>degr'),z=g('APOE4>size');
+ $('hl').textContent=`APOE4 raises cholesterol in ${c.sup} of ${c.f.length} findings, but its lysosome links are contested (degradation ${d.sup} for, ${d.con} against)`;
+ const ns=new Set(N.map(n=>n.id)).size;$('tally').innerHTML=`<div><strong>${F.length}</strong><span>findings, ${F.filter(f=>f.con).length} against</span></div><div><strong>${L.length}</strong><span>evidence links</span></div><div><strong>${ns}</strong><span>concepts and interventions</span></div>`}
+const tog=(host,items,key,multi)=>$(host).insertAdjacentHTML('beforeend',items.map(([v,l])=>`<button class="tg" data-g="${key}" data-v="${v}" aria-pressed="${!multi&&v==='all'}">${esc(l)}</button>`).join(''));
+tog('fV',[['all','All'],['sup','Supports'],['con','Contradicts']],'v',false);
+tog('fK',[1,2,3,4].map(k=>[k,'Class '+k]),'k',true);
+tog('fC',Object.entries(CELLS),'c',true);
+$('fP').insertAdjacentHTML('beforeend',D.papers.map(p=>`<option value="${p.id}">${p.id} ${esc(p.short)}</option>`).join(''));
+const sv=$('sv'),fig=$('fig');let POS={},cur=[];
+const nodeCount=(id,L)=>L.filter(l=>l.s===id||l.t===id).reduce((a,l)=>a+l.f.length,0);
+const draw=()=>{
+ const W=fig.clientWidth,H=fig.clientHeight,fs=F.filter(pass),L=links(fs);cur=L;
+ const top=160,bot=H-110,colW=(W-150)/6,cx=i=>colW*(i+.5);
+ POS={};
+ STEPS.forEach((s,i)=>{const ns=N.filter(n=>n.st===s.id);ns.forEach((n,j)=>POS[n.id]={x:cx(i),y:ns.length===1?(top+bot)/2:top+18+(bot-top-36)*j/(ns.length-1)})});
+ const iv=N.filter(n=>n.st==='iv');iv.forEach((n,j)=>POS[n.id]={x:cx(1)+(cx(5)-cx(1))*j/(iv.length-1),y:H-40});
+ let h='<defs><marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--mute)"/></marker></defs>';
+ // MecCog chain
+ STEPS.forEach((s,i)=>{const sf=s.id==='s1'?null:s.id==='s2'?fs:stepF(fs,s.id);const [c,lab]=s.id==='s1'?['--g','not tested here']:s.id==='s2'?['--g','every finding']:grade(sf);const x=cx(i)-colW/2+8,w=colW-16;
+  h+=`<g class="hit" data-step="${s.id}"><rect x="${x}" y="8" width="${w}" height="104" rx="3" fill="var(--bg)" stroke="var(${c})" stroke-width="3"/><text x="${x+10}" y="27" font-size="12" font-weight="600" fill="var(--mute)">${s.ssp}${sf?` · ${sf.length} findings`:''}</text><text x="${x+10}" y="43" font-size="12" font-weight="600" fill="var(${c})">${lab}</text>`;
+  const words=s.t.split(' ');let line='',ls=[];words.forEach(wd=>{if((line+' '+wd).trim().length*7.4>w-18){ls.push(line);line=wd}else line=(line+' '+wd).trim()});ls.push(line);
+  ls.slice(0,3).forEach((t,k)=>h+=`<text x="${x+10}" y="${63+k*16}" font-size="13.5" font-weight="600" fill="var(--ink)">${esc(t)}</text>`);h+='</g>';
+  if(s.mm&&i<5){h+=`<ellipse cx="${(cx(i)+cx(i+1))/2}" cy="130" rx="${Math.min(70,colW*.42)}" ry="11" fill="var(--panel)" stroke="var(--rule)"/><text x="${(cx(i)+cx(i+1))/2}" y="134" font-size="10.5" text-anchor="middle" fill="var(--mute)">${esc(s.mm.length>26?s.mm.slice(0,25)+'…':s.mm)}</text>`}});
+ h+=`<text x="10" y="${H-46}" font-size="12" font-weight="600" fill="var(--mute)">Interventions</text><text x="10" y="${H-30}" font-size="11.5" fill="var(--mute)">change a lipid,</text><text x="10" y="${H-16}" font-size="11.5" fill="var(--mute)">read the lysosome</text>`;
+ // design edges
+ D.design.forEach(([a,b,v])=>{const p=POS[a],q=POS[b];h+=`<path d="M${p.x} ${p.y}C${p.x} ${p.y-80},${q.x} ${q.y+80},${q.x} ${q.y}" fill="none" stroke="var(--iv)" stroke-width="1.5" stroke-dasharray="1 4" stroke-linecap="round"><title>${esc(NI[a].l+' '+v+' '+NI[b].l)}</title></path>`});
+ // evidence links
+ const U=4.5;
+ L.sort((a,b)=>b.f.length-a.f.length).forEach(l=>{const p=POS[l.s],q=POS[l.t],ws=l.sup*U,wc=l.con*U,tot=ws+wc,dash=l.best<=2?'':'stroke-dasharray="7 5"';
+  const dx=Math.max(40,(q.x-p.x)*.5);const path=o=>`M${p.x} ${p.y+o}C${p.x+dx} ${p.y+o},${q.x-dx} ${q.y+o},${q.x-14} ${q.y+o}`;
+  const vert=NI[l.s].st==='iv'||NI[l.s].st===NI[l.t].st;const vp=o=>`M${p.x+o} ${p.y}C${p.x+o} ${p.y-90},${q.x+o} ${q.y+90},${q.x+o} ${q.y+14}`;
+  const mk=vert?vp:path;
+  h+=`<g class="hit ln" data-l="${l.k}">`;
+  if(ws)h+=`<path d="${mk(-tot/2+ws/2)}" fill="none" stroke="var(--sup)" stroke-opacity=".75" stroke-width="${ws}" ${dash}/>`;
+  if(wc)h+=`<path d="${mk(tot/2-wc/2)}" fill="none" stroke="var(--con)" stroke-opacity=".8" stroke-width="${wc}" ${dash}/>`;
+  h+=`<path d="${mk(0)}" fill="none" stroke="transparent" stroke-width="${Math.max(12,tot+6)}"><title>${esc(NI[l.s].l+' → '+NI[l.t].l+': '+l.sup+' for, '+l.con+' against')}</title></path></g>`});
+ // nodes
+ N.forEach(n=>{const p=POS[n.id],c=nodeCount(n.id,L),r=n.id==='APOE4'?26:n.st==='iv'?7:Math.max(7,Math.min(20,5+Math.sqrt(c)*4)),col=n.st==='iv'?'--iv':SI[n.st].col,emp=!c&&n.st!=='iv';
+  const right=n.st==='iv'?null:true;
+  h+=`<g class="hit nd" data-n="${n.id}"><circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${emp?'var(--bg)':`var(${col})`}" stroke="var(${col})" stroke-width="2"/>`;
+  if(n.id==='APOE4')h+=`<text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-size="14" font-weight="600" fill="var(--chipT)" style="stroke:none">E4</text><text x="${p.x}" y="${p.y+48}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">APOE4 vs APOE3</text>`;
+  else if(n.st==='iv')h+=`<text x="${p.x}" y="${p.y+22}" text-anchor="middle" font-size="12" fill="var(--ink)">${esc(n.l)}</text>`;
+  else{const lw=colW-r-34,ws=n.l.split(' '),ls=[];let ln='';ws.forEach(w=>{if((ln+' '+w).trim().length*7.2>lw&&ln){ls.push(ln);ln=w}else ln=(ln+' '+w).trim()});ls.push(ln);if(c)ls[ls.length-1]+=` <tspan fill="var(--mute)">${c}</tspan>`;
+  ls.forEach((s,k)=>h+=`<text x="${p.x+r+5}" y="${p.y+4+(k-(ls.length-1)/2)*14}" font-size="12.5" font-weight="500" fill="var(--ink)">${s.startsWith(esc(s))?s:s}</text>`)}
+  h+='</g>'});
+ sv.innerHTML=h;highlight();table(L);
+};
+const ro=new ResizeObserver(draw);ro.observe(fig);
+const row=(l,v,p)=>v==null||v===''?'':`<dt>${l}</dt><dd>${esc(v)}${p?` <span style="color:var(--mute)">(${esc(String(p).replace(/_/g,' '))})</span>`:''}</dd>`;
+const fItem=(f,open)=>{const p=P[f.p];return`<details${open?' open':''}><summary><span class="pill" style="background:var(${f.con?'--con':'--sup'})">${f.id}</span><span>${esc(f.sum.replace(/^CONTRADICTS[^:]*:\s*/,''))} <span style="color:var(--mute)">· class ${f.cls}</span></span></summary><div class="bd"><p style="margin:2px 0">${esc(f.desc)}</p><blockquote>“${esc(f.quote)}”</blockquote><dl>${row('Verdict',f.con?'Contradicts':'Supports')}${row('Paper',p.short+', '+p.journal)}${row('System',f.sys)}${row('Data',f.loc)}${row('Effect',f.es,f.esp)}${row('P',f.pv,f.pvp)}${row('n',f.n,f.np)}${row('Directness','class '+f.cls+', strength '+f.str)}</dl><a href="https://doi.org/${esc(p.doi)}">doi ${esc(p.doi)}</a></div></details>`};
+const panel=(title,sub,fs)=>{const s=fs.filter(f=>!f.con).length;$('det').innerHTML=`<h2>${esc(title)}</h2><p class="sub">${esc(sub)} ${fs.length} findings: <b style="color:var(--sup)">${s} for</b>, <b style="color:var(--con)">${fs.length-s} against</b>.</p>${fs.map((f,i)=>fItem(f,fs.length===1)).join('')||'<p>No findings under the current filters.</p>'}`};
+const highlight=()=>{const s=st.sel;const on=new Set();
+ if(s?.t==='l'){const l=cur.find(x=>x.k===s.k);if(l){on.add('n:'+l.s);on.add('n:'+l.t);on.add('l:'+l.k)}}
+ if(s?.t==='n'){on.add('n:'+s.k);cur.forEach(l=>{if(l.s===s.k||l.t===s.k){on.add('l:'+l.k);on.add('n:'+l.s);on.add('n:'+l.t)}})}
+ if(s?.t==='s'){N.filter(n=>n.st===s.k).forEach(n=>on.add('n:'+n.id));cur.forEach(l=>{if(NI[l.t].st===s.k||(s.k==='s4'&&NI[l.s].st==='iv')){on.add('l:'+l.k);on.add('n:'+l.s);on.add('n:'+l.t)}})}
+ sv.querySelectorAll('.ln').forEach(g=>g.classList.toggle('dim',!!s&&!on.has('l:'+g.dataset.l)));
+ sv.querySelectorAll('.nd').forEach(g=>g.classList.toggle('dim',!!s&&!on.has('n:'+g.dataset.n)));
+ document.querySelectorAll('tr.r').forEach(r=>r.classList.toggle('on',s?.t==='l'&&r.dataset.l===s.k));
+ const fs=F.filter(pass);
+ if(!s){const l=cur[0]||null;panel('Pick a step, concept or link','Showing every finding under the current filters.',fs);return}
+ if(s.t==='l'){const l=cur.find(x=>x.k===s.k);if(!l){panel('Link hidden by filters','',[]);return}panel(`${NI[l.s].l} → ${NI[l.t].l}`,`Effect ${l.g} · ${l.papers.length} papers · best directness class ${l.best}.`,l.f)}
+ if(s.t==='n'){const n=NI[s.k];panel(n.l,n.st==='iv'?'Intervention.':`Concept under ${SI[n.st].ssp}.`,fs.filter(f=>f.edges.some(e=>e.s===s.k||e.t===s.k)))}
+ if(s.t==='s'){const sp=SI[s.k];const sf=sp.id==='s1'?[]:sp.id==='s2'?fs:stepF(fs,sp.id);panel(`${sp.ssp}: ${sp.t}`,sp.id==='s1'?'The variant itself; no finding in this sheet tests it.':sp.id==='s4'?'Includes the intervention findings, which test whether lipid drives the lysosomal steps.':sp.d+'.',sf)}
+};
+const table=L=>{$('tb').innerHTML=[...L].sort((a,b)=>b.f.length-a.f.length||a.con-b.con).map(l=>`<tr class="r" data-l="${l.k}"><td data-l="Link">${esc(NI[l.s].l)} → ${esc(NI[l.t].l)}</td><td data-l="Effect" class="v">${l.g}</td><td data-l="For / against" class="v"><b style="color:var(--sup)">${l.sup}</b> / <b style="color:var(--con)">${l.con}</b></td><td data-l="Balance"><div class="seg" style="max-width:${Math.min(240,l.f.length*24)}px"><i style="flex:${l.sup};background:var(--sup)"></i><i style="flex:${l.con};background:var(--con)"></i></div></td><td data-l="Best class" class="v">${l.best}</td><td data-l="Papers">${l.papers.map(p=>esc(P[p].short)).join(', ')}</td></tr>`).join('')||'<tr><td colspan="6">No links under these filters.</td></tr>'};
+document.addEventListener('click',e=>{
+ const t=e.target.closest('[data-g],[data-step],[data-n],.ln,tr.r');if(!t)return;
+ if(t.dataset.g){const g=t.dataset.g,v=t.dataset.v;if(g==='v'){st.v=v;document.querySelectorAll('[data-g=v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v))}else{const s=st[g];s.has(v)?s.delete(v):s.add(v);t.setAttribute('aria-pressed',s.has(v))}draw();return}
+ const k=t.dataset.step?{t:'s',k:t.dataset.step}:t.dataset.n?{t:'n',k:t.dataset.n}:{t:'l',k:t.dataset.l};
+ st.sel=st.sel&&st.sel.t===k.t&&st.sel.k===k.k?null:k;highlight();
+ {const r=$('det').getBoundingClientRect();if(r.top>innerHeight-120||r.bottom<0)$('det').scrollIntoView({behavior:'smooth',block:'start'})}
+});
+$('fP').onchange=e=>{st.p=e.target.value;draw()};
+$('rst').onclick=()=>{st.v='all';st.k.clear();st.c.clear();st.p='';st.sel=null;$('fP').value='';document.querySelectorAll('[data-g]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g==='v'&&b.dataset.v==='all'));draw()};
+st.sel={t:'l',k:'APOE4>degr'};draw();
+}
+</script>
