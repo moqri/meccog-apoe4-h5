@@ -16,9 +16,9 @@ body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-se
 .band{padding-block:clamp(20px,3vw,40px);padding-left:max(4vw,16px,env(safe-area-inset-left,0px));padding-right:max(4vw,16px,env(safe-area-inset-right,0px))}
 .wrap{max-width:1440px;margin:0 auto}
 .tab{width:42px;height:7px;background:var(--ink);margin-bottom:14px}
-h1{font:600 clamp(28px,3.4vw,42px)/1.08 "Source Serif 4",Georgia,serif;letter-spacing:-.02em;margin:0 0 10px;max-width:32ch}
+h1{font:600 clamp(28px,3.4vw,42px)/1.08 "Source Serif 4",Georgia,serif;letter-spacing:-.02em;margin:0 0 10px;max-width:40ch}
 h2{font:600 20px/1.2 "Source Serif 4",Georgia,serif;margin:0 0 8px}
-.top{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:28px;align-items:end}
+.top{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:end}
 .lede{color:var(--mute);margin:0;max-width:74ch}
 a{color:inherit;text-decoration:underline}
 .tally{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
@@ -128,7 +128,6 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
       <p class="lede" id="sum" style="color:var(--ink);font-weight:500;margin-bottom:8px"></p>
       <p class="lede">H5 drawn as a <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog mechanism schema</a>: boxes are steps, ovals are the activities between them, and the border colour is the evidence. Click a small box to read its findings, or a step or oval for its notes.</p>
     </div>
-    <div class="tally" id="tally"></div>
   </div>
 
   <div class="tools">
@@ -199,8 +198,7 @@ const grade=fs=>{if(!fs.length)return['--k','no findings'];if(fs.length===1)retu
 const inBr=(fs,b)=>fs.filter(f=>f.br===b);
 const inStep=(fs,s)=>fs.filter(f=>(CI[s].br||[]).includes(f.br));
 {const a=F.filter(f=>!f.con).length,m=inStep(F,'mm'),ms=m.filter(f=>!f.con).length,y=inStep(F,'s4'),ys=y.filter(f=>!f.con).length;
- $('sum').textContent=`${a} of ${F.length} findings support H5. The direct test, changing a lipid and measuring the lysosome, supports it in ${ms} of ${m.length}.`;
- $('tally').innerHTML=`<div><strong>${F.length}</strong><span>findings from 13 papers</span></div><div><strong>${ys}/${y.length}</strong><span>lysosome findings that support H5</span></div><div><strong>${ms}/${m.length}</strong><span>causal lipid tests that support H5</span></div>`}
+ $('sum').textContent=`${a} of ${F.length} findings support H5. The direct test, changing a lipid and measuring the lysosome, supports it in ${ms} of ${m.length}.`;}
 const tog=(host,items,key,multi)=>$(host).insertAdjacentHTML('beforeend',items.map(([v,l])=>`<button class="tg" data-g="${key}" data-v="${v}" aria-pressed="${!multi&&v==='all'}">${esc(l)}</button>`).join(''));
 tog('fV',[['all','All'],['sup','Supports'],['con','Does not']],'v',false);
 tog('fK',[1,2,3,4].map(k=>[k,'Class '+k]),'k',true);
