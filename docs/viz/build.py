@@ -155,4 +155,5 @@ t=t.replace('<meta name="claude:viewport-fit-sides" content="cover">','')
 page='<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n'+t.replace('<style>','<style>\nimg{max-width:100%}[hidden]{display:none!important}\n',1)
 page=page.replace('\n<div class="band">','\n</head>\n<body>\n<div class="band">',1)+'\n</body>\n</html>\n'
 open(os.path.join(HERE,'..','index.html'),'w').write(page)
+open(os.path.join(HERE,'..','..','index.html'),'w').write(page)  # repo root, for the short Pages URL
 print('built',len(d['findings']),'findings')

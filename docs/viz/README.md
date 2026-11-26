@@ -1,6 +1,6 @@
 # APOE4 knowledge graph (H5 findings)
 
-`docs/index.html` is an interactive knowledge graph of every finding in the H5 submission. It links APOE4 (and lipid interventions) to the concepts each finding measures. The graph is laid under a draft six-step H5 mechanism drawn in MecCog's SSP/MM notation. Link width shows the number of supporting (blue) and contradicting (red) findings. A solid link has at least one class 1 or 2 finding; a dashed link has only class 3 or 4 findings.
+`docs/index.html` (copied to `index.html` at the repo root, which GitHub Pages serves) is an interactive knowledge graph of every finding in the H5 submission. It links APOE4 (and lipid interventions) to the concepts each finding measures. The graph is laid under a draft six-step H5 mechanism drawn in MecCog's SSP/MM notation. Link width shows the number of supporting (blue) and contradicting (red) findings. A solid link has at least one class 1 or 2 finding; a dashed link has only class 3 or 4 findings.
 
 Rebuild after the workbook changes:
 
