@@ -58,7 +58,7 @@ Rows that still need a person:
 
 The automated checks that did run, on every row:
 
-- Every quote must appear word for word in the cached source text, after Unicode normalization of dashes, quotes and spaces. All 67 quotes pass. Quotes were never retyped from memory; each was copied out of the cached text.
+- Every quote must appear word for word in the cached source text, after Unicode normalization of dashes, quotes and spaces. All 68 quotes pass. Quotes were never retyped from memory; each was copied out of the cached text.
 - No quote may be used twice.
 - Every value marked `printed_in_text` must have each of its numbers present in the quote or the source text.
 - A P value may never carry `estimated_from_figure`.
@@ -72,11 +72,11 @@ Three warnings remain and were reviewed and accepted: in P2.F8, P9.F5 and P10.F3
 
 **What counts as evidence here.** The hypothesis has two halves, a lipid disruption (A) and an impaired late endosome or lysosome (B). Directness classes follow the challenge rules. Comparing APOE4 with APOE3 cells is itself a perturbation of A. Where the genotype is compared and a lysosomal or late-endosomal function is measured directly, the finding is class 1. Where a lipid is perturbed instead of the genotype (cyclodextrin, statin, cholesterol loading, choline supplementation) and a lysosomal readout is measured, it is class 2. Findings that carry only a lipid readout (cholesterol level, lipid droplet number, lipidome composition) are class 3: the genotype is perturbed, but B is only inferred from a surrogate. An earlier draft put these at class 5; the rules reserve class 5 for findings none of the other classes fit, so they were moved. Experiments in non-brain cells keep their class, and the caveat sits in the experimental-system column.
 
-**Contradicting findings are in.** Nine of the 67 are recorded as contradicting or showing no difference, and they are not confined to weak papers:
+**Contradicting findings are in.** Eleven of the 68 are recorded as contradicting or showing no difference, and they are not confined to weak papers:
 
 - Lee et al. 2023 (P1), the starting reference itself, measures about 50% higher cathepsin B activity in APOE4 astrocytes (P1.F5), the opposite of impaired lysosomal function. An earlier draft described this in the row but did not label it contradicting.
 
-- de Leeuw et al. 2022 (P4) finds lysosomal activity equally low in APOE3 and APOE4 isogenic astrocytes, and no genotype difference in lysosomal compartment area. This is a direct, class 1 contradiction of the hypothesis in the same cell type as the starting reference.
+- de Leeuw et al. 2022 (P4) finds lysosomal activity equally low in APOE3 and APOE4 isogenic astrocytes, and no genotype difference in lysosomal compartment area. Its lysosomal cholesterol (filipin in dextran-labelled lysosomes) is not significantly higher in APOE4 than APOE3 (P4.F5), and its lipid quantification shows total cholesterol lower, not higher, in APOE4 (P4.F7, added in a later check; the first draft had left this panel out). This is a direct, class 1 contradiction of the hypothesis in the same cell type as the starting reference.
 - Hellén et al. 2025, APOE4/4 iPSC microglia (P6) show a lysosomal degradation deficit but no cholesterol difference at all, which breaks the lipid half of the mechanism, and no difference in autophagic flux.
 - Nyberg et al. 2025 (P9) find no endolysosomal difference in mature neurons at 18 days, the deficit appearing only after prolonged culture, and, importantly, cholesterol loading impairs degradation equally in APOE4, APOE3 and knockout neurons, so lipid load alone does not reproduce the genotype effect.
 
