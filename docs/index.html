@@ -85,7 +85,7 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
     <div>
       <div class="tab"></div>
       <h1 id="hl">APOE4 and the H5 mechanism</h1>
-      <p class="lede">APOE4 is linked to the four H5 steps that the findings test, drawn as steps (SSPs) in <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog's format</a>. Click a step to open it into the things measured. Click a line or a dot to read its findings.</p>
+      <p class="lede">The H5 mechanism runs from the APOE variant (SSP1) through the protein (SSP2) to four steps the findings test (SSP3 to SSP6), drawn in <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog's format</a>. Click a step to open it into the things measured. Click a line or a dot to read its findings.</p>
     </div>
     <div class="tally" id="tally"></div>
   </div>
@@ -169,17 +169,17 @@ const agg=L=>{const m={};L.forEach(l=>{const a=vis(l.s),b=vis(l.t);if(!a||!b||a=
  return Object.values(m).map(o=>{o.f=[...o.fm.values()];o.sup=o.f.filter(f=>!f.con).length;o.con=o.f.length-o.sup;o.best=Math.min(...o.f.map(f=>f.cls));const ef=Object.entries(o.eff).sort((a,b)=>b[1]-a[1]);o.g=ef.length>1&&ef[0][1]===ef[1][1]?'≈':GLY[ef[0][0]];o.papers=[...new Set(o.f.map(f=>f.p))];return o})};
 const wrap=(s,max)=>{const out=[];let ln='';s.split(' ').forEach(w=>{if((ln+' '+w).trim().length>max&&ln){out.push(ln);ln=w}else ln=(ln+' '+w).trim()});out.push(ln);return out};
 const draw=()=>{
- const any=st.open.size>0;fig.style.minWidth=any?'1000px':'720px';
+ const any=st.open.size>0;fig.style.minWidth=any?'1140px':'860px';
  const Hw=(any?660:520)+(st.iv?90:0);if(Math.abs(fig.clientHeight-Hw)>1){fig.style.height=Hw+'px'}
  const W=fig.clientWidth,H=Hw,fs=F.filter(pass),Lc=links(fs),L=agg(Lc);cur=L;
- const x0=70,colW=(W-x0-60)/4,cx=i=>x0+60+colW*(i+.5)-colW*.15,top=24,ivH=st.iv?90:0,bot=H-ivH-20;
+ const x0=236,colW=(W-x0-60)/4,cx=i=>x0+60+colW*(i+.5)-colW*.15,top=24,ivH=st.iv?90:0,bot=H-ivH-20;
  POS={APOE4:{x:x0,y:(top+bot)/2,in:x0,out:x0+28}};
  const bw=Math.min(210,colW-24),bh=104;
  COLS.forEach((sid,i)=>{const x=cx(i);if(st.open.has(sid)){const ns=N.filter(n=>n.st===sid);const y0=top+70,y1=bot-10;ns.forEach((n,j)=>POS[n.id]={x,y:ns.length===1?(y0+y1)/2:y0+(y1-y0)*j/(ns.length-1),in:x-9,out:x+9})}
   else{const k=COLS.length,y=any?(top+bot)/2:top+bh/2+10+(bot-top-bh-30)*i/(k-1);POS['S:'+sid]={x,y,in:x-bw/2,out:x+bw/2}}});
  const iv=N.filter(n=>n.st==='iv');iv.forEach((n,j)=>POS[n.id]={x:cx(0)+(cx(3)-cx(0))*j/(iv.length-1),y:H-46,in:0,out:0,iv:1});
  const maxN=Math.max(1,...L.map(l=>l.f.length)),U=Math.min(4.5,54/maxN);
- let h='';
+ let h='<defs><marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--mute)"/></marker></defs>';
  // links
  [...L].sort((a,b)=>b.f.length-a.f.length).forEach(l=>{const p=POS[l.s],q=POS[l.t];if(!p||!q)return;const ws=l.sup*U,wc=l.con*U,tot=ws+wc,dash=l.best<=2?'':'stroke-dasharray="7 5"';
   let mk;if(p.iv){mk=o=>`M${p.x+o} ${p.y-8}C${p.x+o} ${p.y-110},${q.x+o} ${q.y+110},${q.x+o} ${q.y+(q.in===q.x-9?10:bh/2)}`}
@@ -190,7 +190,9 @@ const draw=()=>{
   if(wc)h+=`<path d="${mk(tot/2-wc/2)}" fill="none" stroke="var(--con)" stroke-opacity=".85" stroke-width="${wc}" ${dash}/>`;
   h+=`<path d="${mk(0)}" fill="none" stroke="transparent" stroke-width="${Math.max(14,tot+8)}"><title>${esc(lbl(l.s)+' → '+lbl(l.t)+': '+l.sup+' support H5, '+l.con+' do not')}</title></path></g>`});
  // APOE4
- const A=POS.APOE4;h+=`<g class="hit nd" data-n="APOE4"><circle cx="${A.x}" cy="${A.y}" r="28" fill="var(--s2)"/><text x="${A.x}" y="${A.y+5}" text-anchor="middle" font-size="15" font-weight="600" fill="var(--chipT)" style="stroke:none">E4</text><text x="${A.x}" y="${A.y+48}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">APOE4</text><text x="${A.x}" y="${A.y+64}" text-anchor="middle" font-size="12" fill="var(--mute)">vs APOE3 (SSP2)</text></g>`;
+ const A=POS.APOE4;h+=`<g class="hit nd" data-n="APOE4"><circle cx="${A.x}" cy="${A.y}" r="28" fill="var(--s2)"/><text x="${A.x}" y="${A.y+5}" text-anchor="middle" font-size="15" font-weight="600" fill="var(--chipT)" style="stroke:none">E4</text><text x="${A.x}" y="${A.y+48}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">APOE4</text><text x="${A.x}" y="${A.y+64}" text-anchor="middle" font-size="12" fill="var(--mute)">vs APOE3</text><text x="${A.x}" y="${A.y-40}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--mute)">SSP2 · protein</text></g>`;
+ h+=`<g class="hit nd" data-n="S:s1"><rect x="8" y="${A.y-52}" width="150" height="104" rx="4" fill="var(--bg)" stroke="var(--mute)" stroke-width="2" stroke-dasharray="5 4"/><text x="18" y="${A.y-32}" font-size="12" font-weight="600" fill="var(--mute)">SSP1 · DNA variant</text><text x="18" y="${A.y-11}" font-size="14" font-weight="600" fill="var(--ink)">rs429358-C</text><text x="18" y="${A.y+7}" font-size="14" font-weight="600" fill="var(--ink)">in APOE</text><text x="18" y="${A.y+40}" font-size="11.5" fill="var(--mute)">no H5 findings</text></g>`;
+ h+=`<path d="M160 ${A.y}H${A.x-34}" stroke="var(--mute)" stroke-width="2" marker-end="url(#ah)"/><text x="${(160+A.x-34)/2}" y="${A.y-8}" text-anchor="middle" font-size="11" fill="var(--mute)">protein</text><text x="${(160+A.x-34)/2}" y="${A.y+16}" text-anchor="middle" font-size="11" fill="var(--mute)">synthesis</text>`;
  // steps
  COLS.forEach((sid,i)=>{const s=SI[sid],sf=stepF(fs,sid),[c,lab]=grade(sf),x=cx(i),con=sf.filter(f=>f.con).length;
   if(st.open.has(sid)){h+=`<g class="hit" data-close="${sid}"><rect x="${x-bw/2}" y="${top}" width="${bw}" height="44" rx="4" fill="var(--bg)" stroke="var(${c})" stroke-width="2.5"/><text x="${x-bw/2+10}" y="${top+18}" font-size="12" font-weight="600" fill="var(--mute)">${s.ssp} · <tspan fill="var(${c})">${lab}</tspan></text><text x="${x-bw/2+10}" y="${top+35}" font-size="12" fill="var(--mute)">− click to close</text></g>`;
@@ -220,7 +222,7 @@ const highlight=()=>{const s=st.sel;const on=new Set();
  const fs=F.filter(pass);
  if(!s){$('det').innerHTML='<h2>Click a step, a dot or a line</h2><p class="sub">A step box opens into the things its findings measured. The findings behind whatever you click appear here, each with its quote, figure, P value and sample size.</p>';return}
  if(s.t==='l'){const l=cur.find(x=>x.k===s.k)||links(fs).find(x=>x.k===s.k);if(!l){panel('Link hidden by filters','',[]);return}panel(`${lbl(l.s)} → ${lbl(l.t)}`,`Effect ${l.g} · ${l.papers.length} papers · best directness class ${l.best}.`,l.f);return}
- if(s.t==='n'){const v=s.k;if(v.startsWith('S:')){const sp=SI[v.slice(2)];panel(`${sp.ssp}: ${sp.t}`,sp.id==='s4'?'Includes the lipid-treatment findings, which test whether lipid drives the lysosomal steps.':sp.d+'.',nodeF(v,fs))}else{const n=NI[v];panel(n.l,n.id==='APOE4'?'Every finding compares APOE4 with APOE3.':n.st==='iv'?'Lipid treatment.':`Measured under ${SI[n.st].ssp}.`,n.id==='APOE4'?fs:nodeF(v,fs))}}
+ if(s.t==='n'){const v=s.k;if(v==='S:s1'){$('det').innerHTML='<h2>SSP1: rs429358-C in the APOE gene</h2><p class="sub">The DNA change that makes the APOE4 allele. Protein synthesis turns it into SSP2, the apoE4 protein (C112R). No H5 finding tests these two steps directly: every finding starts by comparing APOE4 with APOE3 cells, so they are taken as given and drawn in grey.</p>';return}if(v.startsWith('S:')){const sp=SI[v.slice(2)];panel(`${sp.ssp}: ${sp.t}`,sp.id==='s4'?'Includes the lipid-treatment findings, which test whether lipid drives the lysosomal steps.':sp.d+'.',nodeF(v,fs))}else{const n=NI[v];panel(n.l,n.id==='APOE4'?'Every finding compares APOE4 with APOE3.':n.st==='iv'?'Lipid treatment.':`Measured under ${SI[n.st].ssp}.`,n.id==='APOE4'?fs:nodeF(v,fs))}}
 };
 const table=L=>{$('tb').innerHTML=[...L].sort((a,b)=>b.f.length-a.f.length||a.con-b.con).map(l=>`<tr class="r" data-l="${l.k}"><td data-l="Link">${esc(NI[l.s].l)} → ${esc(NI[l.t].l)}</td><td data-l="Effect" class="v">${l.g}</td><td data-l="Support / not" class="v"><b style="color:var(--sup)">${l.sup}</b> / <b style="color:var(--con)">${l.con}</b></td><td data-l="Balance"><div class="seg" style="max-width:${Math.min(240,l.f.length*24)}px"><i style="flex:${l.sup};background:var(--sup)"></i><i style="flex:${l.con};background:var(--con)"></i></div></td><td data-l="Best class" class="v">${l.best}</td><td data-l="Papers">${l.papers.map(p=>esc(P[p].short)).join(', ')}</td></tr>`).join('')||'<tr><td colspan="6">No links under these filters.</td></tr>'};
 document.addEventListener('click',e=>{
