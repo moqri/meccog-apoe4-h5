@@ -13,21 +13,21 @@ img{max-width:100%}[hidden]{display:none!important}
 /* VOICE work: evidence map for the MecCog H5 team
    IDEA a MecCog mechanism schema: SSP rectangles joined by mechanism-module ovals, each opening into a branch tree like MecCog's home-page figures
    PICTURE the SSP/MM chain across the top; open steps hang below as trees of narrow branches, each with a support bar
-   COLOUR white ground, ink #121212, support #2e6f8e, not-support #e3120b, MecCog evidence green/orange/red/black
+   COLOUR white ground, ink #121212, support = MecCog green, not-support = MecCog red, MecCog evidence green/orange/red/black
    TYPE Source Serif 4 600 display + Inter
    LAYOUT laptop: title + tallies, chain full width, trees in a grid, findings panel at right; phone: chain stacks vertically, trees and panel below */
-:root{color-scheme:light dark;--bg:light-dark(#fff,#10191e);--ink:light-dark(#121212,#eef2f4);--mute:light-dark(#5b6670,#9aa8b2);--rule:light-dark(#d9e0e4,#2b3a42);--panel:light-dark(#f6f8f9,#152027);--sup:light-dark(#2e6f8e,#6fb3d4);--con:light-dark(#e3120b,#ff5a4f);--g:light-dark(#2f9e44,#51cf66);--o:light-dark(#e67700,#ffa94d);--r:light-dark(#e03131,#ff6b6b);--blk:light-dark(#121212,#eef2f4);--k:light-dark(#868e96,#909aa3);--chipT:light-dark(#fff,#0c1317)}
+:root{color-scheme:light dark;--bg:light-dark(#fff,#10191e);--ink:light-dark(#121212,#eef2f4);--mute:light-dark(#5b6670,#9aa8b2);--rule:light-dark(#d9e0e4,#2b3a42);--panel:light-dark(#f6f8f9,#152027);--g:light-dark(#2f9e44,#51cf66);--sup:var(--g);--con:var(--r);--o:light-dark(#e67700,#ffa94d);--r:light-dark(#e03131,#ff6b6b);--blk:light-dark(#121212,#eef2f4);--k:light-dark(#868e96,#909aa3);--chipT:light-dark(#fff,#0c1317)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,sans-serif;margin:0;overflow-x:clip}
 .band{padding-block:clamp(20px,3vw,40px);padding-left:max(4vw,16px,env(safe-area-inset-left,0px));padding-right:max(4vw,16px,env(safe-area-inset-right,0px))}
 .wrap{max-width:1440px;margin:0 auto}
-.tab{width:42px;height:7px;background:var(--con);margin-bottom:14px}
+.tab{width:42px;height:7px;background:var(--ink);margin-bottom:14px}
 h1{font:600 clamp(28px,3.4vw,42px)/1.08 "Source Serif 4",Georgia,serif;letter-spacing:-.02em;margin:0 0 10px;max-width:32ch}
 h2{font:600 20px/1.2 "Source Serif 4",Georgia,serif;margin:0 0 8px}
 .top{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:28px;align-items:end}
 .lede{color:var(--mute);margin:0;max-width:74ch}
-a{color:var(--sup)}
+a{color:inherit;text-decoration:underline}
 .tally{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid var(--ink)}
 .tally div{padding:10px 10px 4px 0;border-right:1px solid var(--rule)}.tally div:last-child{border:0}
 .tally strong{display:block;font:600 30px/1 "Source Serif 4",serif}
@@ -56,7 +56,7 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .src{font-size:11.5px;font-style:italic;color:var(--mute)}
 .step .ct{font-size:12.5px;color:var(--mute);margin-top:auto;padding-top:4px}
 .step .ct b{color:var(--con);font-weight:500}
-.step .op{font-size:12px;color:var(--sup);font-weight:500}
+.step .op{font-size:12px;color:var(--ink);font-weight:500}
 .mm{flex:0 0 88px;align-self:center;display:flex;align-items:center;margin:0 -2px}
 .mm::before,.mm::after{content:"";height:2px;background:var(--mute);flex:1 0 8px}
 .mm::after{flex-basis:10px;clip-path:polygon(0 -3px,100% 1px,0 5px);height:8px;background:var(--mute)}
