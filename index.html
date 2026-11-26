@@ -12,10 +12,10 @@ img{max-width:100%}[hidden]{display:none!important}
 
 /* VOICE work: evidence map for the MecCog H5 team
    IDEA a MecCog mechanism schema: SSP rectangles joined by mechanism-module ovals, each opening into a branch tree like MecCog's home-page figures
-   PICTURE the SSP/MM chain across the top; open steps hang below as trees of narrow branches, each with a support bar
+   PICTURE the SSP/MM chain across the top; a clicked step expands in place into its narrow branches, each with a support bar
    COLOUR white ground, ink #121212, support = MecCog green, not-support = MecCog red, MecCog evidence green/orange/red/black
    TYPE Source Serif 4 600 display + Inter
-   LAYOUT laptop: title + tallies, chain full width, trees in a grid, findings panel at right; phone: chain stacks vertically, trees and panel below */
+   LAYOUT laptop: title + tallies, chain full width, the open step widens and holds its branches and findings; phone: chain stacks vertically */
 :root{color-scheme:light dark;--bg:light-dark(#fff,#10191e);--ink:light-dark(#121212,#eef2f4);--mute:light-dark(#5b6670,#9aa8b2);--rule:light-dark(#d9e0e4,#2b3a42);--panel:light-dark(#f6f8f9,#152027);--g:light-dark(#2f9e44,#51cf66);--sup:var(--g);--con:var(--r);--o:light-dark(#e67700,#ffa94d);--r:light-dark(#e03131,#ff6b6b);--blk:light-dark(#121212,#eef2f4);--k:light-dark(#868e96,#909aa3);--chipT:light-dark(#fff,#0c1317)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
@@ -45,11 +45,24 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .stages{display:flex;margin-top:18px;font-size:12px;font-weight:600;color:var(--mute);gap:0}
 .stages span{border-top:2px solid var(--rule);padding-top:4px;margin-right:8px}
 .chain{display:flex;align-items:stretch;margin-top:18px;padding:4px 2px 10px}
-.step{flex:1 1 0;min-width:0;overflow-wrap:break-word;border:3px solid var(--c,var(--k));border-radius:3px;padding:10px 12px;background:var(--bg);cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:3px}
+.step{flex:1 1 0;min-width:0;overflow-wrap:break-word;border:3px solid var(--c,var(--k));border-radius:3px;background:var(--bg);display:flex;flex-direction:column}
+.hd{all:unset;box-sizing:border-box;flex:1 0 auto;display:flex;flex-direction:column;gap:3px;width:100%;padding:10px 12px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.hd:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+.step.open{flex:5 1 0}
+.step.open .hd{flex:0 0 auto;background:color-mix(in srgb,var(--c) 9%,var(--bg))}
+.chain.has-open{align-items:flex-start}
+.chain.has-open .mm{align-self:flex-start;margin-top:64px}
+.chain.has-open .step:not(.open) .src{display:none}
+.chain.has-open .step:not(.open){flex:0 0 132px}.chain.has-open .step:not(.open) .t{font-size:13px}
+.chain.has-open .mm:not(.open){flex-basis:88px}.chain.has-open .mm.big:not(.open){flex-basis:124px}
+.in{padding:4px 12px 12px;text-align:left;font-size:13px}
+.in .nt{font-size:12.5px;color:var(--mute);margin:4px 0 10px;line-height:1.45}
+.mm.open{flex-basis:260px}.mm.big.open{flex-basis:560px}
+.mm.open .ov{flex:1 1 auto;border-radius:18px}
+.mm.open .ov.unk .nt{color:inherit}
 .step.given{border-style:dashed}
 .step.narrow{flex:.6 1 0}
 .step:hover{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 25%,transparent)}
-.step[aria-expanded=true]{background:color-mix(in srgb,var(--c) 9%,var(--bg))}
 .step .n{font-size:12px;font-weight:600;color:var(--mute)}
 .gr{font-weight:600;color:var(--c)}
 .step .t{font-weight:600;font-size:14px;line-height:1.25}
@@ -60,15 +73,15 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .mm{flex:0 0 88px;align-self:center;display:flex;align-items:center;margin:0 -2px}
 .mm::before,.mm::after{content:"";height:2px;background:var(--mute);flex:1 0 8px}
 .mm::after{flex-basis:10px;clip-path:polygon(0 -3px,100% 1px,0 5px);height:8px;background:var(--mute)}
-.ov{flex:0 1 auto;border:2px solid var(--c);border-radius:999px;padding:5px 6px;text-align:center;font:500 11px/1.25 Inter,sans-serif;color:var(--ink);background:var(--bg);cursor:pointer}
+.ov{flex:0 1 auto;border:2px solid var(--c);border-radius:999px;font:500 11px/1.25 Inter,sans-serif;color:var(--ink);background:var(--bg)}
+.ov>.hd{display:block;text-align:center;padding:5px 6px}
 .ov.unk{background:var(--blk);color:var(--bg);border-color:var(--blk)}
 .mm.big{flex-basis:168px}
-.mm.big .ov{border-width:3px;padding:10px 12px;font-size:12px;border-radius:28px;width:100%}
+.mm.big .ov{border-width:3px;font-size:12px;border-radius:28px;width:100%}
+.mm.big .ov>.hd{padding:10px 12px}
 .mm.big .ov b{display:block;font-size:13px}
-.mm.big .ov[aria-expanded=true]{background:color-mix(in srgb,var(--c) 9%,var(--bg))}
-/* trees + panel */
-.main{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:22px;margin-top:16px;align-items:start}
-.trees{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.mm.big.open .ov>.hd{background:color-mix(in srgb,var(--c) 9%,var(--bg));border-radius:26px 26px 0 0}
+/* branches and findings inside an open step */
 .tree{border:1px solid var(--rule);border-radius:10px;padding:14px 16px 10px;background:var(--bg)}
 .tree h3{margin:0;font:600 16px/1.3 "Source Serif 4",serif;display:flex;justify-content:space-between;gap:10px}
 .tree h3 button{font:500 12px Inter;border:0;background:none;color:var(--mute);cursor:pointer;padding:0}
@@ -80,24 +93,20 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .row:hover,.row.on{background:var(--panel)}
 .row .t{font-weight:600;font-size:14px;display:block}
 .row .m{font-size:12.5px;color:var(--mute);display:block}
+.fl{margin:0 0 8px 8px}
 .seg{display:flex;height:9px;border-radius:2px;overflow:hidden;margin:5px 0 3px;background:var(--rule)}
 .empty{border:1px dashed var(--rule);border-radius:10px;padding:18px;color:var(--mute);font-size:14px}
-.det{position:sticky;top:12px;background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:16px;max-height:calc(100vh - 24px);overflow:auto}
-.det h2{font-size:19px}
-.det .sub{font-size:13px;color:var(--mute);margin:0 0 10px}
-.det details{border-top:1px solid var(--rule);padding:8px 0}
-.det summary{cursor:pointer;font-size:13.5px;list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:start}
-.det summary::-webkit-details-marker{display:none}
-.det .bd{font-size:13px;padding:6px 0 2px}
-.det blockquote{margin:6px 0;padding:4px 0 4px 10px;border-left:3px solid var(--rule);font-family:"Source Serif 4",serif;font-size:14px}
-.det dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:2px 10px;margin:6px 0}
-.det dt{color:var(--mute)}.det dd{margin:0;overflow-wrap:anywhere}
+.fl details{border-top:1px solid var(--rule);padding:8px 0}
+.fl summary{cursor:pointer;font-size:13.5px;list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:start}
+.fl summary::-webkit-details-marker{display:none}
+.fl .bd{font-size:13px;padding:6px 0 2px}
+.fl blockquote{margin:6px 0;padding:4px 0 4px 10px;border-left:3px solid var(--rule);font-family:"Source Serif 4",serif;font-size:14px}
+.fl dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:2px 10px;margin:6px 0}
+.fl dt{color:var(--mute)}.fl dd{margin:0;overflow-wrap:anywhere}
 .pill{display:inline-block;font:600 11.5px/1 Inter;color:var(--chipT);padding:4px 6px;border-radius:4px;white-space:nowrap}
 footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-top:28px;padding-top:12px}
-@media(max-width:1100px){.main{grid-template-columns:minmax(0,1fr)}.det{position:static;max-height:none}}
 @media(max-width:860px){.top{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:1180px){.chain{flex-direction:column;overflow:visible}.mm,.mm.big{flex:none;flex-direction:column;align-self:center;margin:-2px 0;width:auto}.mm::before,.mm::after{width:2px;height:10px;flex:none}.mm::after{width:8px;height:8px;clip-path:polygon(0 0,100% 0,50% 100%)}.step{min-width:0}}
-@media(max-width:420px){.trees{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:1180px){.chain{flex-direction:column;overflow:visible}.mm,.mm.big{flex:none;flex-direction:column;align-self:center;margin:-2px 0;width:auto}.mm::before,.mm::after{width:2px;height:10px;flex:none}.mm::after{width:8px;height:8px;clip-path:polygon(0 0,100% 0,50% 100%)}.step{min-width:0}.chain.has-open .mm{margin:-2px 0;align-self:center}.chain.has-open .step:not(.open),.chain.has-open .mm:not(.open),.chain.has-open .mm.big:not(.open){flex:none}.mm.open,.mm.big.open{width:100%}}
 </style>
 
 </head>
@@ -107,7 +116,7 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
     <div>
       <div class="tab"></div>
       <h1 id="hl">APOE4 and the H5 mechanism</h1>
-      <p class="lede">H5 drawn as a <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog mechanism schema</a>: rectangles are steps (substate perturbations, SSPs), ovals are the activities between them (mechanism modules, MMs), and border colour is the evidence. Click a step or the large oval to open its branches, then a branch to read its findings.</p>
+      <p class="lede">H5 drawn as a <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog mechanism schema</a>: boxes are steps, ovals are the activities between them, and the border colour is the evidence. Click a step or an oval to open it in place, then a branch to read its findings.</p>
     </div>
     <div class="tally" id="tally"></div>
   </div>
@@ -115,7 +124,7 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
   <div class="tools">
     <button class="tg" id="closeAll">Close</button>
     <button class="tg" id="fT" aria-pressed="false">Filters</button>
-    <span class="legend"><span><i style="background:var(--sup)"></i>supports H5</span><span><i style="background:var(--con)"></i>does not</span><span>Border, as in MecCog: <b style="color:var(--g)">well</b>, <b style="color:var(--o)">partly</b>, <b style="color:var(--r)">weakly</b> supported, <b>black</b> = nobody has explained this step; dashed = rated by MecCog, not tested by H5 findings</span></span>
+    <span class="legend"><span><i style="background:var(--sup)"></i>supports H5</span><span><i style="background:var(--con)"></i>does not</span><span>Border: <b style="color:var(--g)">well</b>, <b style="color:var(--o)">partly</b>, <b style="color:var(--r)">weakly</b> supported, <b>black</b> = nobody has explained this step; dashed = MecCog’s rating, not tested here</span></span>
   </div>
   <div class="bar" id="bar" hidden role="group" aria-label="Filters">
     <div class="grp" id="fV"><span>Verdict</span></div>
@@ -126,10 +135,6 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
   </div>
 
   <div class="chain" id="chain"></div>
-  <div class="main">
-    <div class="trees" id="trees"></div>
-    <aside class="det" id="det" aria-live="polite"></aside>
-  </div>
 
   <footer>Built from h5_submission.xlsx at method commit 3c07d7a (sheet saved 2026-11-26 00:07 UTC), 79 findings from 13 papers. Every finding sits in exactly one branch, so none is counted twice. Findings of directness class 2 (a lipid changed, the lysosome measured, in the challenge's terms a perturbation of a surrogate A′ with B measured) form the mechanism module between SSP3 and SSP4; every other finding sits under the step its readout measures. MecCog has not published a schema for H5. SSP1 and SSP2 (joined in one box), the outcome and the ovals marked MecCog are copied from MecCog's <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">mechanism example</a> (drawn after Figure 1 of the Moult and Darden preprint), together with its ratings; SSP3 and SSP4 use the words of the <a href="https://meccog-meccog-challenge.static.hf.space/hypotheses.html">H5 statement</a>; SSP5, its oval and the branch names are ours unless a branch says otherwise. Ratings of the H5 steps follow a rule, not expert judgement: green when at least 75% of the findings support H5 and one of them is class 1 or 2, orange from 50%, red below.</footer>
 </div></div>
@@ -173,7 +178,7 @@ F.forEach(f=>{if(f.cls===2){f.br=f.edges.some(e=>e.e==='rescue')?'M1':'M2';retur
 const bad=F.filter(f=>!f.br);if(bad.length)console.warn('unplaced',bad.map(f=>f.id));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const $=id=>document.getElementById(id);
-const st={v:'all',k:new Set(),c:new Set(),p:'',open:new Set(),sel:null};
+const st={v:'all',k:new Set(),c:new Set(),p:'',open:null,sel:null};
 const pass=f=>(st.v==='all'||(st.v==='con')===f.con)&&(!st.k.size||st.k.has(String(f.cls)))&&(!st.c.size||st.c.has(f.cell))&&(!st.p||f.p===st.p);
 const grade=fs=>{if(!fs.length)return['--k','no findings'];const s=fs.filter(f=>!f.con).length/fs.length,d=fs.some(f=>!f.con&&f.cls<=2);return s>=.75&&d?['--g','well supported']:s>=.5?['--o','partly supported']:['--r','weakly supported']};
 const inBr=(fs,b)=>fs.filter(f=>f.br===b);
@@ -190,35 +195,26 @@ const cnt=fs=>{const n=fs.filter(f=>f.con).length;return`${fs.length} finding${f
 const srcTag=s=>s.src==='our addition'?'our addition':'from '+s.src;
 const render=()=>{
  const fs=F.filter(pass);
- $('chain').innerHTML=CH.map(s=>{
-  if(s.k==='mm'){if(s.big){const sf=inStep(fs,s.id),[c,lab]=grade(sf);return`<div class="mm big"><button class="ov" data-s="mm" style="--c:var(${c})" aria-expanded="${st.open.has('mm')}"><b>${esc(s.t)}</b><span class="gr">${lab}</span><br><span style="color:var(--mute)">${sf.length} causal tests · ${sf.filter(f=>f.con).length} not</span><br><span class="src">${srcTag(s)} · ${st.open.has('mm')?'− close':'+ open'}</span></button></div>`}
-   return`<div class="mm"><button class="ov${s.unk?' unk':''}" data-s="${s.id}" style="--c:var(${s.unk?'--blk':'--rule'})" title="${esc(srcTag(s))}">${esc(s.t)}</button></div>`}
-  if(s.given)return`<button class="step given${s.narrow?' narrow':''}" data-s="${s.id}" style="--c:var(--g)"><span class="n">${s.ssp} · ${s.stage}</span><span class="gr" style="font-size:12px">${s.given} (MecCog)</span><span class="t">${esc(s.t).replace(/\//g,'/&#8203;')}</span><span class="src">${srcTag(s)}</span><span class="ct">not tested by H5 findings</span></button>`;
-  const sf=inStep(fs,s.id),[c,lab]=grade(sf),open=st.open.has(s.id);
-  return`<button class="step" data-s="${s.id}" style="--c:var(${c})" aria-expanded="${open}"><span class="n">${s.ssp} · ${s.stage}</span><span class="gr" style="font-size:12px">${lab}</span><span class="t">${esc(s.t).replace(/\//g,'/&#8203;')}</span><span class="src">${srcTag(s)}</span><span class="ct">${cnt(sf)}</span><span class="op">${open?'− close':'+ open branches'}</span></button>`}).join('');
- const open=CH.filter(s=>st.open.has(s.id));
- $('trees').innerHTML=open.length?open.map(s=>{const sf=inStep(fs,s.id),[c]=grade(sf);
-  return`<section class="tree" style="--c:var(${c})"><h3><span>${s.ssp||'Mechanism module'}: ${esc(s.t)}</span><button data-close="${s.id}">close</button></h3><span class="src">${srcTag(s)}${s.u?` · <a href="${s.u}">source</a>`:''}</span>${s.br.map(b=>{const bf=inBr(fs,b),n=bf.length,sp=bf.filter(f=>!f.con).length,[bc,bl]=grade(bf);
-   return`<div class="br"><button class="row${st.sel===b?' on':''}" data-b="${b}"><span class="t">${esc(BR[b].t)}</span>${BR[b].mc?`<span class="src">${esc(BR[b].mc)}</span>`:''}${n?`<span class="seg" style="width:${Math.max(18,Math.min(100,n*9))}%"><i style="flex:${sp};background:var(--sup)"></i><i style="flex:${n-sp};background:var(--con)"></i></span><span class="m">${sp} of ${n} support H5 · <span style="color:var(${bc})">${bl}</span></span>`:'<span class="m">no findings under these filters</span>'}</button></div>`}).join('')}</section>`}).join(''):`<div class="empty">Click a step or the large oval to open its branches. SSP4, the lysosome, splits into five branches; the oval holds the causal tests.</div>`;
- showSel();
+ const ch=$('chain');ch.className='chain'+(st.open?' has-open':'');
+ ch.innerHTML=CH.map(s=>{const o=st.open===s.id,ins=o?inner(s,fs):'';
+  if(s.k==='mm'){if(s.big){const sf=inStep(fs,s.id),[c,lab]=grade(sf);return`<div class="mm big${o?' open':''}"><div class="ov" style="--c:var(${c})"><button class="hd" data-s="mm" aria-expanded="${o}"><b>${esc(s.t)}</b><span class="gr">${lab}</span><br><span style="color:var(--mute)">${sf.length} direct tests · ${sf.filter(f=>f.con).length} do not support</span></button>${ins}</div></div>`}
+   return`<div class="mm${o?' open':''}"><div class="ov${s.unk?' unk':''}" style="--c:var(${s.unk?'--blk':'--rule'})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${esc(s.t)}</button>${ins}</div></div>`}
+  if(s.given)return`<div class="step given${s.narrow?' narrow':''}${o?' open':''}" style="--c:var(--g)"><button class="hd" data-s="${s.id}" aria-expanded="${o}"><span class="t">${esc(s.t).replace(/\//g,'/&#8203;')}</span><span class="ct">not tested here</span></button>${ins}</div>`;
+  const sf=inStep(fs,s.id),[c,lab]=grade(sf);
+  return`<div class="step${o?' open':''}" style="--c:var(${c})"><button class="hd" data-s="${s.id}" aria-expanded="${o}"><span class="t">${esc(s.t).replace(/\//g,'/&#8203;')}</span><span class="gr" style="font-size:12px">${lab}</span><span class="ct">${cnt(sf)}</span></button>${ins}</div>`}).join('');
 };
+const inner=(s,fs)=>{const note=s.note||(s.src==='MecCog'?'Activity copied from MecCog’s mechanism example.':'Our label for the activity between these steps; no findings are placed on it.');
+ return`<div class="in"><p class="nt">${esc(note)}${s.u?` <a href="${s.u}">Source</a>.`:''}</p>${(s.br||[]).map(b=>{const bf=inBr(fs,b),n=bf.length,sp=bf.filter(f=>!f.con).length,[bc,bl]=grade(bf),on=st.sel===b;
+  return`<div class="br" style="--c:var(${grade(inStep(fs,s.id))[0]})"><button class="row${on?' on':''}" data-b="${b}" aria-expanded="${on}"><span class="t">${esc(BR[b].t)}</span>${BR[b].mc?`<span class="src">${esc(BR[b].mc)}</span>`:''}${n?`<span class="seg" style="width:${Math.max(18,Math.min(100,n*9))}%"><i style="flex:${sp};background:var(--sup)"></i><i style="flex:${n-sp};background:var(--con)"></i></span><span class="m">${sp} of ${n} support H5 · <span style="color:var(${bc})">${bl}</span> · ${on?'− hide findings':'+ show findings'}</span>`:'<span class="m">no findings under these filters</span>'}</button>${on&&n?`<div class="fl">${bf.map(f=>fItem(f,n===1)).join('')}</div>`:''}</div>`}).join('')}</div>`};
 const row=(l,v,p)=>v==null||v===''?'':`<dt>${l}</dt><dd>${esc(v)}${p?` <span style="color:var(--mute)">(${esc(String(p).replace(/_/g,' '))})</span>`:''}</dd>`;
 const fItem=(f,open)=>{const p=P[f.p];return`<details${open?' open':''}><summary><span class="pill" style="background:var(${f.con?'--con':'--sup'})">${f.id}</span><span>${esc(f.sum.replace(/^CONTRADICTS[^:]*:\s*/,''))} <span style="color:var(--mute)">· class ${f.cls}</span></span></summary><div class="bd"><p style="margin:2px 0">${esc(f.desc)}</p><blockquote>“${esc(f.quote)}”</blockquote><dl>${row('Verdict',f.con?'Does not support H5':'Supports H5')}${row('Paper',p.short+', '+p.journal)}${row('System',f.sys)}${row('Data',f.loc)}${row('Effect',f.es,f.esp)}${row('P',f.pv,f.pvp)}${row('n',f.n,f.np)}${row('Directness','class '+f.cls+', strength '+f.str)}</dl><a href="https://doi.org/${esc(p.doi)}">doi ${esc(p.doi)}</a></div></details>`};
-const panel=(title,sub,fs,note)=>{const s=fs.filter(f=>!f.con).length;$('det').innerHTML=`<h2>${esc(title)}</h2>${note?`<p class="sub">${note}</p>`:''}<p class="sub">${esc(sub)}${fs.length?`${fs.length} findings: <b style="color:var(--sup)">${s} support H5</b>, <b style="color:var(--con)">${fs.length-s} do not</b>.`:''}</p>${fs.map(f=>fItem(f,fs.length===1)).join('')}`};
-const showSel=()=>{const s=st.sel,fs=F.filter(pass);
- if(!s){$('det').innerHTML='<h2>Findings</h2><p class="sub">Open a step and click a branch. Its findings appear here, each with the quote, figure, P value, sample size and directness.</p>';return}
- if(BR[s]){const sp=CI[brOf[s]];panel(BR[s].t,`${sp.ssp||'Mechanism module'}: ${sp.t}. `,inBr(fs,s));return}
- const sp=CI[s];const note=esc(sp.note||(sp.src==='MecCog'?'Activity copied from MecCog’s mechanism example.':'Our label for the activity between these steps; no findings are placed on it.'))+(sp.u?` <a href="${sp.u}">Source</a>.`:'');
- panel(`${sp.ssp||'Mechanism module'}: ${sp.t}`,'',sp.br?inStep(fs,s):[],note);
-};
 document.addEventListener('click',e=>{
- const t=e.target.closest('[data-g],[data-s],[data-b],[data-close]');if(!t)return;
+ const t=e.target.closest('[data-g],[data-s],[data-b]');if(!t)return;
  if(t.dataset.g){const g=t.dataset.g,v=t.dataset.v;if(g==='v'){st.v=v;document.querySelectorAll('[data-g=v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v))}else{const s=st[g];s.has(v)?s.delete(v):s.add(v);t.setAttribute('aria-pressed',s.has(v))}render();return}
- if(t.dataset.close){st.open.delete(t.dataset.close);if(st.sel&&(st.sel===t.dataset.close||brOf[st.sel]===t.dataset.close))st.sel=null;render();return}
- if(t.dataset.s){const id=t.dataset.s;if(CI[id].br){const was=st.open.has(id);st.open.clear();if(!was){st.open.add(id);st.sel=id}else st.sel=null}else st.sel=id;render();return}
- if(t.dataset.b){st.sel=st.sel===t.dataset.b?null:t.dataset.b;render();if(innerWidth<=1100)$('det').scrollIntoView({behavior:'smooth',block:'start'})}
+ if(t.dataset.s){const id=t.dataset.s;st.open=st.open===id?null:id;st.sel=null;render();return}
+ if(t.dataset.b){st.sel=st.sel===t.dataset.b?null:t.dataset.b;render()}
 });
-$('closeAll').onclick=()=>{st.open.clear();st.sel=null;render()};
+$('closeAll').onclick=()=>{st.open=null;st.sel=null;render()};
 $('fT').onclick=e=>{const b=$('bar');b.hidden=!b.hidden;e.currentTarget.setAttribute('aria-pressed',!b.hidden)};
 $('fP').onchange=e=>{st.p=e.target.value;render()};
 $('rst').onclick=()=>{st.v='all';st.k.clear();st.c.clear();st.p='';$('fP').value='';document.querySelectorAll('[data-g]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g==='v'&&b.dataset.v==='all'));render()};
