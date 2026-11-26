@@ -210,11 +210,11 @@ const render=()=>{
  const fs=F.filter(pass);
  const ch=$('chain');ch.className='chain'+(st.open?' has-open':'');
  ch.innerHTML=CH.map(s=>{const o=st.open===s.id,ins=o||s.br?inner(s,fs,o):'';
-  if(s.k==='mm'){if(s.big){const sf=inStep(fs,s.id),[c,lab]=grade(sf);return`<div class="mm big${o?' open':''}" style="--lc:var(${c})"><div class="ov" style="--c:var(${c})"><button class="hd" data-s="mm" aria-expanded="${o}"><b>${esc(s.t)}</b><span class="gr">${lab}</span><br><span style="color:var(--mute)">${sf.length} direct tests · ${sf.filter(f=>f.con).length} do not support</span></button>${ins}</div></div>`}
+  if(s.k==='mm'){if(s.big){const sf=inStep(fs,s.id),[c,lab]=grade(sf);return`<div class="mm big${o?' open':''}" style="--lc:var(${c})"><div class="ov" style="--c:var(${c})"><button class="hd" data-s="mm" aria-expanded="${o}"><b>${esc(s.t)}</b></button>${ins}</div></div>`}
    const lc=s.unk?'--blk':s.rate||'--mute';return`<div class="mm${o?' open':''}" style="--lc:var(${lc})"><div class="ov${s.unk?' unk':''}" style="--c:var(${s.unk?'--blk':s.rate||'--rule'})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${esc(s.t)}</button>${ins}</div></div>`}
   if(s.given)return`<div class="step given${s.narrow?' narrow':''}${o?' open':''}" style="--c:var(${s.gc||'--g'})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${body(s)}<span class="ct">${s.gc==='--o'?'partly established':'established'} (${s.refs.map(r=>r[0]).join('; ')})</span></button>${ins}</div>`;
   const sf=inStep(fs,s.id),[c,lab]=grade(sf);
-  return`<div class="step${o?' open':''}" style="--c:var(${c})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${body(s)}<span class="gr" style="font-size:12px">${lab}</span><span class="ct">${cnt(sf)}</span></button>${ins}</div>`}).join('');
+  return`<div class="step${o?' open':''}" style="--c:var(${c})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${body(s)}</button>${ins}</div>`}).join('');
 };
 const maxN=Math.max(...Object.keys(BR).map(b=>F.filter(f=>f.br===b).length));
 const inner=(s,fs,o)=>{const note=s.note||(s.src==='MecCog'?'Activity copied from MecCog’s mechanism example.':'Our label for the activity between these steps; no findings are placed on it.');
