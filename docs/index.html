@@ -80,7 +80,7 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
     <div>
       <div class="tab"></div>
       <h1 id="hl">APOE4 and the H5 mechanism</h1>
-      <p class="lede">Every finding in the MecCog H5 submission, drawn as links from APOE4 (and from lipid interventions) to the concepts it measures, and laid under the steps of an H5 mechanism schema in <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog's notation</a>. Click a step, a concept or a link to see the findings behind it.</p>
+      <p class="lede">Each line links APOE4, or a lipid treatment, to something a finding measured. Blue means the finding supports H5, red means it does not. The boxes on top are the H5 steps in <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog's format</a>. Click a box, a dot or a line to see its findings.</p>
     </div>
     <div class="tally" id="tally"></div>
   </div>
@@ -148,7 +148,7 @@ const stepF=(fs,sid)=>fs.filter(f=>f.edges.some(e=>NI[e.t].st===sid||(sid==='s4'
 const grade=fs=>{if(!fs.length)return['--k','no findings'];const s=fs.filter(f=>!f.con).length/fs.length,d=fs.some(f=>!f.con&&f.cls<=2);return s>=.75&&d?['--g','well supported']:s>=.5?['--o','partly supported']:['--r','weakly supported']};
 // headline from the full set
 {const L=links(F),g=k=>L.find(l=>l.k===k);const c=g('APOE4>chol'),d=g('APOE4>degr'),z=g('APOE4>size');
- $('hl').textContent=`APOE4 raises cholesterol in ${c.sup} of ${c.f.length} findings, but its lysosome links are contested (degradation ${d.sup} for, ${d.con} against)`;
+ $('hl').textContent=`In APOE4 cells: more cholesterol in ${c.eff.up||0} of ${c.f.length} findings, less lysosomal degradation in ${d.eff.down||0} of ${d.f.length}`;
  const ns=new Set(N.map(n=>n.id)).size;$('tally').innerHTML=`<div><strong>${F.length}</strong><span>findings, ${F.filter(f=>f.con).length} against</span></div><div><strong>${L.length}</strong><span>evidence links</span></div><div><strong>${ns}</strong><span>concepts and interventions</span></div>`}
 const tog=(host,items,key,multi)=>$(host).insertAdjacentHTML('beforeend',items.map(([v,l])=>`<button class="tg" data-g="${key}" data-v="${v}" aria-pressed="${!multi&&v==='all'}">${esc(l)}</button>`).join(''));
 tog('fV',[['all','All'],['sup','Supports'],['con','Contradicts']],'v',false);
