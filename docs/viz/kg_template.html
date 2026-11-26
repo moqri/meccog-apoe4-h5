@@ -91,7 +91,17 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .row:hover,.row.on{background:var(--panel)}
 .row .t{font-weight:600;font-size:14px;display:block}
 .row .m{font-size:12.5px;color:var(--mute);display:block}
-.fl{margin:0 0 8px 8px}
+.fl{margin:0 0 4px;border-top:1px solid var(--rule);padding-top:4px}
+.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:4px 0 10px}
+.sub{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:3px;border:2px solid var(--bc);border-radius:3px;padding:9px 8px;cursor:pointer;background:var(--bg)}
+.sub:hover{box-shadow:0 0 0 3px color-mix(in srgb,var(--bc) 25%,transparent)}
+.sub.on{background:color-mix(in srgb,var(--bc) 12%,var(--bg));border-width:3px;padding:8px 7px}
+.sub:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.sub .t{font-weight:600;font-size:13px;line-height:1.25}
+.sub .seg{width:100%;margin:4px 0 1px}
+.sub .m{font-size:12px;color:var(--mute)}
+.fl h4{margin:6px 0 2px;font:600 15px/1.3 "Source Serif 4",serif}
+
 .seg{display:flex;height:9px;border-radius:2px;overflow:hidden;margin:5px 0 3px;background:var(--rule)}
 .empty{border:1px dashed var(--rule);border-radius:10px;padding:18px;color:var(--mute);font-size:14px}
 .fl details{border-top:1px solid var(--rule);padding:8px 0}
@@ -204,8 +214,8 @@ const render=()=>{
   return`<div class="step${o?' open':''}" style="--c:var(${c})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${body(s)}<span class="gr" style="font-size:12px">${lab}</span><span class="ct">${cnt(sf)}</span></button>${ins}</div>`}).join('');
 };
 const inner=(s,fs)=>{const note=s.note||(s.src==='MecCog'?'Activity copied from MecCog’s mechanism example.':'Our label for the activity between these steps; no findings are placed on it.');
- return`<div class="in"><p class="nt">${esc(note)}${s.u?` <a href="${s.u}">Source</a>.`:''}</p>${s.refs?`<p class="nt">Established by: ${s.refs.map(r=>`<a href="https://doi.org/${r[1]}">${r[0]}</a>, which ${esc(r[2])}`).join('; ')}. Rating from Moult and Darden 2023, Figure 1.</p>`:''}${(s.br||[]).map(b=>{const bf=inBr(fs,b),n=bf.length,sp=bf.filter(f=>!f.con).length,[bc,bl]=grade(bf),on=st.sel===b;
-  return`<div class="br" style="--c:var(${grade(inStep(fs,s.id))[0]})"><button class="row${on?' on':''}" data-b="${b}" aria-expanded="${on}"><span class="t">${esc(BR[b].t)}</span>${BR[b].mc?`<span class="src">${esc(BR[b].mc)}</span>`:''}${n?`<span class="seg" style="width:${Math.max(18,Math.min(100,n*9))}%"><i style="flex:${sp};background:var(--sup)"></i><i style="flex:${n-sp};background:var(--con)"></i></span><span class="m">${sp} of ${n} support H5 · <span style="color:var(${bc})">${bl}</span> · ${on?'− hide findings':'+ show findings'}</span>`:'<span class="m">no findings under these filters</span>'}</button>${on&&n?`<div class="fl">${bf.map(f=>fItem(f,n===1)).join('')}</div>`:''}</div>`}).join('')}</div>`};
+ return`<div class="in"><p class="nt">${esc(note)}${s.u?` <a href="${s.u}">Source</a>.`:''}</p>${s.refs?`<p class="nt">Established by: ${s.refs.map(r=>`<a href="https://doi.org/${r[1]}">${r[0]}</a>, which ${esc(r[2])}`).join('; ')}. Rating from Moult and Darden 2023, Figure 1.</p>`:''}${s.br?`<p class="nt">Parallel branches: one or more may hold. Click one to list its findings.</p><div class="subs">${s.br.map(b=>{const bf=inBr(fs,b),n=bf.length,sp=bf.filter(f=>!f.con).length,[bc,bl]=grade(bf),on=st.sel===b;
+  return`<button class="sub${on?' on':''}" data-b="${b}" aria-expanded="${on}" style="--bc:var(${bc})"><span class="t">${esc(BR[b].t)}</span>${n?`<span class="seg"><i style="flex:${sp};background:var(--sup)"></i><i style="flex:${n-sp};background:var(--con)"></i></span><span class="m">${sp} of ${n} support</span><span class="m" style="color:var(${bc});font-weight:600">${bl}</span>`:'<span class="m">no findings under these filters</span>'}</button>`}).join('')}</div>${(()=>{const b=s.br.find(x=>x===st.sel);if(!b)return'';const bf=inBr(fs,b);return`<div class="fl"><h4>${esc(BR[b].t)}</h4>${BR[b].mc?`<p class="nt">${esc(BR[b].mc)}</p>`:''}${bf.map(f=>fItem(f,bf.length===1)).join('')}</div>`})()}`:''}</div>`};
 const row=(l,v,p)=>v==null||v===''?'':`<dt>${l}</dt><dd>${esc(v)}${p?` <span style="color:var(--mute)">(${esc(String(p).replace(/_/g,' '))})</span>`:''}</dd>`;
 const fItem=(f,open)=>{const p=P[f.p];return`<details${open?' open':''}><summary><span class="pill" style="background:var(${f.con?'--con':'--sup'})">${f.id}</span><span>${esc(f.sum.replace(/^CONTRADICTS[^:]*:\s*/,''))} <span style="color:var(--mute)">· class ${f.cls}</span></span></summary><div class="bd"><p style="margin:2px 0">${esc(f.desc)}</p><blockquote>“${esc(f.quote)}”</blockquote><dl>${row('Verdict',f.con?'Does not support H5':'Supports H5')}${row('Paper',p.short+', '+p.journal)}${row('System',f.sys)}${row('Data',f.loc)}${row('Effect',f.es,f.esp)}${row('P',f.pv,f.pvp)}${row('n',f.n,f.np)}${row('Directness','class '+f.cls+', strength '+f.str)}</dl><a href="https://doi.org/${esc(p.doi)}">doi ${esc(p.doi)}</a></div></details>`};
 document.addEventListener('click',e=>{
