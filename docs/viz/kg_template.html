@@ -8,7 +8,7 @@
    PICTURE the SSP/MM chain across the top; a clicked step expands in place into its narrow branches, each with a support bar
    COLOUR white ground, ink #121212, support = MecCog green, not-support = MecCog red, MecCog evidence green/orange/red/black
    TYPE Source Serif 4 600 display + Inter
-   LAYOUT laptop: title + tallies, chain full width, the open step widens and holds its branches and findings; phone: chain stacks vertically */
+   LAYOUT chain runs top to bottom at every width; the open step holds its branches and findings */
 :root{color-scheme:light dark;--bg:light-dark(#fff,#10191e);--ink:light-dark(#121212,#eef2f4);--mute:light-dark(#5b6670,#9aa8b2);--rule:light-dark(#d9e0e4,#2b3a42);--panel:light-dark(#f6f8f9,#152027);--g:light-dark(#2f9e44,#51cf66);--sup:var(--g);--con:var(--r);--o:light-dark(#e67700,#ffa94d);--r:light-dark(#e03131,#ff6b6b);--blk:light-dark(#121212,#eef2f4);--k:light-dark(#868e96,#909aa3);--chipT:light-dark(#fff,#0c1317)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
@@ -99,7 +99,7 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .pill{display:inline-block;font:600 11.5px/1 Inter;color:var(--chipT);padding:4px 6px;border-radius:4px;white-space:nowrap}
 footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-top:28px;padding-top:12px}
 @media(max-width:860px){.top{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:1180px){.chain{flex-direction:column;overflow:visible}.mm,.mm.big{flex:none;flex-direction:column;align-self:center;margin:-2px 0;width:auto}.mm::before,.mm::after{width:2px;height:10px;flex:none}.mm::after{width:8px;height:8px;clip-path:polygon(0 0,100% 0,50% 100%)}.step{min-width:0}.chain.has-open{align-items:stretch}.chain.has-open .mm{margin:-2px 0;align-self:center}.chain.has-open .step:not(.open),.chain.has-open .mm:not(.open),.chain.has-open .mm.big:not(.open){flex:none}.mm.open,.mm.big.open{width:100%}}
+@media all{.chain{flex-direction:column;overflow:visible;max-width:820px;margin-inline:auto}.mm,.mm.big{flex:none;flex-direction:column;align-self:center;margin:-2px 0;width:auto}.mm::before,.mm::after{width:2px;height:10px;flex:none}.mm::after{width:8px;height:8px;clip-path:polygon(0 0,100% 0,50% 100%)}.step{min-width:0}.chain.has-open{align-items:stretch}.chain.has-open .mm{margin:-2px 0;align-self:center}.chain.has-open .step:not(.open),.chain.has-open .mm:not(.open),.chain.has-open .mm.big:not(.open){flex:none}.mm.open,.mm.big.open{width:100%}}
 </style>
 
 <div class="band"><div class="wrap">
