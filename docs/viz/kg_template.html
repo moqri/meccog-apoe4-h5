@@ -109,7 +109,8 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
   <div class="top">
     <div>
       <div class="tab"></div>
-      <h1 id="hl">APOE4 and the H5 mechanism</h1>
+      <h1 id="hl">H5. In human brain cells, APOE4 disrupts lipid metabolism, which impairs the lysosome.</h1>
+      <p class="lede" id="sum" style="color:var(--ink);font-weight:500;margin-bottom:8px"></p>
       <p class="lede">H5 drawn as a <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">MecCog mechanism schema</a>: boxes are steps, ovals are the activities between them, and the border colour is the evidence. Click a step or an oval to open it in place, then a branch to read its findings.</p>
     </div>
     <div class="tally" id="tally"></div>
@@ -178,7 +179,7 @@ const grade=fs=>{if(!fs.length)return['--k','no findings'];const s=fs.filter(f=>
 const inBr=(fs,b)=>fs.filter(f=>f.br===b);
 const inStep=(fs,s)=>fs.filter(f=>(CI[s].br||[]).includes(f.br));
 {const a=F.filter(f=>!f.con).length,m=inStep(F,'mm'),ms=m.filter(f=>!f.con).length,y=inStep(F,'s4'),ys=y.filter(f=>!f.con).length;
- $('hl').textContent=`${a} of ${F.length} findings support H5. The direct test, changing a lipid and measuring the lysosome, supports it in ${ms} of ${m.length}`;
+ $('sum').textContent=`${a} of ${F.length} findings support H5. The direct test, changing a lipid and measuring the lysosome, supports it in ${ms} of ${m.length}.`;
  $('tally').innerHTML=`<div><strong>${F.length}</strong><span>findings from 13 papers</span></div><div><strong>${ys}/${y.length}</strong><span>lysosome findings that support H5</span></div><div><strong>${ms}/${m.length}</strong><span>causal lipid tests that support H5</span></div>`}
 const tog=(host,items,key,multi)=>$(host).insertAdjacentHTML('beforeend',items.map(([v,l])=>`<button class="tg" data-g="${key}" data-v="${v}" aria-pressed="${!multi&&v==='all'}">${esc(l)}</button>`).join(''));
 tog('fV',[['all','All'],['sup','Supports'],['con','Does not']],'v',false);
