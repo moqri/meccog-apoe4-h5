@@ -47,6 +47,8 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .chain{display:flex;align-items:stretch;margin-top:18px;padding:4px 2px 10px}
 .step{flex:1 1 0;min-width:0;overflow-wrap:break-word;border:3px solid var(--c,var(--k));border-radius:3px;background:var(--bg);display:flex;flex-direction:column}
 .hd{all:unset;box-sizing:border-box;flex:1 0 auto;display:flex;flex-direction:column;gap:3px;width:100%;padding:10px 12px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.step>.hd{align-items:center;justify-content:center;text-align:center}
+.step>.hd .ct{margin-top:0;padding-top:2px}
 .hd:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
 .step.open{flex:5 1 0}
 .step.open .hd{flex:0 0 auto;background:color-mix(in srgb,var(--c) 9%,var(--bg))}
