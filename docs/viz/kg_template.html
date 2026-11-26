@@ -40,6 +40,7 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .chain{display:flex;align-items:stretch;margin-top:18px;padding:4px 2px 10px}
 .step{flex:1 1 0;min-width:0;overflow-wrap:break-word;border:3px solid var(--c,var(--k));border-radius:3px;padding:10px 12px;background:var(--bg);cursor:pointer;text-align:left;font:inherit;color:inherit;display:flex;flex-direction:column;gap:3px}
 .step.given{border-style:dashed}
+.step.narrow{flex:.6 1 0}
 .step:hover{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 25%,transparent)}
 .step[aria-expanded=true]{background:color-mix(in srgb,var(--c) 9%,var(--bg))}
 .step .n{font-size:12px;font-weight:600;color:var(--mute)}
@@ -122,7 +123,7 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
     <aside class="det" id="det" aria-live="polite"></aside>
   </div>
 
-  <footer>Built from h5_submission.xlsx at method commit __SHA__ (sheet saved __TIME__), __NF__ findings from 13 papers. Every finding sits in exactly one branch, so none is counted twice. Findings of directness class 2 (a lipid changed, the lysosome measured, in the challenge's terms a perturbation of a surrogate A′ with B measured) form the mechanism module between SSP3 and SSP4; every other finding sits under the step its readout measures. MecCog has not published a schema for H5. SSP1, SSP2, the outcome and the ovals marked MecCog are copied from MecCog's <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">mechanism example</a> (drawn after Figure 1 of the Moult and Darden preprint), together with its ratings; SSP3 and SSP4 use the words of the <a href="https://meccog-meccog-challenge.static.hf.space/hypotheses.html">H5 statement</a>; SSP5, its oval and the branch names are ours unless a branch says otherwise. Ratings of the H5 steps follow a rule, not expert judgement: green when at least 75% of the findings support H5 and one of them is class 1 or 2, orange from 50%, red below.</footer>
+  <footer>Built from h5_submission.xlsx at method commit __SHA__ (sheet saved __TIME__), __NF__ findings from 13 papers. Every finding sits in exactly one branch, so none is counted twice. Findings of directness class 2 (a lipid changed, the lysosome measured, in the challenge's terms a perturbation of a surrogate A′ with B measured) form the mechanism module between SSP3 and SSP4; every other finding sits under the step its readout measures. MecCog has not published a schema for H5. SSP1 and SSP2 (joined in one box), the outcome and the ovals marked MecCog are copied from MecCog's <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">mechanism example</a> (drawn after Figure 1 of the Moult and Darden preprint), together with its ratings; SSP3 and SSP4 use the words of the <a href="https://meccog-meccog-challenge.static.hf.space/hypotheses.html">H5 statement</a>; SSP5, its oval and the branch names are ours unless a branch says otherwise. Ratings of the H5 steps follow a rule, not expert judgement: green when at least 75% of the findings support H5 and one of them is class 1 or 2, orange from 50%, red below.</footer>
 </div></div>
 
 <script>
@@ -146,9 +147,7 @@ const BR={
  A3:{t:'Undegraded cargo builds up',c:['abeta','asyn','tau','lipofuscin','neurite'],mc:'MecCog broader tree has kin: “Impaired tau degradation”, “Reduced plaque clearance”'}};
 // chain items: steps (SSP) and mechanism modules (MM) in MecCog order
 const CH=[
- {id:'s1',k:'ssp',ssp:'SSP1',stage:'DNA',t:'Single base change: rs429358-C, in the APOE gene',src:'MecCog',u:MECH,given:'well supported',note:'Copied from SSP1 of MecCog’s mechanism example, with MecCog’s rating. No H5 finding tests it: every finding starts from APOE4 versus APOE3 cells.'},
- {id:'m1',k:'mm',t:'Protein synthesis',src:'MecCog',u:MECH},
- {id:'s2',k:'ssp',ssp:'SSP2',stage:'Protein',t:'apoE C112R missense variant',src:'MecCog',u:MECH,given:'well supported',note:'Copied from SSP2 of MecCog’s mechanism example, with MecCog’s rating. The challenge rules count comparing APOE4 with APOE3 as a perturbation of this step, so every H5 finding starts here.'},
+ {id:'s1',k:'ssp',ssp:'SSP1–2',stage:'DNA → protein',narrow:1,t:'APOE4: rs429358-C gives apoE C112R',src:'MecCog',u:MECH,given:'well supported',note:'Two MecCog steps in one box. SSP1 (DNA): “Single base change: rs429358-C, in the APOE gene”. Protein synthesis, then SSP2 (protein): “apoE C112R missense variant”. Both copied from MecCog’s mechanism example, with MecCog’s rating. No H5 finding tests them; the challenge rules count comparing APOE4 with APOE3 as a perturbation of SSP2, so every H5 finding starts here.'},
  {id:'m2',k:'mm',t:'Mechanism unknown',src:'MecCog',u:MECH,unk:1,note:'How apoE4 disrupts lipid metabolism is not shown by any finding here, so the oval is black, MecCog’s mark for “nobody has explained this step”. MecCog’s own example uses the same label after SSP2.'},
  {id:'s3',k:'ssp',ssp:'SSP3',stage:'Inside the cell',t:'Disruption of lipid metabolism',src:'H5 statement',u:HYP,br:['L1','L2','L3','L4'],note:'Words of the H5 statement (“APOE4 disruption of lipid metabolism”). MecCog’s broader-mechanisms tree has the same idea under Lipid effects: “Altered lipid metabolism”. Findings here compare APOE4 with APOE3 and measure a lipid (mostly directness class 3).'},
  {id:'mm',k:'mm',big:1,t:'Lipid drives the lysosome defect',src:'H5 statement',u:HYP,br:['M1','M2'],note:'The causal claim inside H5 (“disruption of lipid metabolism … results in impaired … function”), drawn as a mechanism module. It holds the findings that change a lipid and then measure the lysosome (directness class 2): the only direct test of the link.'},
@@ -156,7 +155,7 @@ const CH=[
  {id:'m3',k:'mm',t:'Less lysosomal clearance',src:'our addition'},
  {id:'s5',k:'ssp',ssp:'SSP5',stage:'Inside the cell',t:'Autophagy stalls, cargo builds up',src:'our addition',br:['A1','A2','A3'],note:'Our addition, not a MecCog or H5 step: the findings downstream of the lysosome, autophagy and the cargo it fails to clear.'},
  {id:'m4',k:'mm',t:'Higher rate of plaque formation',src:'MecCog',u:MECH},
- {id:'s6',k:'ssp',ssp:'Outcome',stage:'Organism',t:'More plaque, higher risk',src:'MecCog',u:MECH,given:'well supported',note:'The last step of MecCog’s mechanism example (SSP8 there), copied with MecCog’s rating. The hypotheses page frames all five hypotheses as routes to a higher risk of late-onset Alzheimer’s disease. Outside H5: no finding here tests it; the closest are the amyloid-β findings under SSP5.'}];
+ {id:'s6',k:'ssp',ssp:'Outcome',stage:'Organism',narrow:1,t:'More plaque, higher risk',src:'MecCog',u:MECH,given:'well supported',note:'The last step of MecCog’s mechanism example (SSP8 there), copied with MecCog’s rating. The hypotheses page frames all five hypotheses as routes to a higher risk of late-onset Alzheimer’s disease. Outside H5: no finding here tests it; the closest are the amyloid-β findings under SSP5.'}];
 const CI=Object.fromEntries(CH.map(s=>[s.id,s]));
 const brOf=Object.fromEntries(CH.flatMap(s=>(s.br||[]).map(b=>[b,s.id])));
 const CELLS={astro:'Astrocytes',microglia:'Microglia',neurons:'Neurons',mixed:'Neuron-glia cultures',lines:'Cell lines'};
@@ -186,7 +185,7 @@ const render=()=>{
  $('chain').innerHTML=CH.map(s=>{
   if(s.k==='mm'){if(s.big){const sf=inStep(fs,s.id),[c,lab]=grade(sf);return`<div class="mm big"><button class="ov" data-s="mm" style="--c:var(${c})" aria-expanded="${st.open.has('mm')}"><b>${esc(s.t)}</b><span class="gr">${lab}</span><br><span style="color:var(--mute)">${sf.length} causal tests · ${sf.filter(f=>f.con).length} not</span><br><span class="src">${srcTag(s)} · ${st.open.has('mm')?'− close':'+ open'}</span></button></div>`}
    return`<div class="mm"><button class="ov${s.unk?' unk':''}" data-s="${s.id}" style="--c:var(${s.unk?'--blk':'--rule'})" title="${esc(srcTag(s))}">${esc(s.t)}</button></div>`}
-  if(s.given)return`<button class="step given" data-s="${s.id}" style="--c:var(--g)"><span class="n">${s.ssp} · ${s.stage}</span><span class="gr" style="font-size:12px">${s.given} (MecCog)</span><span class="t">${esc(s.t).replace(/\//g,'/&#8203;')}</span><span class="src">${srcTag(s)}</span><span class="ct">not tested by H5 findings</span></button>`;
+  if(s.given)return`<button class="step given${s.narrow?' narrow':''}" data-s="${s.id}" style="--c:var(--g)"><span class="n">${s.ssp} · ${s.stage}</span><span class="gr" style="font-size:12px">${s.given} (MecCog)</span><span class="t">${esc(s.t).replace(/\//g,'/&#8203;')}</span><span class="src">${srcTag(s)}</span><span class="ct">not tested by H5 findings</span></button>`;
   const sf=inStep(fs,s.id),[c,lab]=grade(sf),open=st.open.has(s.id);
   return`<button class="step" data-s="${s.id}" style="--c:var(${c})" aria-expanded="${open}"><span class="n">${s.ssp} · ${s.stage}</span><span class="gr" style="font-size:12px">${lab}</span><span class="t">${esc(s.t).replace(/\//g,'/&#8203;')}</span><span class="src">${srcTag(s)}</span><span class="ct">${cnt(sf)}</span><span class="op">${open?'− close':'+ open branches'}</span></button>`}).join('');
  const open=CH.filter(s=>st.open.has(s.id));
