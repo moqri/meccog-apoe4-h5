@@ -104,8 +104,7 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
   </div>
 
   <div class="tools">
-    <button class="tg" id="openAll">Open all</button>
-    <button class="tg" id="closeAll">Close all</button>
+    <button class="tg" id="closeAll">Close</button>
     <button class="tg" id="fT" aria-pressed="false">Filters</button>
     <span class="legend"><span><i style="background:var(--sup)"></i>supports H5</span><span><i style="background:var(--con)"></i>does not</span><span>Border, as in MecCog: <b style="color:var(--g)">well</b>, <b style="color:var(--o)">partly</b>, <b style="color:var(--r)">weakly</b> supported, <b>black</b> = nobody has explained this step; dashed = rated by MecCog, not tested by H5 findings</span></span>
   </div>
@@ -207,10 +206,9 @@ document.addEventListener('click',e=>{
  const t=e.target.closest('[data-g],[data-s],[data-b],[data-close]');if(!t)return;
  if(t.dataset.g){const g=t.dataset.g,v=t.dataset.v;if(g==='v'){st.v=v;document.querySelectorAll('[data-g=v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v))}else{const s=st[g];s.has(v)?s.delete(v):s.add(v);t.setAttribute('aria-pressed',s.has(v))}render();return}
  if(t.dataset.close){st.open.delete(t.dataset.close);if(st.sel&&(st.sel===t.dataset.close||brOf[st.sel]===t.dataset.close))st.sel=null;render();return}
- if(t.dataset.s){const id=t.dataset.s;if(CI[id].br){st.open.has(id)&&st.sel===id?st.open.delete(id):st.open.add(id)}st.sel=id;render();return}
+ if(t.dataset.s){const id=t.dataset.s;if(CI[id].br){const was=st.open.has(id);st.open.clear();if(!was){st.open.add(id);st.sel=id}else st.sel=null}else st.sel=id;render();return}
  if(t.dataset.b){st.sel=st.sel===t.dataset.b?null:t.dataset.b;render();if(innerWidth<=1100)$('det').scrollIntoView({behavior:'smooth',block:'start'})}
 });
-$('openAll').onclick=()=>{CH.forEach(s=>{if(s.br)st.open.add(s.id)});render()};
 $('closeAll').onclick=()=>{st.open.clear();st.sel=null;render()};
 $('fT').onclick=e=>{const b=$('bar');b.hidden=!b.hidden;e.currentTarget.setAttribute('aria-pressed',!b.hidden)};
 $('fP').onchange=e=>{st.p=e.target.value;render()};
