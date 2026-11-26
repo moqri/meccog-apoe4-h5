@@ -92,9 +92,9 @@ select{font:16px Inter,sans-serif;border:1px solid var(--rule);background:var(--
 .row .t{font-weight:600;font-size:14px;display:block}
 .row .m{font-size:12.5px;color:var(--mute);display:block}
 .fl{margin:0 0 4px;border-top:1px solid var(--rule);padding-top:4px}
-.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:4px 0 10px}
+.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin:4px 0 10px}
 .subs:last-child{margin-bottom:0}
-.chain .mm.big{width:min(100%,480px)}.chain .mm.big.open{width:100%}
+.chain .mm.big{width:min(100%,640px)}.chain .mm.big.open{width:100%}
 .sub{all:unset;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:3px;border:2px solid var(--bc);border-radius:3px;padding:9px 8px;cursor:pointer;background:var(--bg)}
 .sub:hover{box-shadow:0 0 0 3px color-mix(in srgb,var(--bc) 25%,transparent)}
 .sub.on{background:color-mix(in srgb,var(--bc) 12%,var(--bg));border-width:3px;padding:8px 7px}
@@ -146,7 +146,7 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
 
   <div class="chain" id="chain"></div>
 
-  <footer>Built from h5_submission.xlsx at method commit __SHA__ (sheet saved __TIME__), __NF__ findings from 13 papers. Every finding sits in exactly one branch, so none is counted twice. Findings of directness class 2 (a lipid changed, the lysosome measured, in the challenge's terms a perturbation of a surrogate A′ with B measured) form the mechanism module between SSP3 and SSP4; every other finding sits under the step its readout measures. MecCog has not published a schema for H5. Boxes follow Figure 1 of the Moult and Darden preprint: the stage, the kind of perturbation, then the specific one. SSP1 and SSP2 (joined in one box), the plaque and phenotype steps and the ovals marked MecCog are copied from that figure and MecCog's <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">mechanism example</a>, together with their ratings; ovals and arrows take the colour of their rating; SSP3 and SSP4 use the words of the <a href="https://meccog-meccog-challenge.static.hf.space/hypotheses.html">H5 statement</a>; SSP5, its oval and the branch names are ours unless a branch says otherwise. Ratings of the H5 steps follow a rule, not expert judgement: green when at least 75% of the findings support H5 and one of them is class 1 or 2, orange from 50%, red below. A branch whose findings mostly support H5 but include no class 1 or 2 finding is marked “indirect evidence only”. Bar length shows how many findings a branch has. Branches are ordered by strength of support, strongest first.</footer>
+  <footer>Built from h5_submission.xlsx at method commit __SHA__ (sheet saved __TIME__), __NF__ findings from 13 papers. Every finding sits in exactly one branch, so none is counted twice. Findings of directness class 2 (a lipid changed, the lysosome measured, in the challenge's terms a perturbation of a surrogate A′ with B measured) form the mechanism module between SSP3 and SSP4; every other finding sits under the step its readout measures. MecCog has not published a schema for H5. Boxes follow Figure 1 of the Moult and Darden preprint: the stage, the kind of perturbation, then the specific one. SSP1 and SSP2 (joined in one box), the plaque and phenotype steps and the ovals marked MecCog are copied from that figure and MecCog's <a href="https://meccog-meccog-challenge.static.hf.space/mechanism.html">mechanism example</a>, together with their ratings; ovals and arrows take the colour of their rating; SSP3 and SSP4 use the words of the <a href="https://meccog-meccog-challenge.static.hf.space/hypotheses.html">H5 statement</a>; SSP5, its oval and the branch names are ours unless a branch says otherwise. Ratings of the H5 steps follow a rule, not expert judgement: green when at least 75% of the findings support H5 and one of them is class 1 or 2, orange from 50%, red below. A branch whose findings mostly support H5 but include no class 1 or 2 finding is marked “indirect evidence only”. A branch with a single finding is marked “one finding only”. Bar length shows how many findings a branch has. Branches are ordered by strength of support, strongest first.</footer>
 </div></div>
 
 <script>
@@ -160,25 +160,28 @@ const BR={
  L4:{t:'Impaired lipid export',c:['efflux'],mc:'MecCog molecular tree: “impaired lipid export”'},
  M1:{t:'Lowering cholesterol restores the lysosome',c:[]},
  M2:{t:'Adding lipid harms the lysosome',c:[]},
+ M3:{t:'Blocking lysosomal lipid export hits APOE4 harder',c:[]},
+ M4:{t:'Removing TMED5 restores lysosomal acidity',c:[]},
  Y1:{t:'Less lysosomal degradation',c:['degr','cath']},
  Y2:{t:'Less acidic lysosomes',c:['ph']},
- Y3:{t:'Lysosome size and number change',c:['size']},
- Y4:{t:'Less LAMP1/2 and lysosomal gene expression',c:['lamp','lgenes']},
- Y5:{t:'Leaky lysosomes, altered contents',c:['lmp','lprot']},
+ Y3:{t:'Enlarged lysosomes',c:['size']},
+ Y4:{t:'Fewer lysosomal proteins and genes',c:['lamp','lgenes']},
+ Y5:{t:'Leaky lysosomal membrane',c:['lmp']},
+ Y6:{t:'Changed lysosomal protein make-up',c:['lprot']},
  A1:{t:'Slower autophagy',c:['auto']},
  A2:{t:'Stalled lipophagy and mitophagy',c:['lipophagy','mito']},
- A3:{t:'Undegraded cargo builds up',c:['abeta','asyn','tau','lipofuscin','neurite'],mc:'MecCog broader tree has kin: “Impaired tau degradation”, “Reduced plaque clearance”'}};
+ A3:{t:'Undegraded material builds up (lipofuscin, tau)',c:['abeta','asyn','tau','lipofuscin','neurite'],mc:'MecCog broader tree has kin: “Impaired tau degradation”, “Reduced plaque clearance”'}};
 // chain items: steps (SSP) and mechanism modules (MM) in MecCog order
 const CH=[
  {id:'s1',k:'ssp',ssp:'SSP1–2',stage:'DNA → protein',stg:'DNA → Protein',refs:[['Weisgraber 1981','10.1016/s0021-9258(19)52510-8','found the cysteine-to-arginine change at position 112 that defines apoE4']],kind:'SNV → missense variant',what:'rs429358-C → apoE C112R',gc:'--g',narrow:1,t:'APOE4: rs429358-C gives apoE C112R',src:'MecCog',u:MECH,given:'well supported',note:'Two MecCog steps in one box. SSP1 (DNA): “Single base change: rs429358-C, in the APOE gene”. Protein synthesis, then SSP2 (protein): “apoE C112R missense variant”. Both copied from MecCog’s mechanism example, with MecCog’s rating. No H5 finding tests them; the challenge rules count comparing APOE4 with APOE3 as a perturbation of SSP2, so every H5 finding starts here.'},
  {id:'m2',k:'mm',t:'Mechanism unknown',src:'MecCog',u:MECH,unk:1,note:'How apoE4 disrupts lipid metabolism is not shown by any finding here, so the oval is black, MecCog’s mark for “nobody has explained this step”. MecCog’s own example uses the same label after SSP2.'},
  {id:'s3',k:'ssp',ssp:'SSP3',stage:'Inside the cell',stg:'Cell',kind:'Disrupted lipid metabolism',what:'cholesterol, lipid droplets, lipid export',t:'Disruption of lipid metabolism',src:'H5 statement',u:HYP,br:['L1','L2','L3','L4'],note:'Words of the H5 statement (“APOE4 disruption of lipid metabolism”). MecCog’s broader-mechanisms tree has the same idea under Lipid effects: “Altered lipid metabolism”. Findings here compare APOE4 with APOE3 and measure a lipid (mostly directness class 3).'},
- {id:'mm',k:'mm',big:1,t:'Lipid drives the lysosome defect',src:'H5 statement',u:HYP,br:['M1','M2'],note:'The causal claim inside H5 (“disruption of lipid metabolism … results in impaired … function”), drawn as a mechanism module. It holds the findings that change a lipid and then measure the lysosome (directness class 2): the only direct test of the link.'},
- {id:'s4',k:'ssp',ssp:'SSP4',stage:'Inside the cell',stg:'Cell',kind:'Impaired function',what:'late endosomes and lysosomes',t:'Impaired late endosome/lysosome function',src:'H5 statement',u:HYP,br:['Y1','Y2','Y3','Y4','Y5'],note:'Words of the H5 statement, split into five narrower branches so that results pointing different ways are not pooled. Findings here compare APOE4 with APOE3 and measure the lysosome (mostly class 1 and 3).'},
+ {id:'mm',k:'mm',big:1,t:'Lipid drives the lysosome defect',src:'H5 statement',u:HYP,br:['M1','M2','M3','M4'],note:'The causal claim inside H5 (“disruption of lipid metabolism … results in impaired … function”), drawn as a mechanism module. It holds the findings that change a lipid and then measure the lysosome (directness class 2): the only direct test of the link.'},
+ {id:'s4',k:'ssp',ssp:'SSP4',stage:'Inside the cell',stg:'Cell',kind:'Impaired function',what:'late endosomes and lysosomes',t:'Impaired late endosome/lysosome function',src:'H5 statement',u:HYP,br:['Y1','Y2','Y3','Y4','Y5','Y6'],note:'Words of the H5 statement, split into six narrower branches so that results pointing different ways are not pooled. Findings here compare APOE4 with APOE3 and measure the lysosome (mostly class 1 and 3).'},
  {id:'m3',k:'mm',t:'Less lysosomal clearance',src:'our addition'},
- {id:'s5',k:'ssp',ssp:'SSP5',stage:'Inside the cell',stg:'Cell',kind:'Decreased autophagy',what:'undegraded cargo (Aβ, tau, α-synuclein)',t:'Autophagy stalls, cargo builds up',src:'our addition',br:['A1','A2','A3'],note:'Our addition, not a MecCog or H5 step: the findings downstream of the lysosome, autophagy and the cargo it fails to clear.'},
+ {id:'s5',k:'ssp',ssp:'SSP5',stage:'Inside the cell',stg:'Cell',kind:'Decreased autophagy',what:'undegraded material (lipofuscin, tau)',t:'Autophagy stalls, cargo builds up',src:'our addition',br:['A1','A2','A3'],note:'Our addition, not a MecCog or H5 step: the findings downstream of the lysosome, autophagy and the cargo it fails to clear.'},
  {id:'m4',k:'mm',t:'Higher rate of plaque formation',src:'MecCog',u:MECH,rate:'--o',note:'MM7 of MecCog’s Figure 1 (Moult and Darden), rated orange there.'},
- {id:'s6',k:'ssp',ssp:'SSP8',stage:'Protein',stg:'Protein',kind:'Increased aggregation',refs:[['Schmechel 1993','10.1073/pnas.90.20.9649','showed more amyloid-β deposition in the cortex of APOE4 carriers']],what:'Amyloid plaque',gc:'--o',narrow:1,t:'More amyloid plaque',src:'MecCog',u:MECH,given:'partly supported',note:'SSP8 of MecCog’s Figure 1 (Moult and Darden), with its orange rating. Outside H5: no finding here tests it; the closest are the amyloid-β findings under decreased autophagy.'},
+ {id:'s6',k:'ssp',ssp:'SSP8',stage:'Protein',stg:'Protein',kind:'Increased aggregation',refs:[['Schmechel 1993','10.1073/pnas.90.20.9649','showed more amyloid-β deposition in the cortex of APOE4 carriers']],what:'Amyloid plaque',gc:'--o',narrow:1,t:'More amyloid plaque',src:'MecCog',u:MECH,given:'partly supported',note:'SSP8 of MecCog’s Figure 1 (Moult and Darden), with its orange rating. Outside H5: no finding here tests it; the closest is the amyloid-β degradation finding under less lysosomal degradation.'},
  {id:'m5',k:'mm',t:'Downstream processes',src:'MecCog',u:MECH,rate:'--g',note:'MM8 of MecCog’s Figure 1, rated green there.'},
  {id:'s7',k:'ssp',ssp:'SSP9',stage:'Phenotype',stg:'Phenotype',refs:[['Corder 1993','10.1126/science.8346443','showed that APOE4 raises Alzheimer’s risk with gene dose'],['Strittmatter 1993','10.1073/pnas.90.5.1977','found APOE4 enriched in late-onset familial Alzheimer’s']],kind:'Increased disease risk',what:'Alzheimer’s',gc:'--g',narrow:1,t:'Higher Alzheimer’s risk',src:'MecCog',u:MECH,given:'well supported',note:'SSP9 of MecCog’s Figure 1, the phenotype every APOE4 schema ends in, with its green rating. Not tested by H5 findings.'}];
 const CI=Object.fromEntries(CH.map(s=>[s.id,s]));
@@ -186,13 +189,15 @@ const brOf=Object.fromEntries(CH.flatMap(s=>(s.br||[]).map(b=>[b,s.id])));
 const CELLS={astro:'Astrocytes',microglia:'Microglia',neurons:'Neurons',mixed:'Neuron-glia cultures',lines:'Cell lines'};
 const P=Object.fromEntries(D.papers.map(p=>[p.id,p]));
 const F=D.findings;
-F.forEach(f=>{if(f.cls===2){f.br=f.edges.some(e=>e.e==='rescue')?'M1':'M2';return}const c=f.edges[0].t;f.br=Object.keys(BR).find(k=>BR[k].c.includes(c))});
+// hand placements where the first readout tag would put a finding in the wrong branch
+const OV={'P6.F6':'Y4','P6.F5':'Y4','P2.F9':'Y1','P10.F1':'M3','P10.F4':'M3','P5.F5':'M4'};
+F.forEach(f=>{if(OV[f.id]){f.br=OV[f.id];return}if(f.cls===2){f.br=f.edges.some(e=>e.e==='rescue')?'M1':'M2';return}const c=f.edges[0].t;f.br=Object.keys(BR).find(k=>BR[k].c.includes(c))});
 const bad=F.filter(f=>!f.br);if(bad.length)console.warn('unplaced',bad.map(f=>f.id));
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const $=id=>document.getElementById(id);
 const st={v:'all',k:new Set(),c:new Set(),p:'',open:null,sel:null};
 const pass=f=>(st.v==='all'||(st.v==='con')===f.con)&&(!st.k.size||st.k.has(String(f.cls)))&&(!st.c.size||st.c.has(f.cell))&&(!st.p||f.p===st.p);
-const grade=fs=>{if(!fs.length)return['--k','no findings'];const s=fs.filter(f=>!f.con).length/fs.length,d=fs.some(f=>!f.con&&f.cls<=2);return s>=.75&&d?['--g','well supported']:s>=.75?['--o','indirect evidence only']:s>=.5?['--o','partly supported']:['--r','weakly supported']};
+const grade=fs=>{if(!fs.length)return['--k','no findings'];if(fs.length===1)return fs[0].con?['--r','one finding only']:['--o','one finding only'];const s=fs.filter(f=>!f.con).length/fs.length,d=fs.some(f=>!f.con&&f.cls<=2);return s>=.75&&d?['--g','well supported']:s>=.75?['--o','indirect evidence only']:s>=.5?['--o','partly supported']:['--r','weakly supported']};
 const inBr=(fs,b)=>fs.filter(f=>f.br===b);
 const inStep=(fs,s)=>fs.filter(f=>(CI[s].br||[]).includes(f.br));
 {const a=F.filter(f=>!f.con).length,m=inStep(F,'mm'),ms=m.filter(f=>!f.con).length,y=inStep(F,'s4'),ys=y.filter(f=>!f.con).length;
@@ -217,7 +222,7 @@ const render=()=>{
   return`<div class="step${o?' open':''}" style="--c:var(${c})"><button class="hd" data-s="${s.id}" aria-expanded="${o}">${body(s)}</button>${ins}</div>`}).join('');
 };
 const maxN=Math.max(...Object.keys(BR).map(b=>F.filter(f=>f.br===b).length));
-const rank=bf=>{if(!bf.length)return -1;const l=grade(bf)[1],sp=bf.filter(f=>!f.con).length;return({'well supported':3,'indirect evidence only':2,'partly supported':1}[l]||0)*1e4+sp/bf.length*100+bf.length/100};
+const rank=bf=>{if(!bf.length)return -1;const l=grade(bf)[1],sp=bf.filter(f=>!f.con).length;return({'well supported':3,'indirect evidence only':2,'partly supported':1,'one finding only':.5}[l]||0)*1e4+sp/bf.length*100+bf.length/100};
 const inner=(s,fs,o)=>{const note=s.note||(s.src==='MecCog'?'Activity copied from MecCog’s mechanism example.':'Our label for the activity between these steps; no findings are placed on it.');
  return`<div class="in">${o?`<p class="nt">${esc(note)}${s.u?` <a href="${s.u}">Source</a>.`:''}</p>`:''}${o&&s.refs?`<p class="nt">Established by: ${s.refs.map(r=>`<a href="https://doi.org/${r[1]}">${r[0]}</a>, which ${esc(r[2])}`).join('; ')}. Rating from Moult and Darden 2023, Figure 1.</p>`:''}${s.br?`<div class="subs">${[...s.br].sort((x,y)=>rank(inBr(fs,y))-rank(inBr(fs,x))).map(b=>{const bf=inBr(fs,b),n=bf.length,sp=bf.filter(f=>!f.con).length,[bc,bl]=grade(bf),on=st.sel===b;
   return`<button class="sub${on?' on':''}" data-b="${b}" aria-expanded="${on}" style="--bc:var(${bc})"><span class="t">${esc(BR[b].t)}</span>${n?`<span class="seg" style="width:${Math.round(Math.max(.25,n/maxN)*100)}%"><i style="flex:${sp};background:var(--sup)"></i><i style="flex:${n-sp};background:var(--con)"></i></span><span class="m">${sp} of ${n} support</span><span class="m" style="color:var(${bc});font-weight:600">${bl}</span>`:'<span class="m">no findings under these filters</span>'}</button>`}).join('')}</div>${(()=>{const b=s.br.find(x=>x===st.sel);if(!b)return'';const bf=inBr(fs,b);return`<div class="fl"><h4>${esc(BR[b].t)}</h4>${BR[b].mc?`<p class="nt">${esc(BR[b].mc)}</p>`:''}${bf.map(f=>fItem(f,bf.length===1)).join('')}</div>`})()}`:''}</div>`};
