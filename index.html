@@ -141,7 +141,6 @@ footer{font-size:13px;color:var(--mute);border-top:1px solid var(--rule);margin-
   </div>
 
   <div class="tools">
-    <button class="tg" id="fT" aria-pressed="true">Filters</button>
     <span class="legend"><span>Small boxes inside a step are parallel branches: one or more may hold</span><span><i style="background:var(--sup)"></i>supports H5</span><span><i style="background:var(--con)"></i>does not</span><span>Border: <b style="color:var(--g)">well</b>, <b style="color:var(--o)">partly</b>, <b style="color:var(--r)">weakly</b> supported, <b>black</b> = nobody has explained this step; dashed = established in earlier work, with the source in the box</span></span>
   </div>
   <div class="bar" id="bar" role="group" aria-label="Filters">
@@ -242,7 +241,6 @@ document.addEventListener('click',e=>{
  if(t.dataset.s){const id=t.dataset.s;st.open=st.open===id?null:id;render();return}
  if(t.dataset.b){st.sel=st.sel===t.dataset.b?null:t.dataset.b;render()}
 });
-$('fT').onclick=e=>{const b=$('bar');b.hidden=!b.hidden;e.currentTarget.setAttribute('aria-pressed',!b.hidden)};
 $('fP').onchange=e=>{st.p=e.target.value;render()};
 $('rst').onclick=()=>{st.v='all';st.k.clear();st.c.clear();st.p='';$('fP').value='';document.querySelectorAll('[data-g]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g==='v'&&b.dataset.v==='all'));render()};
 render();
