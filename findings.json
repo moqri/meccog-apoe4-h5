@@ -508,9 +508,9 @@
           "strength": "4 weak"
         },
         {
-          "description": "CONTRADICTING the cholesterol-accumulation direction: by HPTLC lipid quantification, total cholesterol is about half in APOE4 versus APOE3 iAstrocytes (about 3.2 vs 6.2, normalized to phosphatidylcholine), the opposite of the filipin III increase in the same paper (P4.F4, Fig 3F). Cholesterol is changed, so lipid metabolism is disrupted, but not in the accumulating direction the lysosomal-cholesterol mechanism assumes.",
+          "description": "Lipid arm, direction differs from accumulation: by HPTLC lipid quantification, total cholesterol is about half in APOE4 versus APOE3 iAstrocytes (about 3.2 vs 6.2, normalized to phosphatidylcholine), with lower efflux and lower biosynthesis, while the same paper finds more free cholesterol in lysosomes (Fig 3F-G). The authors read this as dysregulated cholesterol homeostasis with cholesterol relocated into lysosomes. H5 requires disrupted lipid metabolism, not accumulation, so this is recorded as a lipid disruption, not a contradiction; it does disagree with the higher total cholesterol reported in other APOE4 astrocyte papers.",
           "quote": "In line with the proteomic data, total as well as cellular and secreted cholesterol was decreased in APOE4 compared with APOE3 and APOE2 iAstrocytes, while showing similar levels to APOE-KO (E2 = E3 > E4 = KO) (Figures 3D, S2A, and S2B)",
-          "summary": "CONTRADICTS the accumulation direction: (APOE3 -> APOE4) -> (less total cholesterol by lipid quantification)",
+          "summary": "(APOE3 -> APOE4) -> (less total, cellular and secreted cholesterol: disrupted cholesterol homeostasis)",
           "relevance": 0.6,
           "system": "Isogenic APOE2/E3/E4/knockout iPSC-derived astrocytes (EBiSC lines from one donor), quiescent, serum-free protocol. HPTLC lipid quantification. Lipid readout only.",
           "location": "Fig 3D",
