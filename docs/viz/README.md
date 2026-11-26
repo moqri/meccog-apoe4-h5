@@ -1,6 +1,6 @@
 # APOE4 knowledge graph (H5 findings)
 
-`docs/index.html` (copied to `index.html` at the repo root, which GitHub Pages serves) is an interactive knowledge graph of every finding in the H5 submission. It links APOE4 (and lipid interventions) to the concepts each finding measures. The graph is laid under a draft six-step H5 mechanism drawn in MecCog's SSP/MM notation. Link width shows the number of supporting (blue) and contradicting (red) findings. A solid link has at least one class 1 or 2 finding; a dashed link has only class 3 or 4 findings.
+`docs/index.html` (copied to `index.html` at the repo root, which GitHub Pages serves) is an interactive map of every finding in the H5 submission, drawn as a MecCog mechanism schema: steps (SSPs) joined by mechanism modules (ovals). Each step opens into narrow branches, and every finding sits in exactly one branch. Class 2 findings (a lipid changed, the lysosome measured) form the module between the lipid step and the lysosome step. SSP1, SSP2 and the outcome are copied from MecCog's mechanism example; SSP3 and SSP4 use the words of the H5 statement; SSP5 and the branch names are ours.
 
 Rebuild after the workbook changes:
 
