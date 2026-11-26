@@ -58,7 +58,7 @@ Rows that still need a person:
 
 The automated checks that did run, on every row:
 
-- Every quote must appear word for word in the cached source text, after Unicode normalization of dashes, quotes and spaces. All 68 quotes pass. Quotes were never retyped from memory; each was copied out of the cached text.
+- Every quote must appear word for word in the cached source text, after Unicode normalization of dashes, quotes and spaces. All 79 quotes pass. Quotes were never retyped from memory; each was copied out of the cached text.
 - No quote may be used twice.
 - Every value marked `printed_in_text` must have each of its numbers present in the quote or the source text.
 - A P value may never carry `estimated_from_figure`.
@@ -72,7 +72,9 @@ Three warnings remain and were reviewed and accepted: in P2.F8, P9.F5 and P10.F3
 
 **What counts as evidence here.** The hypothesis has two halves, a lipid disruption (A) and an impaired late endosome or lysosome (B). Directness classes follow the challenge rules. Comparing APOE4 with APOE3 cells is itself a perturbation of A. Where the genotype is compared and a lysosomal or late-endosomal function is measured directly, the finding is class 1. Where a lipid is perturbed instead of the genotype (cyclodextrin, statin, cholesterol loading, choline supplementation) and a lysosomal readout is measured, it is class 2. Findings that carry only a lipid readout (cholesterol level, lipid droplet number, lipidome composition) are class 3: the genotype is perturbed, but B is only inferred from a surrogate. An earlier draft put these at class 5; the rules reserve class 5 for findings none of the other classes fit, so they were moved. Experiments in non-brain cells keep their class, and the caveat sits in the experimental-system column.
 
-**Contradicting findings are in.** Ten of the 68 are recorded as contradicting or showing no difference, and they are not confined to weak papers:
+**Missing-panel check (2026-11-26).** After a human checker found that a significant panel had been left out (de Leeuw Fig 3D), every paper's results text was scanned for sentences that report an APOE4 versus APOE3 lipid or late-endosome/lysosome result and cite a figure panel with no row in the sheet. Each hit was read against the figure. Eleven rows were added, five of them null or contradicting: Lee 2023 Fig 3D and 3G; Mesentier-Louro 2026 Fig 4C; TCW 2022 Fig 6B-C; Hellén 2025 Fig 1F and 4D-E; Guo 2024 Fig S6E-F, S6G-H and S6I-K; the PNAS Nexus 2026 paper (P10) Fig 1B-D (neurons alone); Sienski 2021 Fig 1C. Panels left out on purpose: post-mortem AD brain and AD-cohort data (outside H5's non-AD scope), early-endosome-only readouts (outside late endosome/lysosome), APOE2-versus-APOE4-only comparisons, mouse in vivo tissue, yeast, glycolysis and synaptic readouts, and Lin 2018 Fig S6F-G (supplementary image not obtainable).
+
+**Contradicting findings are in.** Fifteen of the 79 are recorded as contradicting or showing no difference, and they are not confined to weak papers:
 
 - Lee et al. 2023 (P1), the starting reference itself, measures about 50% higher cathepsin B activity in APOE4 astrocytes (P1.F5), the opposite of impaired lysosomal function. An earlier draft described this in the row but did not label it contradicting.
 

@@ -181,6 +181,38 @@
           "sample_size_prov": "supplement_only",
           "directness": 3,
           "strength": "2 strong"
+        },
+        {
+          "description": "Lysosomes and mitochondria colocalize about 2.5-fold more in APOE4 than APOE3 astrocytes (LysoTracker/MitoTracker overlap, Fig 3D: about 2.55 vs 1.0), which the authors read as impaired lysosome-dependent mitochondrial degradation.",
+          "quote": "The significantly increased colocalization of lysosomes and mitochondria found in ApoE4 astrocytes was likely due to lysosomal dysfunction, suggesting impaired lysosome-dependent mitochondrial degradation in these cells (Figures 3A and 3D)",
+          "summary": "(APOE3 -> APOE4) -> (more lysosome-mitochondria colocalization -> impaired mitophagic clearance)",
+          "relevance": 0.6,
+          "system": "Isogenic hiPSC-derived astrocytes (GLAST-sorted): APOE4/4 line from an AD patient vs its CRISPR-corrected APOE3/3 isogenic line. LysoTracker/MitoTracker imaging.",
+          "location": "Fig 3D",
+          "effect_size": "~2.5x",
+          "effect_size_prov": "estimated_from_figure",
+          "p_value": "<0.05",
+          "p_value_prov": "visual_only",
+          "sample_size": "18-20",
+          "sample_size_prov": "printed_in_text",
+          "directness": 3,
+          "strength": "3 moderate"
+        },
+        {
+          "description": "CONTRADICTING in direction: LysoTracker mean intensity is about 34 percent HIGHER in APOE4 than APOE3 astrocytes (Fig 3G: about 55 vs 41), and the authors state that LysoTracker intensity is positively associated with lysosomal activity, consistent with the higher cathepsin B activity in P1.F5.",
+          "quote": "We also observed that ApoE4 increased the intensity of LysoTracker, which is positively associated with lysosomal activity (Figure 3G)",
+          "summary": "CONTRADICTS: (APOE3 -> APOE4) -> (higher LysoTracker intensity, read by the authors as higher lysosomal activity)",
+          "relevance": 0.6,
+          "system": "Isogenic hiPSC-derived astrocytes (GLAST-sorted): APOE4/4 line from an AD patient vs its CRISPR-corrected APOE3/3 isogenic line. LysoTracker/MitoTracker imaging.",
+          "location": "Fig 3G",
+          "effect_size": "~34%",
+          "effect_size_prov": "estimated_from_figure",
+          "p_value": "<0.0001",
+          "p_value_prov": "visual_only",
+          "sample_size": "18-20",
+          "sample_size_prov": "visual_only",
+          "directness": 3,
+          "strength": "3 moderate"
         }
       ]
     },
@@ -316,6 +348,22 @@
           "sample_size_prov": "supplement_only",
           "directness": 3,
           "strength": "4 weak"
+        },
+        {
+          "description": "APOE4/4 astrocytes fail to degrade internalized alpha-synuclein: after the label is removed, intracellular alpha-Syn-HiLyte falls significantly in APOE3/3 astrocytes (p < 0.0001) but not in APOE4/4 astrocytes (p = 0.694). The recorded P is the APOE3 decline; the genotype difference is shown as decline versus no decline, not as a direct APOE4-vs-APOE3 test.",
+          "quote": "APOE3/3 astrocytes showed a significant reduction in intracellular α-Syn-HiLyte signal (p < 0.0001), whereas APOE4/4 astrocytes showed no significant decrease (p = 0.694; Figure 4c), indicating impaired degradation of α-Syn.",
+          "summary": "(APOE3 -> APOE4) -> (no clearance of internalized alpha-synuclein -> impaired degradation)",
+          "relevance": 0.75,
+          "system": "Isogenic iPSC-derived astrocytes (APOE3/3 line CRISPR-edited to APOE4/4), astrocyte monoculture. Fluorescent alpha-Syn-HiLyte uptake then 24 h chase.",
+          "location": "Fig 4C",
+          "effect_size": "qualitative",
+          "effect_size_prov": "printed_in_text",
+          "p_value": "<0.0001",
+          "p_value_prov": "printed_in_text",
+          "sample_size": "4",
+          "sample_size_prov": "printed_in_text",
+          "directness": 1,
+          "strength": "2 strong"
         }
       ]
     },
@@ -403,6 +451,22 @@
           "sample_size_prov": "printed_in_text",
           "directness": 3,
           "strength": "4 weak"
+        },
+        {
+          "description": "Lipid arm, second assay: filipin-stained free cholesterol is about 30 percent higher in APOE4 than isogenic APOE3 astrocytes at baseline (Fig 6C: about 1.3 vs 1.0); donor fibroblasts show no genotype difference.",
+          "quote": "Further, intracellular free cholesterol levels measured with filipin (Pipalia et al., 2011) was significantly increased in APOE4 astrocytes, but donor fibroblasts did not exhibit genotype-dependent cholesterol differences (whole cells and lysosomes), potentially due to the lack of APOE (Figures 6B, 6C and S6A).",
+          "summary": "(APOE3 -> APOE4) -> (more intracellular free cholesterol by filipin)",
+          "relevance": 0.7,
+          "system": "Isogenic hiPSC-derived astrocytes (CRISPR-edited APOE3/APOE4 pairs, Indiv1 and Indiv2, same APOE haplotype). GC-MS sterol quantification. Lipid readout only in this panel.",
+          "location": "Fig 6B-C",
+          "effect_size": "~30%",
+          "effect_size_prov": "estimated_from_figure",
+          "p_value": "<0.001",
+          "p_value_prov": "visual_only",
+          "sample_size": "6",
+          "sample_size_prov": "printed_in_text",
+          "directness": 3,
+          "strength": "3 moderate"
         }
       ]
     },
@@ -698,7 +762,7 @@
           "strength": "2 strong"
         },
         {
-          "description": "Lysosomal protein content trends lower in APOE4/4 microglia: LAMP-2 is reduced, and the lysosomal transporters MFSD1 and GLMP are downregulated in proteomics at baseline.",
+          "description": "Lysosomal protein content trends lower in APOE4/4 microglia: LAMP-2 trends lower without reaching significance (Fig 4D-E, see P6.F7), and the lysosomal transporters MFSD1 and GLMP are downregulated in proteomics at baseline.",
           "quote": "Since proteomic analysis comparing two (isogenic to each other) E4/E4 lines to E3/E3 lines revealed a downregulation of two other lysosomal proteins MFSD1 and GLMP in E4/E4 iMGs at basal conditions (Fig. 3B, Table S4), the overall lysosomal protein content may be reduced by E4/E4 genotype",
           "summary": "(APOE3 -> APOE4) -> (less lysosomal protein content)",
           "relevance": 0.55,
@@ -712,6 +776,38 @@
           "sample_size_prov": "visual_only",
           "directness": 3,
           "strength": "4 weak"
+        },
+        {
+          "description": "Lysosomal protease transcripts: CTSD (cathepsin D) mRNA is about 32 percent lower in APOE4/4 microglia (Fig 1F: about 0.68 vs 1.0), while CTSB and MAP1LC3B mRNA do not differ by genotype.",
+          "quote": "RT-qPCR analysis showed that CTSD was significantly downregulated in E4/E4 iMGs, while there was no difference in CTSB or MAP1LC3B expression between the genotypes (Fig. 1F)",
+          "summary": "(APOE3 -> APOE4) -> (lower CTSD mRNA; CTSB unchanged)",
+          "relevance": 0.5,
+          "system": "Human iPSC-derived microglia-like cells from APOE3/3 and APOE4/4 donor lines (population lines, not isogenic). RT-qPCR.",
+          "location": "Fig 1F",
+          "effect_size": "~32%",
+          "effect_size_prov": "estimated_from_figure",
+          "p_value": "<0.01",
+          "p_value_prov": "visual_only",
+          "sample_size": "5",
+          "sample_size_prov": "visual_only",
+          "directness": 3,
+          "strength": "4 weak"
+        },
+        {
+          "description": "NO SIGNIFICANT DIFFERENCE: LAMP-2 protein tends to be lower in APOE4/4 microglia by western blot (Fig 4D: about 3200 vs 6000 at baseline), but the genotype comparison carries no significance mark.",
+          "quote": "Interestingly, lysosomal-associated membrane protein 2 (LAMP-2), a key mediator of autophagosome-lysosome fusion [57, 58], was unaffected by Aβ42 stimulation but tended to be reduced in E4/E4 iMGs (Fig. 4D, E)",
+          "summary": "CONTRADICTS: (APOE3 -> APOE4) -> (no significant change in LAMP-2 protein)",
+          "relevance": 0.55,
+          "system": "Human iPSC-derived microglia-like cells from APOE3/3 and APOE4/4 donor lines (population lines, not isogenic). LAMP-2 western blot with or without Abeta42 and bafilomycin.",
+          "location": "Fig 4D-E",
+          "effect_size": "N/A",
+          "effect_size_prov": "not_found_in_source",
+          "p_value": "N/A",
+          "p_value_prov": "not_found_in_source",
+          "sample_size": "3",
+          "sample_size_prov": "visual_only",
+          "directness": 3,
+          "strength": "3 moderate"
         }
       ]
     },
@@ -868,6 +964,54 @@
           "p_value_prov": "visual_only",
           "sample_size": "3",
           "sample_size_prov": "printed_in_text",
+          "directness": 3,
+          "strength": "3 moderate"
+        },
+        {
+          "description": "Lipid arm in human neurons: after 14 days with CE(20:4)-lipidated ApoE, APOE4-treated iNeurons carry about 4-fold more CE(20:4) than ApoE3-treated ones (Fig S6F: about 2.55 vs 0.6) and more PUFA-containing triacylglycerol.",
+          "quote": "Lipidomics uncovered significant alterations in numerous lipid species after 14 d treatment with CE(20:4)-lipApoE4 compared to the other isoforms (Figure S6E–F)",
+          "summary": "(ApoE3 -> ApoE4, same PUFA-CE cargo) -> (more CE(20:4) and PUFA triacylglycerol in neurons)",
+          "relevance": 0.55,
+          "system": "Human iPSC-derived NGN2 neurons treated with recombinant ApoE isoforms lipidated with POPC and the polyunsaturated cholesteryl ester CE(20:4); exogenous ApoE, not genotype. Longitudinal autofluorescence imaging at 7, 14 and 21 d.",
+          "location": "Fig S6E-F",
+          "effect_size": "~4x",
+          "effect_size_prov": "estimated_from_figure",
+          "p_value": "<0.0001",
+          "p_value_prov": "visual_only",
+          "sample_size": "3",
+          "sample_size_prov": "visual_only",
+          "directness": 3,
+          "strength": "3 moderate"
+        },
+        {
+          "description": "NO APOE4-SPECIFIC EFFECT: cathepsin activity (6QC probe) falls modestly and equally with CE(20:4)-lipidated ApoE3 and ApoE4 (Fig S6H: about 0.93 vs 0.92); ApoE3 versus ApoE4 carries no mark.",
+          "quote": "Cathepsin activity measured by the 6QC probe40 showed a modest but significant reduction with CE(20:4)-lipApoE3 or CE(20:4)-lipApoE4 treatment compared to other treatments that minimally induced lipofuscin (Figure S6G–H)",
+          "summary": "CONTRADICTS: (ApoE3 -> ApoE4, same PUFA-CE cargo) -> (no difference in cathepsin activity)",
+          "relevance": 0.55,
+          "system": "H4 neuroglioma cells treated with CE(20:4) or CE(18:1) lipidated ApoE4. Caveat: cell line, not neurons.",
+          "location": "Fig S6G-H",
+          "effect_size": "N/A",
+          "effect_size_prov": "not_found_in_source",
+          "p_value": "N/A",
+          "p_value_prov": "not_found_in_source",
+          "sample_size": "3",
+          "sample_size_prov": "visual_only",
+          "directness": 2,
+          "strength": "3 moderate"
+        },
+        {
+          "description": "NO APOE4-SPECIFIC EFFECT: total LAMP1 lysosomal area is unchanged by any treatment, and the lysosomal clustering induced by CE(20:4) cargo is similar with ApoE3 and ApoE4 (Fig S6K: about 1.2 vs 1.25, no mark between them).",
+          "quote": "LAMP1 immunostaining revealed no treatment effect on the total lysosomal area, but CE(20:4)-lipApoE3/E4 treatment resulted in prominent lysosomal clustering (Figure S6I–K)",
+          "summary": "CONTRADICTS: (ApoE3 -> ApoE4, same PUFA-CE cargo) -> (no difference in lysosomal area or clustering)",
+          "relevance": 0.5,
+          "system": "H4 neuroglioma cells treated with CE(20:4) or CE(18:1) lipidated ApoE4. Caveat: cell line, not neurons.",
+          "location": "Fig S6I-K",
+          "effect_size": "N/A",
+          "effect_size_prov": "not_found_in_source",
+          "p_value": "N/A",
+          "p_value_prov": "not_found_in_source",
+          "sample_size": "3",
+          "sample_size_prov": "visual_only",
           "directness": 3,
           "strength": "3 moderate"
         }
@@ -1044,6 +1188,22 @@
           "sample_size_prov": "printed_in_text",
           "directness": 2,
           "strength": "2 strong"
+        },
+        {
+          "description": "CONTRADICTING for neuron-intrinsic APOE: in neurons alone, NPC1 inhibition raises Nile Red neutral-lipid accumulation equally in APOE3 and APOE4 neurons, with no genotype difference.",
+          "quote": "In iN alone, NPC1 inhibition significantly increased the percentage of NR+ neurons and the number of NR+ particles per soma in both APOE3 and APOE4 iNs compared with Veh treatment, with no APOE genotype-dependent differences (Fig. 1B–D)",
+          "summary": "CONTRADICTS in neurons alone: (APOE3 -> APOE4) -> (no change in neutral lipid accumulation)",
+          "relevance": 0.55,
+          "system": "Human iPSC-derived APOE3 or APOE4 neurons without astrocytes (three isogenic pairs); Nile Red imaging after NPC1 inhibition.",
+          "location": "Fig 1B-D",
+          "effect_size": "N/A",
+          "effect_size_prov": "not_found_in_source",
+          "p_value": "N/A",
+          "p_value_prov": "not_found_in_source",
+          "sample_size": "3",
+          "sample_size_prov": "printed_in_text",
+          "directness": 3,
+          "strength": "2 strong"
         }
       ]
     },
@@ -1097,6 +1257,22 @@
           "p_value_prov": "printed_in_text",
           "sample_size": "4",
           "sample_size_prov": "printed_in_text",
+          "directness": 3,
+          "strength": "4 weak"
+        },
+        {
+          "description": "Lipid arm: whole-cell lipidomics shows a large increase in triacylglycerols and only a minor change in phospholipids in APOE4 versus isogenic APOE3 astrocytes (heatmap, no per-species statistics in the figure).",
+          "quote": "We observed a minor change in phospholipid content and a much larger increase in triacylglycerides in APOE4-expressing human iPSC-derived astrocytes compared to APOE3-expressing human iPSC-derived astrocytes (Fig. 1C)",
+          "summary": "(APOE3 -> APOE4) -> (more triacylglycerol)",
+          "relevance": 0.5,
+          "system": "Human iPSC-derived astrocytes from APOE4 and APOE3 carriers (fibroblast-derived, population lines), plus yeast expressing human APOE isoforms. LC-MS whole-cell lipidomics.",
+          "location": "Fig 1C",
+          "effect_size": "qualitative",
+          "effect_size_prov": "printed_in_text",
+          "p_value": "N/A",
+          "p_value_prov": "not_found_in_source",
+          "sample_size": "N/A",
+          "sample_size_prov": "not_found_in_source",
           "directness": 3,
           "strength": "4 weak"
         }
